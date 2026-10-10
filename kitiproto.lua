@@ -16,7 +16,7 @@ local PGUI = LP:WaitForChild("PlayerGui")
 local env = (getgenv and getgenv()) or _G
 
 for _, g in ipairs(PGUI:GetChildren()) do
-	if g.Name == "KitiProtoV3" then g:Destroy() end
+	if g.Name == "KitiProtoV4" then g:Destroy() end
 end
 
 local T = {
@@ -41,7 +41,7 @@ local function new(class, props, children)
 end
 
 local function corner(par, r)
-	return new("UICorner", { CornerRadius = UDim.new(0, r or 10), Parent = par })
+	return new("UICorner", { CornerRadius = r and UDim.new(0, r) or UDim.new(1, 0), Parent = par })
 end
 
 local function stroke(par, col, th, tr)
@@ -53,7 +53,7 @@ local function grad(par, c1, c2, rot)
 end
 
 local sg = new("ScreenGui", {
-	Name = "KitiProtoV3", ResetOnSpawn = false, IgnoreGuiInset = true,
+	Name = "KitiProtoV4", ResetOnSpawn = false, IgnoreGuiInset = true,
 	DisplayOrder = 2147483647, ZIndexBehavior = Enum.ZIndexBehavior.Sibling, Parent = PGUI,
 })
 
@@ -76,7 +76,7 @@ new("UIListLayout", { Parent = notifHolder, Padding = UDim.new(0, 8), SortOrder 
 local function notify(title, text, dur)
 	dur = dur or 4
 	local f = new("Frame", { Size = UDim2.new(1, 0, 0, 58), BackgroundColor3 = T.card, BackgroundTransparency = 1, BorderSizePixel = 0, Parent = notifHolder })
-	corner(f, 12)
+	corner(f)
 	local st = stroke(f, T.accent1, 1.2, 1)
 	local bar = new("Frame", { Size = UDim2.new(0, 4, 1, -14), Position = UDim2.new(0, 0, 0.5, 0), AnchorPoint = Vector2.new(0, 0.5), BorderSizePixel = 0, Parent = f })
 	corner(bar, 2)
@@ -108,7 +108,7 @@ local winStroke = stroke(win, T.accent1, 1.4, 0.5)
 
 local topbar = new("Frame", { Size = UDim2.new(1, 0, 0, 54), BackgroundColor3 = T.card, BorderSizePixel = 0, ZIndex = 2, Parent = win })
 local logo = new("Frame", { Size = UDim2.fromOffset(34, 34), Position = UDim2.fromOffset(16, 10), BorderSizePixel = 0, ZIndex = 3, Parent = topbar })
-corner(logo, 10)
+corner(logo)
 grad(logo, T.accent1, T.accent2, 30)
 new("TextLabel", { Size = UDim2.fromScale(1, 1), BackgroundTransparency = 1, Text = "K", TextColor3 = Color3.fromRGB(255, 255, 255), Font = Enum.Font.GothamBlack, TextSize = 18, ZIndex = 4, Parent = logo })
 
@@ -117,7 +117,7 @@ local subtitle = new("TextLabel", { Size = UDim2.new(0, 320, 0, 15), Position = 
 
 local function topBtn(text, xoff, cb)
 	local b = new("TextButton", { Size = UDim2.fromOffset(30, 30), Position = UDim2.new(1, xoff, 0.5, -15), BackgroundColor3 = T.element, Text = text, TextColor3 = T.text, Font = Enum.Font.GothamBold, TextSize = 16, AutoButtonColor = false, ZIndex = 3, Parent = topbar })
-	corner(b, 9)
+	corner(b)
 	b.MouseEnter:Connect(function() hoverSnd(); TS:Create(b, TweenInfo.new(0.12), { BackgroundColor3 = T.hover }):Play() end)
 	b.MouseLeave:Connect(function() TS:Create(b, TweenInfo.new(0.12), { BackgroundColor3 = T.element }):Play() end)
 	b.MouseButton1Click:Connect(function() clickSnd(); pcall(cb) end)
@@ -141,7 +141,7 @@ local current
 
 local function addTab(name, icon)
 	local btn = new("TextButton", { Size = UDim2.new(0, 92, 0, 34), BackgroundColor3 = T.element, BackgroundTransparency = 1, Text = (icon and icon .. " " or "") .. name, TextColor3 = T.sub, Font = Enum.Font.GothamBold, TextSize = 12, AutoButtonColor = false, Parent = tabbar })
-	corner(btn, 9)
+	corner(btn)
 	local page = new("ScrollingFrame", { Size = UDim2.fromScale(1, 1), BackgroundTransparency = 1, BorderSizePixel = 0, ScrollBarThickness = 3, CanvasSize = UDim2.new(0, 0, 0, 0), AutomaticCanvasSize = Enum.AutomaticSize.Y, Visible = false, Parent = content })
 	new("UIListLayout", { Parent = page, Padding = UDim.new(0, 8), SortOrder = Enum.SortOrder.LayoutOrder })
 	new("UIPadding", { PaddingTop = UDim.new(0, 14), PaddingLeft = UDim.new(0, 16), PaddingRight = UDim.new(0, 16), PaddingBottom = UDim.new(0, 14), Parent = page })
@@ -180,7 +180,7 @@ end
 
 local function addButton(page, text, cb)
 	local b = new("TextButton", { Size = UDim2.new(1, 0, 0, 38), BackgroundColor3 = T.element, Text = "  " .. text, TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 13, TextXAlignment = Enum.TextXAlignment.Left, AutoButtonColor = false, Parent = page })
-	corner(b, 10)
+	corner(b)
 	b.MouseEnter:Connect(function() hoverSnd(); TS:Create(b, TweenInfo.new(0.15, Enum.EasingStyle.Quint), { BackgroundColor3 = T.hover }):Play() end)
 	b.MouseLeave:Connect(function() TS:Create(b, TweenInfo.new(0.15), { BackgroundColor3 = T.element }):Play() end)
 	b.MouseButton1Click:Connect(function()
@@ -195,14 +195,14 @@ end
 
 local function addToggle(page, text, def, cb)
 	local row = new("Frame", { Size = UDim2.new(1, 0, 0, 38), BackgroundColor3 = T.element, Parent = page })
-	corner(row, 10)
+	corner(row)
 	new("TextLabel", { Size = UDim2.new(1, -80, 1, 0), Position = UDim2.fromOffset(14, 0), BackgroundTransparency = 1, Text = text, TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 13, TextXAlignment = Enum.TextXAlignment.Left, Parent = row })
 	local track = new("Frame", { Size = UDim2.fromOffset(44, 22), Position = UDim2.new(1, -58, 0.5, -11), BackgroundColor3 = T.off, BorderSizePixel = 0, Parent = row })
-	corner(track, 11)
+	corner(track)
 	local fillg = grad(track, T.accent1, T.accent2, 20)
 	fillg.Enabled = false
 	local knob = new("Frame", { Size = UDim2.fromOffset(18, 18), Position = UDim2.fromOffset(2, 2), BackgroundColor3 = Color3.fromRGB(255, 255, 255), BorderSizePixel = 0, Parent = track })
-	corner(knob, 9)
+	corner(knob)
 	local on = def or false
 	local function paint(anim)
 		local gp = on and UDim2.fromOffset(24, 2) or UDim2.fromOffset(2, 2)
@@ -230,16 +230,16 @@ end
 local function addSlider(page, text, mn, mx, def, cb, dec)
 	dec = dec or 0
 	local row = new("Frame", { Size = UDim2.new(1, 0, 0, 52), BackgroundColor3 = T.element, Parent = page })
-	corner(row, 10)
+	corner(row)
 	new("TextLabel", { Size = UDim2.new(1, -100, 0, 22), Position = UDim2.fromOffset(14, 6), BackgroundTransparency = 1, Text = text, TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 13, TextXAlignment = Enum.TextXAlignment.Left, Parent = row })
 	local vlab = new("TextLabel", { Size = UDim2.fromOffset(80, 22), Position = UDim2.new(1, -94, 0, 6), BackgroundTransparency = 1, Text = tostring(def), TextColor3 = T.accent1, Font = Enum.Font.GothamBold, TextSize = 13, TextXAlignment = Enum.TextXAlignment.Right, Parent = row })
 	local track = new("TextButton", { Size = UDim2.new(1, -28, 0, 8), Position = UDim2.new(0, 14, 0, 36), BackgroundColor3 = T.off, Text = "", AutoButtonColor = false, Parent = row })
-	corner(track, 4)
+	corner(track)
 	local fill = new("Frame", { Size = UDim2.new(0, 0, 1, 0), BorderSizePixel = 0, Active = false, Parent = track })
-	corner(fill, 4)
+	corner(fill)
 	grad(fill, T.accent1, T.accent2, 0)
 	local dot = new("Frame", { Size = UDim2.fromOffset(16, 16), AnchorPoint = Vector2.new(0.5, 0.5), Position = UDim2.new(0, 0, 0.5, 0), BackgroundColor3 = Color3.fromRGB(255, 255, 255), BorderSizePixel = 0, Active = false, Parent = track })
-	corner(dot, 8)
+	corner(dot)
 	stroke(dot, T.accent1, 1, 0.2)
 	local val = def
 	local function upd()
@@ -266,7 +266,7 @@ end
 local function addDropdown(page, text, options, def, cb)
 	local IH = 30
 	local row = new("Frame", { Size = UDim2.new(1, 0, 0, 38), BackgroundColor3 = T.element, Parent = page })
-	corner(row, 10)
+	corner(row)
 	local head = new("TextButton", { Size = UDim2.new(1, 0, 0, 38), BackgroundColor3 = Color3.fromRGB(255, 255, 255), BackgroundTransparency = 1, Text = "", Parent = row })
 	new("TextLabel", { Size = UDim2.new(1, -170, 0, 38), Position = UDim2.fromOffset(14, 0), BackgroundTransparency = 1, Text = text, TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 13, TextXAlignment = Enum.TextXAlignment.Left, Parent = head })
 	local cur = new("TextLabel", { Size = UDim2.fromOffset(120, 38), Position = UDim2.new(1, -160, 0, 0), BackgroundTransparency = 1, Text = def or (options[1] or "-"), TextColor3 = T.accent1, Font = Enum.Font.GothamBold, TextSize = 13, TextXAlignment = Enum.TextXAlignment.Right, Parent = head })
@@ -275,7 +275,7 @@ local function addDropdown(page, text, options, def, cb)
 	local opts = {}
 	for i, opt in ipairs(options) do
 		local ob = new("TextButton", { Size = UDim2.new(1, -24, 0, IH - 2), Position = UDim2.fromOffset(12, 38 + (i - 1) * IH), BackgroundColor3 = T.panel, Text = "  " .. opt, TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, Visible = false, AutoButtonColor = false, Parent = row })
-		corner(ob, 6)
+		corner(ob)
 		opts[i] = ob
 		ob.MouseEnter:Connect(function() hoverSnd(); ob.BackgroundColor3 = T.hover end)
 		ob.MouseLeave:Connect(function() ob.BackgroundColor3 = T.panel end)
@@ -298,7 +298,7 @@ end
 
 local function addBox(page, placeholder, cb)
 	local box = new("TextBox", { Size = UDim2.new(1, 0, 0, 38), BackgroundColor3 = T.element, PlaceholderText = placeholder, PlaceholderColor3 = T.sub, Text = "", TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 13, ClearTextOnFocus = false, Parent = page })
-	corner(box, 10)
+	corner(box)
 	new("UIPadding", { PaddingLeft = UDim.new(0, 12), Parent = box })
 	box.FocusLost:Connect(function(enter) if enter then clickSnd(); pcall(cb, box.Text) end end)
 	return box
@@ -313,11 +313,16 @@ local S = {
 	speed = 16, jump = 50, menuKey = Enum.KeyCode.RightControl,
 	fly = false, flySpeed = 60, noclip = false, infJump = false, antiAfk = false,
 	fullbright = false, clockLock = false, clock = 14,
-	espNames = false, espHighlight = false, espRole = true,
+	fog = false, fogEnd = 350, fogColor = Color3.fromRGB(255, 255, 255),
+	haze = false, hazeVal = 0.3,
+	beauty = false, sat = 0.15, bloomI = 0.9, sunraysOn = true, dofOn = false,
+	rainbow = false, trail = false, fire = false, godMode = false, autoRespawn = false, freeze = false,
+	espNames = false, espHighlight = false, espRole = true, xray = false, rainbowEsp = false,
 	aimbot = false, aimAlways = false, aimKey = Enum.KeyCode.E, aimFov = 150, aimPart = "Head", aimSmooth = 0.5,
 	trigger = false, triggerKey = Enum.KeyCode.Q, hitbox = false, hitboxSize = 6,
+	autoClick = false, autoClickDelay = 0.1,
 	fov = 70, thirdPerson = false, camMin = 0.5, camMax = 12,
-	clickTp = false, hud = true, watermark = true, crosshair = false,
+	clickTp = false, hud = true, watermark = true, crosshair = false, hudExtra = true,
 }
 
 local DrawingLib = Drawing
@@ -394,40 +399,73 @@ local function ensureEffects()
 	if not sunrays then sunrays = new("SunRaysEffect", { Parent = Lighting }) end
 end
 
+local SKY_FACES = { "SkyboxBk", "SkyboxDn", "SkyboxFt", "SkyboxLf", "SkyboxRt", "SkyboxUp" }
+local SKY_SETS = {
+	["Космос"] = { 159454299, 159454296, 159454293, 159454286, 159454300, 159454288 },
+	["Галактика"] = { 159454299, 159454299, 159454299, 159454299, 159454299, 159454299 },
+}
+
+local function getSky()
+	local sky = Lighting:FindFirstChildOfClass("Sky")
+	if not sky then sky = new("Sky", { Parent = Lighting }) end
+	return sky
+end
+
+local function applySkySet(set)
+	local sky = getSky()
+	sky.SkyboxOrientation = Vector3.new(0, 0, 0)
+	for i = 1, 6 do
+		local id = set[i]
+		pcall(function() sky[SKY_FACES[i]] = "rbxassetid://" .. tostring(id) end)
+	end
+	return sky
+end
+
+local function clearSky()
+	local sky = Lighting:FindFirstChildOfClass("Sky")
+	if sky then sky:Destroy() end
+end
+
 local function setMood(mode)
 	ensureEffects()
+	atmosphere.Density = 0; atmosphere.Haze = 0; atmosphere.Glare = 0
+	Lighting.FogStart = 0; Lighting.FogEnd = 100000
 	if mode == "День" then
-		Lighting.ClockTime = 14; Lighting.Brightness = 2
+		clearSky()
+		Lighting.ClockTime = 14; Lighting.Brightness = 2.2
 		Lighting.Ambient = Color3.fromRGB(140, 140, 140); Lighting.OutdoorAmbient = Color3.fromRGB(150, 150, 150)
-		Lighting.FogEnd = 100000; atmosphere.Density = 0; atmosphere.Haze = 0
 		colorCorr.TintColor = Color3.fromRGB(255, 255, 255); colorCorr.Saturation = 0
 	elseif mode == "Закат" then
-		Lighting.ClockTime = 17.4; Lighting.Brightness = 1.7
-		Lighting.Ambient = Color3.fromRGB(140, 105, 95); Lighting.OutdoorAmbient = Color3.fromRGB(200, 130, 95)
-		Lighting.FogColor = Color3.fromRGB(255, 170, 120); Lighting.FogStart = 0; Lighting.FogEnd = 800
-		atmosphere.Color = Color3.fromRGB(255, 190, 150); atmosphere.Density = 0.3
-		colorCorr.TintColor = Color3.fromRGB(255, 225, 200); colorCorr.Saturation = 0.1
+		clearSky()
+		Lighting.ClockTime = 17.4; Lighting.Brightness = 1.8
+		Lighting.Ambient = Color3.fromRGB(150, 110, 95); Lighting.OutdoorAmbient = Color3.fromRGB(210, 130, 95)
+		Lighting.FogColor = Color3.fromRGB(255, 170, 120); Lighting.FogEnd = 900
+		atmosphere.Color = Color3.fromRGB(255, 190, 150); atmosphere.Density = 0.28
+		colorCorr.TintColor = Color3.fromRGB(255, 225, 200); colorCorr.Saturation = 0.12
 	elseif mode == "Ночь" then
-		Lighting.ClockTime = 0; Lighting.Brightness = 0.7
-		Lighting.Ambient = Color3.fromRGB(45, 50, 80); Lighting.OutdoorAmbient = Color3.fromRGB(35, 40, 70)
-		Lighting.FogEnd = 100000; atmosphere.Density = 0; atmosphere.Haze = 0
+		clearSky()
+		Lighting.ClockTime = 0; Lighting.Brightness = 0.8
+		Lighting.Ambient = Color3.fromRGB(55, 60, 95); Lighting.OutdoorAmbient = Color3.fromRGB(40, 45, 80)
 		colorCorr.TintColor = Color3.fromRGB(200, 210, 255); colorCorr.Saturation = 0
 	elseif mode == "Космос" then
-		Lighting.ClockTime = 0; Lighting.Brightness = 0.15
-		Lighting.Ambient = Color3.fromRGB(20, 20, 45); Lighting.OutdoorAmbient = Color3.fromRGB(15, 15, 40)
-		Lighting.FogEnd = 100000; atmosphere.Density = 0; atmosphere.Haze = 0
-		colorCorr.TintColor = Color3.fromRGB(180, 190, 255); colorCorr.Saturation = 0.1
-		local sky = Lighting:FindFirstChildOfClass("Sky")
-		if sky then
-			sky.CelestialBodiesShown = true
-			sky.StarCount = 5000
-			sky.SkyboxOrientation = Vector3.new(0, 0, 0)
-		end
+		local sky = applySkySet(SKY_SETS["Космос"])
+		sky.StarCount = 0; sky.CelestialBodiesShown = false
+		Lighting.ClockTime = 0; Lighting.Brightness = 0.4
+		Lighting.Ambient = Color3.fromRGB(40, 40, 70); Lighting.OutdoorAmbient = Color3.fromRGB(30, 30, 60)
+		colorCorr.TintColor = Color3.fromRGB(190, 200, 255); colorCorr.Saturation = 0.2
+		Lighting.ExposureCompensation = 0.2
+	elseif mode == "Галактика" then
+		local sky = applySkySet(SKY_SETS["Галактика"])
+		sky.StarCount = 0; sky.CelestialBodiesShown = false
+		Lighting.ClockTime = 0; Lighting.Brightness = 0.5
+		Lighting.Ambient = Color3.fromRGB(50, 45, 85); Lighting.OutdoorAmbient = Color3.fromRGB(45, 40, 90)
+		colorCorr.TintColor = Color3.fromRGB(210, 190, 255); colorCorr.Saturation = 0.25
 	elseif mode == "Неон" then
+		clearSky()
 		Lighting.ClockTime = 2; Lighting.Brightness = 2.2
 		Lighting.Ambient = Color3.fromRGB(60, 40, 90); Lighting.OutdoorAmbient = Color3.fromRGB(50, 30, 80)
-		Lighting.FogColor = Color3.fromRGB(120, 60, 200); Lighting.FogStart = 0; Lighting.FogEnd = 400
-		atmosphere.Color = Color3.fromRGB(150, 80, 255); atmosphere.Density = 0.4
+		Lighting.FogColor = Color3.fromRGB(120, 60, 200); Lighting.FogEnd = 450
+		atmosphere.Color = Color3.fromRGB(150, 80, 255); atmosphere.Density = 0.35
 		colorCorr.TintColor = Color3.fromRGB(200, 150, 255); colorCorr.Saturation = 0.4
 	end
 	notify("Небо", mode, 2)
@@ -458,6 +496,27 @@ addToggle(mov, "Noclip (сквозь стены)", false, function(on) S.noclip 
 addToggle(mov, "Anti-AFK", false, function(on) S.antiAfk = on end)
 addToggle(mov, "Click TP (лкм)", false, function(on) S.clickTp = on; notify("Click TP", on and "вкл" or "выкл", 2) end)
 addButton(mov, "Reset персонажа", function() local h = getHum(); if h then h.Health = 0 end end)
+addDivider(mov)
+addSection(mov, "Телепорт")
+addBox(mov, "X (число) + Enter", function(t) S.tpX = tonumber(t) end)
+addBox(mov, "Y (число) + Enter", function(t) S.tpY = tonumber(t) end)
+addBox(mov, "Z (число) + Enter", function(t) S.tpZ = tonumber(t) end)
+addButton(mov, "📍 Телепорт по координатам", function()
+	local hrp = getHRP()
+	if hrp and S.tpX and S.tpY and S.tpZ then hrp.CFrame = CFrame.new(S.tpX, S.tpY, S.tpZ); notify("Телепорт", "готово", 2)
+	else notify("Телепорт", "введи X, Y и Z", 3) end
+end)
+addButton(mov, "⬆ Вверх на 50", function() local hrp = getHRP(); if hrp then hrp.CFrame = hrp.CFrame + Vector3.new(0, 50, 0) end end)
+addButton(mov, "⬇ Вниз на 50", function() local hrp = getHRP(); if hrp then hrp.CFrame = hrp.CFrame - Vector3.new(0, 50, 0) end end)
+addDivider(mov)
+addSection(mov, "Дополнительно")
+addToggle(mov, "❄ Заморозить себя", false, function(on) S.freeze = on; local hrp = getHRP(); if hrp then hrp.Anchored = on end end)
+addToggle(mov, "♻ Авто-респавн", false, function(on) S.autoRespawn = on; Players.RespawnTime = on and 0 or 5 end)
+addToggle(mov, "🛡 God Mode (клиент)", false, function(on)
+	S.godMode = on
+	local h = getHum()
+	if h and on then h.MaxHealth = 9e9; h.Health = 9e9 end
+end)
 
 local vis = addTab("Мир", "◍")
 addSection(vis, "Небо")
@@ -465,7 +524,9 @@ addButton(vis, "☀ День", function() setMood("День") end)
 addButton(vis, "🌅 Закат", function() setMood("Закат") end)
 addButton(vis, "🌙 Ночь", function() setMood("Ночь") end)
 addButton(vis, "🌌 Космос", function() setMood("Космос") end)
+addButton(vis, "🪐 Галактика", function() setMood("Галактика") end)
 addButton(vis, "🟣 Неон", function() setMood("Неон") end)
+addButton(vis, "↩ Сбросить небо", function() clearSky(); notify("Небо", "сброшено", 2) end)
 addBox(vis, "Skybox ID (текстура на все стороны) + Enter", function(id)
 	if id ~= "" then
 		local url = "rbxassetid://" .. id:gsub("%D", "")
@@ -480,14 +541,18 @@ end)
 addDivider(vis)
 addSection(vis, "Туман")
 addToggle(vis, "Туман вкл/выкл", false, function(on)
-	Lighting.FogEnd = on and 500 or 100000
+	S.fog = on
+	if not on then Lighting.FogStart = 0; Lighting.FogEnd = 100000 end
 	notify("Туман", on and "включён" or "выключен", 2)
 end)
-addSlider(vis, "Плотность (FogEnd)", 0, 5000, 500, function(v) Lighting.FogEnd = v end)
-addButton(vis, "Туман: белый", function() Lighting.FogColor = Color3.fromRGB(255, 255, 255) end)
-addButton(vis, "Туман: синий", function() Lighting.FogColor = Color3.fromRGB(90, 130, 220) end)
-addButton(vis, "Туман: фиолетовый", function() Lighting.FogColor = Color3.fromRGB(150, 80, 220) end)
-addButton(vis, "Туман: зелёный", function() Lighting.FogColor = Color3.fromRGB(70, 200, 120) end)
+addSlider(vis, "Плотность (меньше = гуще)", 20, 5000, 350, function(v) S.fogEnd = v end)
+addButton(vis, "Туман: белый", function() S.fogColor = Color3.fromRGB(255, 255, 255) end)
+addButton(vis, "Туман: синий", function() S.fogColor = Color3.fromRGB(90, 130, 220) end)
+addButton(vis, "Туман: фиолетовый", function() S.fogColor = Color3.fromRGB(150, 80, 220) end)
+addButton(vis, "Туман: зелёный", function() S.fogColor = Color3.fromRGB(70, 200, 120) end)
+addButton(vis, "Туман: чёрный", function() S.fogColor = Color3.fromRGB(0, 0, 0) end)
+addToggle(vis, "Дымка (атмосфера)", false, function(on) S.haze = on end)
+addSlider(vis, "Плотность дымки", 0, 1, 0.3, function(v) S.hazeVal = v end, 2)
 addDivider(vis)
 addSection(vis, "Освещение")
 addToggle(vis, "Fullbright", false, function(on)
@@ -535,6 +600,70 @@ addButton(me, "🔴 Красный", function() local c = getChar(); if c then f
 addButton(me, "🔵 Синий", function() local c = getChar(); if c then for _, d in ipairs(c:GetDescendants()) do if d:IsA("BasePart") then d.Color = Color3.fromRGB(60, 120, 255) end end end end)
 addButton(me, "🟢 Зелёный", function() local c = getChar(); if c then for _, d in ipairs(c:GetDescendants()) do if d:IsA("BasePart") then d.Color = Color3.fromRGB(70, 220, 120) end end end end)
 addButton(me, "⚪ Белый", function() local c = getChar(); if c then for _, d in ipairs(c:GetDescendants()) do if d:IsA("BasePart") then d.Color = Color3.fromRGB(240, 240, 245) end end end end)
+addDivider(me)
+addSection(me, "Размер и вид")
+addButton(me, "🐜 Крошка", function()
+	local c = getChar(); local h = c and c:FindFirstChildOfClass("Humanoid")
+	if h then h.BodyWidthScale = 0.4; h.BodyHeightScale = 0.4; h.BodyDepthScale = 0.4; h.HeadScale = 0.6 end
+end)
+addButton(me, "🦖 Гигант", function()
+	local c = getChar(); local h = c and c:FindFirstChildOfClass("Humanoid")
+	if h then h.BodyWidthScale = 2.5; h.BodyHeightScale = 2.5; h.BodyDepthScale = 2.5; h.HeadScale = 2 end
+end)
+addButton(me, "↩ Обычный размер", function()
+	local c = getChar(); local h = c and c:FindFirstChildOfClass("Humanoid")
+	if h then h.BodyWidthScale = 1; h.BodyHeightScale = 1; h.BodyDepthScale = 1; h.HeadScale = 1 end
+end)
+addButton(me, "🧹 Убрать все аксессуары", function()
+	local c = getChar()
+	if c then for _, d in ipairs(c:GetDescendants()) do if d:IsA("Accessory") or d:IsA("Accoutrement") or d:IsA("Hat") then d:Destroy() end end end
+	notify("Персонаж", "аксессуары убраны", 2)
+end)
+addButton(me, "👯 Копировать внешность ближайшего", function()
+	local best, bd
+	local myhrp = getHRP()
+	for _, p in ipairs(Players:GetPlayers()) do
+		if p ~= LP and p.Character then
+			local phrp = p.Character:FindFirstChild("HumanoidRootPart")
+			if myhrp and phrp then
+				local d = (myhrp.Position - phrp.Position).Magnitude
+				if not bd or d < bd then bd = d; best = p end
+			end
+		end
+	end
+	local c = getChar(); local h = c and c:FindFirstChildOfClass("Humanoid")
+	if best and best.Character and h and c then
+		local bh = best.Character:FindFirstChildOfClass("Humanoid")
+		if bh then
+			h.BodyWidthScale = bh.BodyWidthScale; h.BodyHeightScale = bh.BodyHeightScale
+			h.BodyDepthScale = bh.BodyDepthScale; h.HeadScale = bh.HeadScale
+		end
+		for _, d in ipairs(best.Character:GetDescendants()) do
+			if d:IsA("Accessory") or d:IsA("Accoutrement") then
+				local cl = d:Clone(); cl.Parent = c
+				local ap = cl:FindFirstChildWhichIsA("BasePart")
+				local head = c:FindFirstChild("Head")
+				if ap and head then
+					local w = new("WeldConstraint", { Parent = ap }); w.Part0 = head; w.Part1 = ap; ap.CFrame = head.CFrame
+				end
+			end
+		end
+		notify("Персонаж", "скопировано с " .. best.Name, 2)
+	else
+		notify("Персонаж", "игроки рядом не найдены", 3)
+	end
+end)
+addButton(me, "💃 Танец", function()
+	local c = getChar(); local h = c and c:FindFirstChildOfClass("Humanoid")
+	if h then
+		local a = new("Animation", { AnimationId = "rbxassetid://507771019", Parent = h })
+		local t = h:FindFirstChildOfClass("Animator"); if not t then t = new("Animator", { Parent = h }) end
+		pcall(function() t:LoadAnimation(a):Play() end)
+	end
+end)
+addToggle(me, "🌈 Радужный персонаж", false, function(on) S.rainbow = on end)
+addToggle(me, "✨ Шлейф частиц", false, function(on) S.trail = on end)
+addToggle(me, "🔥 Огонь на персонаже", false, function(on) S.fire = on end)
 addDivider(me)
 addSection(me, "Шляпа / аксессуар")
 addToggle(me, "🎩 Копировать шапки с игрока", false, function(on)
@@ -588,6 +717,10 @@ addToggle(cmb, "Расширить хитбоксы", false, function(on)
 	if not on then for _, p in ipairs(Players:GetPlayers()) do local hrp = hrpOf(p); if hrp then hrp.Size = Vector3.new(2, 2, 1) end end end
 end)
 addSlider(cmb, "Размер хитбокса", 2, 15, 6, function(v) S.hitboxSize = v end)
+addDivider(cmb)
+addSection(cmb, "Авто-кликер")
+addToggle(cmb, "Авто-клик (левая кнопка)", false, function(on) S.autoClick = on end)
+addSlider(cmb, "Задержка (сек)", 0.01, 1, 0.1, function(v) S.autoClickDelay = v end, 2)
 
 local vis2 = addTab("Визуал", "◎")
 addSection(vis2, "Подсветка игроков")
@@ -607,6 +740,24 @@ addSection(vis2, "HUD")
 addToggle(vis2, "Watermark", true, function(on) S.watermark = on end)
 addToggle(vis2, "HUD (FPS/ping/коорд.)", true, function(on) S.hud = on end)
 addToggle(vis2, "Прицел (crosshair)", false, function(on) S.crosshair = on end)
+addDivider(vis2)
+addSection(vis2, "Мир и HUD")
+addToggle(vis2, "🌈 Радужный ESP", false, function(on) S.rainbowEsp = on end)
+addToggle(vis2, "X-Ray (прозрачные стены)", false, function(on)
+	S.xray = on
+	if not on then
+		pcall(function()
+			for _, d in ipairs(workspace:GetDescendants()) do
+				if d:IsA("BasePart") then
+					local o = d:GetAttribute("KitiOrigT")
+					if o ~= nil then d.Transparency = o; d:SetAttribute("KitiOrigT", nil) end
+				end
+			end
+		end)
+	end
+	notify("X-Ray", on and "включён" or "выключен", 2)
+end)
+addToggle(vis2, "HUD: время и игроки", true, function(on) S.hudExtra = on end)
 
 local perf = addTab("Бусты", "⚡")
 addSection(perf, "Производительность")
@@ -622,21 +773,30 @@ addButton(perf, "⚡ Boost FPS (убрать тени/эффекты)", function
 	if c then for _, d in ipairs(c:GetDescendants()) do if d:IsA("BasePart") then d.CastShadow = false end end end
 	notify("FPS", "оптимизация включена", 3)
 end)
-addButton(perf, "✨ Boost Красоты (bloom/атмосфера)", function()
-	ensureEffects()
-	atmosphere.Density = 0.3; atmosphere.Haze = 1.5; atmosphere.Glare = 0.2; atmosphere.Color = Color3.fromRGB(200, 210, 255)
-	colorCorr.Saturation = 0.15; colorCorr.Contrast = 0.1
-	bloom.Intensity = 0.8; bloom.Size = 24; bloom.Threshold = 0.95
-	dof.FarIntensity = 0.1; dof.FocusDistance = 40; dof.InFocusRadius = 30; dof.NearIntensity = 0.1
-	sunrays.Intensity = 0.08; sunrays.Spread = 1
-	Lighting.EnvironmentDiffuseScale = 0.5; Lighting.EnvironmentSpecularScale = 0.5
-	notify("Красота", "эффекты включены", 3)
+addDivider(perf)
+addSection(perf, "Красота (кинематограф)")
+addToggle(perf, "✨ Boost красоты", false, function(on)
+	S.beauty = on
+	if not on then
+		pcall(function()
+			local a = Lighting:FindFirstChildOfClass("Atmosphere"); if a then a.Density = 0 end
+			local b = Lighting:FindFirstChildOfClass("BloomEffect"); if b then b.Intensity = 0 end
+			local dd = Lighting:FindFirstChildOfClass("DepthOfFieldEffect"); if dd then dd.FarIntensity = 0; dd.NearIntensity = 0 end
+			local s = Lighting:FindFirstChildOfClass("SunRaysEffect"); if s then s.Intensity = 0 end
+		end)
+	end
+	notify("Красота", on and "включена" or "выключена", 2)
 end)
+addSlider(perf, "Насыщенность", 0, 1, 0.15, function(v) S.sat = v end, 2)
+addSlider(perf, "Свечение (bloom)", 0, 3, 0.9, function(v) S.bloomI = v end, 2)
+addToggle(perf, "Лучи солнца", true, function(on) S.sunraysOn = on end)
+addToggle(perf, "Глубина резкости (DOF)", false, function(on) S.dofOn = on end)
 addButton(perf, "↩ Сбросить эффекты", function()
 	for _, v in ipairs(Lighting:GetChildren()) do
 		if v:IsA("Atmosphere") or v:IsA("BloomEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("DepthOfFieldEffect") or v:IsA("SunRaysEffect") then v:Destroy() end
 	end
 	atmosphere, colorCorr, bloom, dof, sunrays = nil, nil, nil, nil, nil
+	Lighting.EnvironmentDiffuseScale = 1; Lighting.EnvironmentSpecularScale = 1; Lighting.ExposureCompensation = 0
 	notify("Эффекты", "сброшены", 2)
 end)
 
@@ -651,7 +811,7 @@ local overLbl = new("TextLabel", { Size = UDim2.fromScale(1, 1), BackgroundTrans
 
 local tank = { x = 280, y = 210, r = 13, cd = 0 }
 local tankBody = new("Frame", { Size = UDim2.fromOffset(26, 26), AnchorPoint = Vector2.new(0.5, 0.5), BackgroundColor3 = Color3.fromRGB(90, 200, 255), BorderSizePixel = 0, ZIndex = 10, Parent = field })
-corner(tankBody, 6)
+corner(tankBody)
 local tankBarrel = new("Frame", { Size = UDim2.fromOffset(4, 16), AnchorPoint = Vector2.new(0.5, 1), Position = UDim2.new(0.5, 0, 0, 0), BackgroundColor3 = Color3.fromRGB(200, 240, 255), BorderSizePixel = 0, ZIndex = 11, Parent = tankBody })
 
 local enemies = {}
@@ -690,7 +850,7 @@ local function startTanks()
 			if UIS:IsKeyDown(Enum.KeyCode.Space) and tank.cd <= 0 then
 				tank.cd = 0.22
 				local b = new("Frame", { Size = UDim2.fromOffset(6, 6), AnchorPoint = Vector2.new(0.5, 0.5), BackgroundColor3 = Color3.fromRGB(160, 230, 255), BorderSizePixel = 0, ZIndex = 9, Parent = field })
-				corner(b, 3)
+				corner(b)
 				table.insert(bullets, { f = b, x = tank.x, y = tank.y - 16, dx = 0, dy = -420, friendly = true })
 			end
 			tankBody.Position = UDim2.fromOffset(tank.x, tank.y)
@@ -704,7 +864,7 @@ local function startTanks()
 				elseif side == 2 then ex = 540; ey = math.random(20, 230)
 				else ex = math.random(20, 540); ey = 20 end
 				local f = new("Frame", { Size = UDim2.fromOffset(24, 24), AnchorPoint = Vector2.new(0.5, 0.5), BackgroundColor3 = Color3.fromRGB(255, 90, 90), BorderSizePixel = 0, ZIndex = 10, Parent = field })
-				corner(f, 6)
+				corner(f)
 				table.insert(enemies, { f = f, x = ex, y = ey, cd = math.random(10, 20) / 10 })
 			end
 
@@ -725,7 +885,7 @@ local function startTanks()
 					local bd = math.sqrt(bx * bx + by * by)
 					if bd > 1 then
 						local b = new("Frame", { Size = UDim2.fromOffset(6, 6), AnchorPoint = Vector2.new(0.5, 0.5), BackgroundColor3 = Color3.fromRGB(255, 200, 90), BorderSizePixel = 0, ZIndex = 9, Parent = field })
-						corner(b, 3)
+						corner(b)
 						table.insert(bullets, { f = b, x = e.x, y = e.y, dx = bx / bd * 260, dy = by / bd * 260, friendly = false })
 					end
 				end
@@ -814,13 +974,13 @@ local function openGames()
 	local gtop = new("Frame", { Size = UDim2.new(1, 0, 0, 46), BackgroundColor3 = T.card, BorderSizePixel = 0, ZIndex = 61, Parent = gamesWin })
 	new("TextLabel", { Size = UDim2.new(1, -60, 1, 0), Position = UDim2.fromOffset(16, 0), BackgroundTransparency = 1, Text = "🌐 Игры — телепорт", TextColor3 = T.text, Font = Enum.Font.GothamBlack, TextSize = 16, TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 62, Parent = gtop })
 	local gclose = new("TextButton", { Size = UDim2.fromOffset(30, 30), Position = UDim2.new(1, -40, 0.5, -15), BackgroundColor3 = T.element, Text = "×", TextColor3 = T.text, Font = Enum.Font.GothamBold, TextSize = 16, AutoButtonColor = false, ZIndex = 62, Parent = gtop })
-	corner(gclose, 9)
+	corner(gclose)
 	gclose.MouseButton1Click:Connect(function() clickSnd(); gamesWin.Visible = false end)
 	local gscroll = new("ScrollingFrame", { Size = UDim2.new(1, -20, 1, -58), Position = UDim2.fromOffset(10, 52), BackgroundTransparency = 1, BorderSizePixel = 0, ScrollBarThickness = 3, CanvasSize = UDim2.new(0, 0, 0, 0), AutomaticCanvasSize = Enum.AutomaticSize.Y, ZIndex = 62, Parent = gamesWin })
 	new("UIListLayout", { Parent = gscroll, Padding = UDim.new(0, 6), SortOrder = Enum.SortOrder.LayoutOrder })
 	for _, g in ipairs(GAMES) do
 		local b = new("TextButton", { Size = UDim2.new(1, -8, 0, 40), BackgroundColor3 = T.element, Text = "  🎮  " .. g[1], TextColor3 = T.text, Font = Enum.Font.GothamBold, TextSize = 13, TextXAlignment = Enum.TextXAlignment.Left, AutoButtonColor = false, ZIndex = 62, Parent = gscroll })
-		corner(b, 10)
+		corner(b)
 		b.MouseEnter:Connect(function() hoverSnd(); TS:Create(b, TweenInfo.new(0.12), { BackgroundColor3 = T.hover }):Play() end)
 		b.MouseLeave:Connect(function() TS:Create(b, TweenInfo.new(0.12), { BackgroundColor3 = T.element }):Play() end)
 		b.MouseButton1Click:Connect(function() clickSnd(); teleportGame(g[2], g[1]) end)
@@ -854,6 +1014,33 @@ addDivider(srv)
 addSection(srv, "Свой скрипт")
 addBox(srv, "raw URL скрипта + Enter", function(url) if url ~= "" then task.spawn(function() local ok, err = pcall(function() loadstring(game:HttpGet(url))() end); if not ok then notify("Ошибка", tostring(err), 5) end end) end end)
 
+local util = addTab("Утилиты", "🛠")
+addSection(util, "Инфо")
+addButton(util, "👥 Кол-во игроков", function()
+	notify("Сервер", "онлайн: " .. #Players:GetPlayers() .. " / " .. Players.MaxPlayers, 4)
+end)
+addButton(util, "📏 Расстояние до ближайшего", function()
+	local myhrp = getHRP(); local best, bd
+	if myhrp then
+		for _, p in ipairs(Players:GetPlayers()) do
+			if p ~= LP then
+				local hrp = hrpOf(p)
+				if hrp then local d = (myhrp.Position - hrp.Position).Magnitude; if not bd or d < bd then bd = d; best = p end end
+			end
+		end
+	end
+	if best then notify("Ближайший", best.Name .. " — " .. math.floor(bd) .. " studs", 4) else notify("Ближайший", "не найдено", 3) end
+end)
+addButton(util, "📋 Скопировать мой ник", function() if setclipboard then setclipboard(LP.Name); notify("Буфер", "скопировано", 2) else notify("Буфер", "нет setclipboard", 3) end end)
+addButton(util, "📋 Скопировать позицию", function()
+	local hrp = getHRP()
+	if hrp and setclipboard then setclipboard(string.format("%.1f %.1f %.1f", hrp.Position.X, hrp.Position.Y, hrp.Position.Z)); notify("Буфер", "позиция скопирована", 2) end
+end)
+addDivider(util)
+addSection(util, "Разное")
+addBox(util, "raw URL + Enter — запустить", function(url) if url ~= "" then task.spawn(function() local ok, err = pcall(function() loadstring(game:HttpGet(url))() end); if not ok then notify("Ошибка", tostring(err), 5) end end) end end)
+addButton(util, "🔄 Переподключиться", function() TPS:Teleport(game.PlaceId, LP) end)
+
 local st = addTab("Настройки", "⚙")
 addSection(st, "Интерфейс")
 addToggle(st, "Звуки меню", true, function(on) cfg.sounds = on end)
@@ -880,11 +1067,11 @@ addToggle(st, "Свернуть в иконку", false, function(on)
 end)
 addDivider(st)
 addSection(st, "Инфо")
-new("TextLabel", { Size = UDim2.new(1, 0, 0, 70), BackgroundTransparency = 1, Text = "KITI · PROTO — tablet edition\nуниверсальный хаб · V3\nсделано по запросу", TextColor3 = T.sub, Font = Enum.Font.Gotham, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Top, Parent = st })
+new("TextLabel", { Size = UDim2.new(1, 0, 0, 70), BackgroundTransparency = 1, Text = "KITI · PROTO — tablet edition\nуниверсальный хаб · V4\nсделано по запросу", TextColor3 = T.sub, Font = Enum.Font.Gotham, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Top, Parent = st })
 
 local watermark = new("TextLabel", { Name = "WM", Parent = sg, BackgroundTransparency = 1, Size = UDim2.new(0, 320, 0, 22), Position = UDim2.fromOffset(14, 10), Text = "KITI · PROTO", TextColor3 = T.accent1, Font = Enum.Font.GothamBlack, TextSize = 16, TextXAlignment = Enum.TextXAlignment.Left, TextStrokeTransparency = 0.7, TextStrokeColor3 = Color3.fromRGB(255, 255, 255), ZIndex = 100 })
 
-local hud = new("Frame", { Name = "HUD", Parent = sg, BackgroundColor3 = T.card, BackgroundTransparency = 0.15, Size = UDim2.fromOffset(210, 88), Position = UDim2.new(0, 14, 0, 40), BorderSizePixel = 0, ZIndex = 90 })
+local hud = new("Frame", { Name = "HUD", Parent = sg, BackgroundColor3 = T.card, BackgroundTransparency = 0.15, Size = UDim2.fromOffset(210, 122), Position = UDim2.new(0, 14, 0, 40), BorderSizePixel = 0, ZIndex = 90 })
 corner(hud, 12)
 stroke(hud, T.accent1, 1.2, 0.5)
 new("UIListLayout", { Parent = hud, Padding = UDim.new(0, 3), SortOrder = Enum.SortOrder.LayoutOrder })
@@ -893,6 +1080,8 @@ new("TextLabel", { Size = UDim2.new(1, -14, 0, 16), BackgroundTransparency = 1, 
 local hudFps = new("TextLabel", { Size = UDim2.new(1, -14, 0, 15), BackgroundTransparency = 1, Text = "FPS: -", TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, Parent = hud })
 local hudPing = new("TextLabel", { Size = UDim2.new(1, -14, 0, 15), BackgroundTransparency = 1, Text = "Ping: -", TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, Parent = hud })
 local hudPos = new("TextLabel", { Size = UDim2.new(1, -14, 0, 15), BackgroundTransparency = 1, Text = "Pos: -", TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, Parent = hud })
+local hudTime = new("TextLabel", { Size = UDim2.new(1, -14, 0, 15), BackgroundTransparency = 1, Text = "Time: -", TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, Parent = hud })
+local hudPl = new("TextLabel", { Size = UDim2.new(1, -14, 0, 15), BackgroundTransparency = 1, Text = "Players: -", TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, Parent = hud })
 
 task.spawn(function()
 	local pname = "game " .. tostring(game.PlaceId)
@@ -911,6 +1100,13 @@ task.spawn(function()
 			hudPing.Text = "Ping: " .. ping .. " ms"
 			local hrp = getHRP()
 			if hrp then hudPos.Text = string.format("Pos: %d, %d, %d", hrp.Position.X, hrp.Position.Y, hrp.Position.Z) end
+			if S.hudExtra then
+				hudTime.Visible = true; hudPl.Visible = true
+				hudTime.Text = string.format("Time: %02d:%02d", math.floor(Lighting.ClockTime) % 24, math.floor((Lighting.ClockTime % 1) * 60))
+				hudPl.Text = "Players: " .. #Players:GetPlayers() .. " / " .. Players.MaxPlayers
+			else
+				hudTime.Visible = false; hudPl.Visible = false
+			end
 		end
 		frames = 0
 	end
@@ -920,6 +1116,92 @@ task.spawn(function()
 	while true do
 		task.wait(0.03)
 		pcall(function() shineGrad.Offset = Vector2.new((shineGrad.Offset.X + 0.01) % 3, 0) end)
+	end
+end)
+
+task.spawn(function()
+	while true do
+		task.wait(0.1)
+		pcall(function()
+			if S.fog then
+				Lighting.FogStart = 0; Lighting.FogEnd = S.fogEnd; Lighting.FogColor = S.fogColor
+			end
+			if S.beauty or S.haze then
+				ensureEffects()
+				atmosphere.Density = S.haze and S.hazeVal or 0.25
+				if S.beauty then
+					atmosphere.Color = Color3.fromRGB(200, 210, 255); atmosphere.Decay = Color3.fromRGB(120, 140, 200)
+					atmosphere.Haze = 1.2; atmosphere.Glare = 0.15
+					colorCorr.Saturation = S.sat; colorCorr.Contrast = 0.08
+					bloom.Intensity = S.bloomI; bloom.Size = 24; bloom.Threshold = 0.9
+					sunrays.Intensity = S.sunraysOn and 0.1 or 0; sunrays.Spread = 1
+					if S.dofOn then
+						dof.FarIntensity = 0.18; dof.FocusDistance = 40; dof.InFocusRadius = 25; dof.NearIntensity = 0.12
+					else dof.FarIntensity = 0; dof.NearIntensity = 0 end
+					Lighting.EnvironmentDiffuseScale = 0.4; Lighting.EnvironmentSpecularScale = 0.5
+				else
+					atmosphere.Color = S.fogColor
+				end
+			end
+			local c = getChar()
+			if S.rainbow and c then
+				local col = Color3.fromHSV(tick() % 1, 1, 1)
+				for _, d in ipairs(c:GetDescendants()) do if d:IsA("BasePart") then d.Color = col end end
+			end
+			if S.godMode then
+				local h = getHum()
+				if h then h.MaxHealth = 9e9; h.Health = 9e9 end
+			end
+			local hrp = getHRP()
+			if hrp then
+				if S.fire and not hrp:FindFirstChild("KitiFire") then
+					new("Fire", { Name = "KitiFire", Size = 8, Heat = 12, Color = Color3.fromRGB(255, 150, 40), SecondaryColor = Color3.fromRGB(255, 60, 20), Parent = hrp })
+				elseif not S.fire and hrp:FindFirstChild("KitiFire") then
+					hrp:FindFirstChild("KitiFire"):Destroy()
+				end
+				if S.trail and not hrp:FindFirstChild("KitiA0") then
+					local a0 = new("Attachment", { Name = "KitiA0", Position = Vector3.new(-0.6, 0, 0), Parent = hrp })
+					local a1 = new("Attachment", { Name = "KitiA1", Position = Vector3.new(0.6, 0, 0), Parent = hrp })
+					local tr = new("Trail", { Name = "KitiTrailFx", Attachment0 = a0, Attachment1 = a1, Lifetime = 0.45, LightEmission = 1, Parent = hrp })
+					tr.Color = ColorSequence.new(Color3.fromRGB(126, 108, 255), Color3.fromRGB(86, 198, 255))
+				elseif not S.trail and hrp:FindFirstChild("KitiTrailFx") then
+					hrp:FindFirstChild("KitiTrailFx"):Destroy()
+					local a0 = hrp:FindFirstChild("KitiA0"); if a0 then a0:Destroy() end
+					local a1 = hrp:FindFirstChild("KitiA1"); if a1 then a1:Destroy() end
+				end
+			end
+		end)
+	end
+end)
+
+task.spawn(function()
+	while true do
+		task.wait(2)
+		if S.xray then
+			pcall(function()
+				local mychar = LP.Character
+				for _, d in ipairs(workspace:GetDescendants()) do
+					if d:IsA("BasePart") and not (mychar and d:IsDescendantOf(mychar)) then
+						if d:GetAttribute("KitiOrigT") == nil then d:SetAttribute("KitiOrigT", d.Transparency) end
+						d.Transparency = 0.65
+					end
+				end
+			end)
+		end
+	end
+end)
+
+task.spawn(function()
+	while true do
+		if S.autoClick then
+			pcall(function()
+				if mouse1click then mouse1click()
+				else VU:Button1Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame); task.wait(0.02); VU:Button1Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame) end
+			end)
+			task.wait(S.autoClickDelay)
+		else
+			task.wait(0.1)
+		end
 	end
 end)
 
@@ -1007,7 +1289,7 @@ RS.RenderStepped:Connect(function(dt)
 				local hrp = c and c:FindFirstChild("HumanoidRootPart")
 				local hum2 = c and c:FindFirstChildOfClass("Humanoid")
 				if p ~= LP and head and hrp and hum2 and hum2.Health > 0 then
-					local col = roleColor(p)
+					local col = S.rainbowEsp and Color3.fromHSV(tick() % 1, 1, 1) or roleColor(p)
 					if S.espNames then
 						local tag = head:FindFirstChild("KitiName")
 						if not tag then
@@ -1123,8 +1405,8 @@ topBtn("–", -76, function()
 end)
 topBtn("×", -42, function()
 	sg:Destroy()
-	print("[KITI-PROTO] V3 closed")
+	print("[KITI-PROTO] V4 closed")
 end)
 
 notify("KITI · PROTO", "tablet edition загружен. Меню: " .. S.menuKey.Name, 5)
-print("[KITI-PROTO] V3 loaded")
+print("[KITI-PROTO] V4 loaded")
