@@ -1,23 +1,44 @@
-local Players = game:GetService("Players")
-local UIS = game:GetService("UserInputService")
-local RS = game:GetService("RunService")
-local TS = game:GetService("TweenService")
-local Lighting = game:GetService("Lighting")
-local SoundService = game:GetService("SoundService")
-local VU = game:GetService("VirtualUser")
-local TPS = game:GetService("TeleportService")
-local HS = game:GetService("HttpService")
-local Stats = game:GetService("Stats")
-local MPS = game:GetService("MarketplaceService")
-local InsertService = game:GetService("InsertService")
-local LP = Players.LocalPlayer
-local Cam = workspace.CurrentCamera
-local PGUI = LP:WaitForChild("PlayerGui")
+local Players, UIS, RS, TS, Lighting, SoundService, VU, TPS, HS, Stats, MPS, InsertService
+local LP, Cam, PGUI
+
+local function safe(pcallFn, name)
+	local ok, err = pcall(pcallFn)
+	if not ok then
+		warn("[KITI] " .. (name or "error") .. ": " .. tostring(err))
+	end
+	return ok, err
+end
+
+safe(function()
+	Players = game:GetService("Players")
+	UIS = game:GetService("UserInputService")
+	RS = game:GetService("RunService")
+	TS = game:GetService("TweenService")
+	Lighting = game:GetService("Lighting")
+	SoundService = game:GetService("SoundService")
+	VU = game:GetService("VirtualUser")
+	TPS = game:GetService("TeleportService")
+	HS = game:GetService("HttpService")
+	Stats = game:GetService("Stats")
+	MPS = game:GetService("MarketplaceService")
+	InsertService = game:GetService("InsertService")
+end, "services")
+
+safe(function()
+	LP = Players.LocalPlayer
+	Cam = workspace.CurrentCamera
+	PGUI = LP:WaitForChild("PlayerGui")
+end, "player")
+
 local env = (getgenv and getgenv()) or _G
 
 for _, g in ipairs(PGUI:GetChildren()) do
 	if g.Name == "KitiProtoV4" then g:Destroy() end
 end
+
+print("[KITI] init ok, player=" .. tostring(LP and LP.Name))
+local mainOK, mainErr = pcall(function()
+
 
 local T = {
 	bg = Color3.fromRGB(244, 245, 251),
@@ -1710,3 +1731,8 @@ task.spawn(function()
 		end)
 	end
 end)
+end)
+if not mainOK then
+  warn('[KITI] MAIN ERROR: ' .. tostring(mainErr))
+  print('[KITI] MAIN ERROR: ' .. tostring(mainErr))
+end
