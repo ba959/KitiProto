@@ -112,8 +112,8 @@ corner(logo)
 grad(logo, T.accent1, T.accent2, 30)
 new("TextLabel", { Size = UDim2.fromScale(1, 1), BackgroundTransparency = 1, Text = "K", TextColor3 = Color3.fromRGB(255, 255, 255), Font = Enum.Font.GothamBlack, TextSize = 18, ZIndex = 4, Parent = logo })
 
-local title = new("TextLabel", { Size = UDim2.new(0, 320, 0, 20), Position = UDim2.fromOffset(60, 9), BackgroundTransparency = 1, Text = "KITI �. PROTO", TextColor3 = T.text, Font = Enum.Font.GothamBlack, TextSize = 18, TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 3, Parent = topbar })
-local subtitle = new("TextLabel", { Size = UDim2.new(0, 320, 0, 15), Position = UDim2.fromOffset(60, 30), BackgroundTransparency = 1, Text = "tablet edition �. " .. LP.Name, TextColor3 = T.sub, Font = Enum.Font.Gotham, TextSize = 11, TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 3, Parent = topbar })
+local title = new("TextLabel", { Size = UDim2.new(0, 320, 0, 20), Position = UDim2.fromOffset(60, 9), BackgroundTransparency = 1, Text = "KITI · PROTO", TextColor3 = T.text, Font = Enum.Font.GothamBlack, TextSize = 18, TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 3, Parent = topbar })
+local subtitle = new("TextLabel", { Size = UDim2.new(0, 320, 0, 15), Position = UDim2.fromOffset(60, 30), BackgroundTransparency = 1, Text = "tablet edition · " .. LP.Name, TextColor3 = T.sub, Font = Enum.Font.Gotham, TextSize = 11, TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 3, Parent = topbar })
 
 local function topBtn(text, xoff, cb)
 	local b = new("TextButton", { Size = UDim2.fromOffset(30, 30), Position = UDim2.new(1, xoff, 0.5, -15), BackgroundColor3 = T.element, Text = text, TextColor3 = T.text, Font = Enum.Font.GothamBold, TextSize = 16, AutoButtonColor = false, ZIndex = 3, Parent = topbar })
@@ -529,7 +529,7 @@ end)
 addSlider(mov, "Fly speed", 10, 500, 60, function(v) S.flySpeed = v end)
 addDivider(mov)
 addSection(mov, "Прочее")
-addToggle(mov, "Noclip (скво�.ь стены)", false, function(on) S.noclip = on end)
+addToggle(mov, "Noclip (сквозь стены)", false, function(on) S.noclip = on end)
 addToggle(mov, "Anti-AFK", false, function(on) S.antiAfk = on end)
 addToggle(mov, "Click TP (лкм)", false, function(on) S.clickTp = on; notify("Click TP", on and "вкл" or "выкл", 2) end)
 addButton(mov, "Reset персонажа", function() local h = getHum(); if h then h.Health = 0 end end)
@@ -544,10 +544,10 @@ addButton(mov, "📍 Телепорт по координатам", function()
 	else notify("Телепорт", "введи X, Y и Z", 3) end
 end)
 addButton(mov, "⬆ Вверх на 50", function() local hrp = getHRP(); if hrp then hrp.CFrame = hrp.CFrame + Vector3.new(0, 50, 0) end end)
-addButton(mov, "⬇ Вни�. на 50", function() local hrp = getHRP(); if hrp then hrp.CFrame = hrp.CFrame - Vector3.new(0, 50, 0) end end)
+addButton(mov, "⬇ Вниз на 50", function() local hrp = getHRP(); if hrp then hrp.CFrame = hrp.CFrame - Vector3.new(0, 50, 0) end end)
 addDivider(mov)
 addSection(mov, "Дополнительно")
-addToggle(mov, "❄ Заморо�.ить себя", false, function(on) S.freeze = on; local hrp = getHRP(); if hrp then hrp.Anchored = on end end)
+addToggle(mov, "❄ Заморозить себя", false, function(on) S.freeze = on; local hrp = getHRP(); if hrp then hrp.Anchored = on end end)
 addToggle(mov, "♻ Авто-респавн", false, function(on) S.autoRespawn = on; Players.RespawnTime = on and 0 or 5 end)
 addToggle(mov, "🛡 God Mode (клиент)", false, function(on)
 	S.godMode = on
@@ -588,7 +588,7 @@ addSlider(vis, "Плотность (меньше = гуще)", 20, 5000, 350, fu
 addButton(vis, "Туман: белый", function() S.fogColor = Color3.fromRGB(255, 255, 255) end)
 addButton(vis, "Туман: синий", function() S.fogColor = Color3.fromRGB(90, 130, 220) end)
 addButton(vis, "Туман: фиолетовый", function() S.fogColor = Color3.fromRGB(150, 80, 220) end)
-addButton(vis, "Туман: �.елёный", function() S.fogColor = Color3.fromRGB(70, 200, 120) end)
+addButton(vis, "Туман: зелёный", function() S.fogColor = Color3.fromRGB(70, 200, 120) end)
 addButton(vis, "Туман: чёрный", function() S.fogColor = Color3.fromRGB(0, 0, 0) end)
 addToggle(vis, "Дымка (атмосфера)", false, function(on) S.haze = on end)
 addSlider(vis, "Плотность дымки", 0, 1, 0.3, function(v) S.hazeVal = v end, 2)
@@ -608,7 +608,7 @@ addSlider(vis, "Время суток", 0, 24, 14, function(v) S.clock = v; if S
 
 local me = addTab("Персонаж", "☺")
 addSection(me, "Внешность")
-addButton(me, "�. Сделать неоновым", function()
+addButton(me, "🩷 Сделать неоновым", function()
 	local c = getChar(); if not c then return end
 	for _, d in ipairs(c:GetDescendants()) do
 		if d:IsA("BasePart") then d.Material = Enum.Material.Neon end
@@ -640,7 +640,7 @@ addButton(me, "🔵 Синий", function() local c = getChar(); if c then for _
 addButton(me, "🟢 Зелёный", function() local c = getChar(); if c then for _, d in ipairs(c:GetDescendants()) do if d:IsA("BasePart") then d.Color = Color3.fromRGB(70, 220, 120) end end end end)
 addButton(me, "⚪ Белый", function() local c = getChar(); if c then for _, d in ipairs(c:GetDescendants()) do if d:IsA("BasePart") then d.Color = Color3.fromRGB(240, 240, 245) end end end end)
 addDivider(me)
-addSection(me, "Ра�.мер и вид")
+addSection(me, "Размер и вид")
 addButton(me, "🐜 Крошка", function()
 	local c = getChar(); local h = c and c:FindFirstChildOfClass("Humanoid")
 	if h then h.BodyWidthScale = 0.4; h.BodyHeightScale = 0.4; h.BodyDepthScale = 0.4; h.HeadScale = 0.6 end
@@ -649,7 +649,7 @@ addButton(me, "🦖 Гигант", function()
 	local c = getChar(); local h = c and c:FindFirstChildOfClass("Humanoid")
 	if h then h.BodyWidthScale = 2.5; h.BodyHeightScale = 2.5; h.BodyDepthScale = 2.5; h.HeadScale = 2 end
 end)
-addButton(me, "↩ Обычный ра�.мер", function()
+addButton(me, "↩ Обычный размер", function()
 	local c = getChar(); local h = c and c:FindFirstChildOfClass("Humanoid")
 	if h then h.BodyWidthScale = 1; h.BodyHeightScale = 1; h.BodyDepthScale = 1; h.HeadScale = 1 end
 end)
@@ -733,9 +733,9 @@ end)
 addBox(me, "ID аксессуара (число) + Enter", function(txt) S.hatId = tonumber(txt:gsub("%D", "")) or 0; notify("Шляпа", "ID = " .. tostring(S.hatId), 2) end)
 addDivider(me)
 addSection(me, "Камера")
-addSlider(me, "FOV (об�.ор)", 40, 120, 70, function(v) S.fov = v; Cam.FieldOfView = v end)
-addSlider(me, "Мин. �.ум", 0.5, 30, 0.5, function(v) S.camMin = v; LP.CameraMinZoomDistance = v end, 1)
-addSlider(me, "Макс. �.ум (отдаление)", 4, 120, 12, function(v) S.camMax = v; LP.CameraMaxZoomDistance = v end, 1)
+addSlider(me, "FOV (обзор)", 40, 120, 70, function(v) S.fov = v; Cam.FieldOfView = v end)
+addSlider(me, "Мин. зум", 0.5, 30, 0.5, function(v) S.camMin = v; LP.CameraMinZoomDistance = v end, 1)
+addSlider(me, "Макс. зум (отдаление)", 4, 120, 12, function(v) S.camMax = v; LP.CameraMaxZoomDistance = v end, 1)
 addToggle(me, "От первого лица", false, function(on)
 	LP.CameraMode = on and Enum.CameraMode.LockFirstPerson or Enum.CameraMode.Classic
 	notify("Камера", on and "1-е лицо" or "3-е лицо", 2)
@@ -755,13 +755,13 @@ addToggle(cmb, "Расширить хитбоксы", false, function(on)
 	S.hitbox = on
 	if not on then for _, p in ipairs(Players:GetPlayers()) do local hrp = hrpOf(p); if hrp then hrp.Size = Vector3.new(2, 2, 1) end end end
 end)
-addSlider(cmb, "Ра�.мер хитбокса", 2, 15, 6, function(v) S.hitboxSize = v end)
+addSlider(cmb, "Размер хитбокса", 2, 15, 6, function(v) S.hitboxSize = v end)
 addDivider(cmb)
 addSection(cmb, "Авто-кликер")
 addToggle(cmb, "Авто-клик (левая кнопка)", false, function(on) S.autoClick = on end)
 addSlider(cmb, "Задержка (сек)", 0.01, 1, 0.1, function(v) S.autoClickDelay = v end, 2)
 
-local vis2 = addTab("Ви�.уал", "◎")
+local vis2 = addTab("Визуал", "◎")
 addSection(vis2, "Подсветка игроков")
 addToggle(vis2, "ESP имена", false, function(on) S.espNames = on end)
 addToggle(vis2, "ESP: HP и дистанция", false, function(on) S.espInfo = on end)
@@ -783,7 +783,7 @@ addToggle(vis2, "Прицел (crosshair)", false, function(on) S.crosshair = on
 addDivider(vis2)
 addSection(vis2, "Мир и HUD")
 addToggle(vis2, "🌈 Радужный ESP", false, function(on) S.rainbowEsp = on end)
-addToggle(vis2, "X-Ray (про�.рачные стены)", false, function(on)
+addToggle(vis2, "X-Ray (прозрачные стены)", false, function(on)
 	S.xray = on
 	if not on then
 		pcall(function()
@@ -800,7 +800,7 @@ end)
 addToggle(vis2, "HUD: время и игроки", true, function(on) S.hudExtra = on end)
 
 local perf = addTab("Бусты", "⚡")
-addSection(perf, "Прои�.водительность")
+addSection(perf, "Производительность")
 addButton(perf, "⚡ Boost FPS (убрать тени/эффекты)", function()
 	pcall(function()
 		Lighting.GlobalShadows = false
@@ -811,7 +811,7 @@ addButton(perf, "⚡ Boost FPS (убрать тени/эффекты)", function
 	end)
 	local c = getChar()
 	if c then for _, d in ipairs(c:GetDescendants()) do if d:IsA("BasePart") then d.CastShadow = false end end end
-	notify("FPS", "оптими�.ация включена", 3)
+	notify("FPS", "оптимизация включена", 3)
 end)
 addDivider(perf)
 addSection(perf, "Красота (кинематограф)")
@@ -830,7 +830,7 @@ end)
 addSlider(perf, "Насыщенность", 0, 1, 0.15, function(v) S.sat = v end, 2)
 addSlider(perf, "Свечение (bloom)", 0, 3, 0.9, function(v) S.bloomI = v end, 2)
 addToggle(perf, "Лучи солнца", true, function(on) S.sunraysOn = on end)
-addToggle(perf, "Глубина ре�.кости (DOF)", false, function(on) S.dofOn = on end)
+addToggle(perf, "Глубина резкости (DOF)", false, function(on) S.dofOn = on end)
 addButton(perf, "↩ Сбросить эффекты", function()
 	for _, v in ipairs(Lighting:GetChildren()) do
 		if v:IsA("Atmosphere") or v:IsA("BloomEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("DepthOfFieldEffect") or v:IsA("SunRaysEffect") then v:Destroy() end
@@ -1004,7 +1004,7 @@ local function buildPlayers()
 			corner(sp)
 			sp.MouseButton1Click:Connect(function()
 				local hum = p.Character and p.Character:FindFirstChildOfClass("Humanoid")
-				if hum then Cam.CameraSubject = hum; notify("Камера", "слежу �.а " .. p.Name, 2) end
+				if hum then Cam.CameraSubject = hum; notify("Камера", "слежу за " .. p.Name, 2) end
 			end)
 			local cp = new("TextButton", { Size = UDim2.fromOffset(52, 30), Position = UDim2.new(1, -64, 0.5, -15), BackgroundColor3 = T.element, Text = "Copy", TextColor3 = T.text, Font = Enum.Font.GothamBold, TextSize = 11, AutoButtonColor = false, Parent = rowP })
 			corner(cp)
@@ -1125,7 +1125,7 @@ local GAMES = {
 }
 
 local function teleportGame(placeId, name)
-	notify("Телепорт", "�.аходим в " .. name .. "...", 4)
+	notify("Телепорт", "заходим в " .. name .. "...", 4)
 	task.spawn(function()
 		local ok, err = pcall(function() TPS:Teleport(placeId, LP) end)
 		if not ok then notify("Телепорт", "не удалось: " .. tostring(err), 5) end
@@ -1199,13 +1199,13 @@ addButton(util, "📏 Расстояние до ближайшего", function(
 	if best then notify("Ближайший", best.Name .. " — " .. math.floor(bd) .. " studs", 4) else notify("Ближайший", "не найдено", 3) end
 end)
 addButton(util, "📋 Скопировать мой ник", function() if setclipboard then setclipboard(LP.Name); notify("Буфер", "скопировано", 2) else notify("Буфер", "нет setclipboard", 3) end end)
-addButton(util, "📋 Скопировать по�.ицию", function()
+addButton(util, "📋 Скопировать позицию", function()
 	local hrp = getHRP()
-	if hrp and setclipboard then setclipboard(string.format("%.1f %.1f %.1f", hrp.Position.X, hrp.Position.Y, hrp.Position.Z)); notify("Буфер", "по�.иция скопирована", 2) end
+	if hrp and setclipboard then setclipboard(string.format("%.1f %.1f %.1f", hrp.Position.X, hrp.Position.Y, hrp.Position.Z)); notify("Буфер", "позиция скопирована", 2) end
 end)
 addDivider(util)
-addSection(util, "Ра�.ное")
-addBox(util, "raw URL + Enter — �.апустить", function(url) if url ~= "" then task.spawn(function() local ok, err = pcall(function() loadstring(game:HttpGet(url))() end); if not ok then notify("Ошибка", tostring(err), 5) end end) end end)
+addSection(util, "Разное")
+addBox(util, "raw URL + Enter — запустить", function(url) if url ~= "" then task.spawn(function() local ok, err = pcall(function() loadstring(game:HttpGet(url))() end); if not ok then notify("Ошибка", tostring(err), 5) end end) end end)
 addButton(util, "🔄 Переподключиться", function() TPS:Teleport(game.PlaceId, LP) end)
 
 local st = addTab("Настройки", "⚙")
@@ -1234,7 +1234,7 @@ addToggle(st, "Свернуть в иконку", false, function(on)
 end)
 addDivider(st)
 addSection(st, "Инфо")
-new("TextLabel", { Size = UDim2.new(1, 0, 0, 70), BackgroundTransparency = 1, Text = "KITI �. PROTO — tablet edition\nуниверсальный хаб �. V4\nсделано по �.апросу", TextColor3 = T.sub, Font = Enum.Font.Gotham, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Top, Parent = st })
+new("TextLabel", { Size = UDim2.new(1, 0, 0, 70), BackgroundTransparency = 1, Text = "KITI · PROTO — tablet edition\nуниверсальный хаб · V4\nсделано по запросу", TextColor3 = T.sub, Font = Enum.Font.Gotham, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Top, Parent = st })
 addDivider(st)
 addSection(st, "Конфиг")
 local function applyAll()
@@ -1251,9 +1251,9 @@ addButton(st, "💾 Сохранить настройки", function()
 		if t == "number" or t == "boolean" or t == "string" then out[k] = v end
 	end
 	local ok = pcall(function() writefile("kitiproto.json", HS:JSONEncode(out)) end)
-	notify("Конфиг", ok and "сохранено" or "ошибка �.аписи", 2)
+	notify("Конфиг", ok and "сохранено" or "ошибка записи", 2)
 end)
-addButton(st, "📂 Загру�.ить настройки", function()
+addButton(st, "📂 Загрузить настройки", function()
 	if not (readfile and isfile and isfile("kitiproto.json")) then notify("Конфиг", "нет файла", 3); return end
 	local ok, data = pcall(function() return HS:JSONDecode(readfile("kitiproto.json")) end)
 	if ok and type(data) == "table" then
@@ -1262,13 +1262,13 @@ addButton(st, "📂 Загру�.ить настройки", function()
 			if t == "number" or t == "boolean" or t == "string" then S[k] = v end
 		end
 		applyAll()
-		notify("Конфиг", "�.агружено", 2)
+		notify("Конфиг", "загружено", 2)
 	else
 		notify("Конфиг", "ошибка чтения", 3)
 	end
 end)
 
-local watermark = new("TextLabel", { Name = "WM", Parent = sg, BackgroundTransparency = 1, Size = UDim2.new(0, 320, 0, 22), Position = UDim2.fromOffset(14, 10), Text = "KITI �. PROTO | RightShift - ������/��������", TextColor3 = T.accent1, Font = Enum.Font.GothamBlack, TextSize = 16, TextXAlignment = Enum.TextXAlignment.Left, TextStrokeTransparency = 0.7, TextStrokeColor3 = Color3.fromRGB(255, 255, 255), ZIndex = 100 })
+local watermark = new("TextLabel", { Name = "WM", Parent = sg, BackgroundTransparency = 1, Size = UDim2.new(0, 320, 0, 22), Position = UDim2.fromOffset(14, 10), Text = "KITI · PROTO | RightShift - hide", TextColor3 = T.accent1, Font = Enum.Font.GothamBlack, TextSize = 16, TextXAlignment = Enum.TextXAlignment.Left, TextStrokeTransparency = 0.7, TextStrokeColor3 = Color3.fromRGB(255, 255, 255), ZIndex = 100 })
 
 local hud = new("Frame", { Name = "HUD", Parent = sg, BackgroundColor3 = T.card, BackgroundTransparency = 0.15, Size = UDim2.fromOffset(210, 122), Position = UDim2.new(0, 14, 0, 40), BorderSizePixel = 0, ZIndex = 90 })
 corner(hud, 12)
@@ -1285,7 +1285,7 @@ local hudPl = new("TextLabel", { Size = UDim2.new(1, -14, 0, 15), BackgroundTran
 task.spawn(function()
 	local pname = "game " .. tostring(game.PlaceId)
 	pcall(function() pname = MPS:GetProductInfo(game.PlaceId).Name end)
-	subtitle.Text = pname .. "  �.  " .. LP.Name
+	subtitle.Text = pname .. "  ·  " .. LP.Name
 end)
 
 local frames = 0
@@ -1630,7 +1630,7 @@ topBtn("×", -42, function()
 	print("[KITI-PROTO] V4 closed")
 end)
 
-notify("KITI �. PROTO", "tablet edition �.агружен. Меню: " .. S.menuKey.Name .. " | скрыть: RightShift", 5)
+notify("KITI · PROTO", "tablet edition загружен. Меню: " .. S.menuKey.Name .. " | скрыть: RightShift", 5)
 print("[KITI-PROTO] V4 loaded")
 
 
