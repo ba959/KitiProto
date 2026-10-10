@@ -1632,3 +1632,81 @@ end)
 
 notify("KITI · PROTO", "tablet edition загружен. Меню: " .. S.menuKey.Name .. " | скрыть: RightShift", 5)
 print("[KITI-PROTO] V4 loaded")
+
+
+-- KITI PROTO V6 ADDON: REAL VISUALS + PETS + UTILITIES
+local function getChar() return game.Players.LocalPlayer.Character end
+local function getHRP() local c=getChar(); return c and c:FindFirstChild("HumanoidRootPart") end
+local function getHum() local c=getChar(); return c and c:FindFirstChildOfClass("Humanoid") end
+
+S.skel = false; S.hpbar = false; S.chams = false; S.btrac = false; S.team = true; S.pets = false
+S.petModel = "Ball"; S.petCount = 3; S.petSize = 1; S.petColor = Color3.fromRGB(126,108,255); S.petRainbow = false; S.petFollowDist = 6
+S.theme = "light"; S.rainbowUI = false; S.spin = false; S.spinspeed = 15; S.antifling = false; S.aimvis = false; S.arrows = false; S.atmos = false; S.atmosdens = 0.25
+S.tracersAll = false; S.box3d = false; S.name3d = false; S.outline = false
+
+local pets = {}
+local function clearPets()
+	for _,p in ipairs(pets) do p:Destroy() end pets = {}
+end
+
+local function spawnPets()
+	clearPets()
+	local hrp = getHRP()
+	if not S.pets or not hrp then return end
+	for i=1, S.petCount do
+		local part = Instance.new("Part")
+		part.Shape = Enum.PartType.Ball
+		part.Size = Vector3.new(S.petSize, S.petSize, S.petSize)
+		part.Material = Enum.Material.Neon
+		part.Color = S.petRainbow and Color3.fromHSV(tick()%1,1,1) or S.petColor
+		part.CanCollide = false
+		part.Anchored = false
+		part.Parent = workspace
+		local bp = Instance.new("BodyPosition", part)
+		bp.MaxForce = Vector3.new(1e5,1e5,1e5)
+		local bg = Instance.new("BodyGyro", part)
+		bg.MaxTorque = Vector3.new(1e5,1e5,1e5)
+		bg.P = 3000
+		table.insert(pets, part)
+		task.delay(i*0.01, function()
+			if part.Parent and hrp.Parent then part.CFrame = hrp.CFrame*CFrame.new(math.sin(i)*S.petFollowDist, 3, math.cos(i)*S.petFollowDist) end
+		end)
+	end
+end
+
+local themes = {
+	light = {bg=Color3.fromRGB(244,245,251), card=Color3.fromRGB(255,255,255), text=Color3.fromRGB(28,30,46), sub=Color3.fromRGB(124,128,152), accent1=Color3.fromRGB(126,108,255), accent2=Color3.fromRGB(86,198,255)},
+	dark  = {bg=Color3.fromRGB(14,15,22),  card=Color3.fromRGB(20,22,32),  text=Color3.fromRGB(240,242,255), sub=Color3.fromRGB(150,155,190), accent1=Color3.fromRGB(140,120,255), accent2=Color3.fromRGB(95,205,255)},
+	neon  = {bg=Color3.fromRGB(10,8,20),   card=Color3.fromRGB(16,12,32),  text=Color3.fromRGB(250,248,255), sub=Color3.fromRGB(190,170,255), accent1=Color3.fromRGB(180,90,255),  accent2=Color3.fromRGB(90,210,255)},
+	amoled= {bg=Color3.fromRGB(0,0,0),     card=Color3.fromRGB(10,10,12),  text=Color3.fromRGB(235,235,240), sub=Color3.fromRGB(160,160,170), accent1=Color3.fromRGB(160,130,255), accent2=Color3.fromRGB(100,210,255)},
+}
+local function applyTheme()
+	local t = themes[S.theme]
+	if not t then return end
+	T.bg=T.bg; T.card=t.card; T.text=t.text; T.sub=t.sub; T.accent1=t.accent1; T.accent2=t.accent2
+end
+
+task.spawn(function()
+	while true do
+		task.wait(0.1)
+		pcall(function()
+			if S.pets then
+				local hrp=getHRP(); if hrp then
+					for i,v in ipairs(pets) do
+						if v.Parent then
+							local bp=v:FindFirstChildOfClass("BodyPosition")
+							if bp then bp.Position = hrp.Position + Vector3.new(math.sin(tick()*2 + i)*S.petFollowDist, math.sin(tick()+i)*2+4, math.cos(tick()*2 + i)*S.petFollowDist) end
+							if S.petRainbow then v.Color = Color3.fromHSV(tick()%1,1,1) end
+						end
+					end
+				else clearPets() end
+			else clearPets() end
+			if S.spin then
+				local hrp=getHRP(); if hrp then hrp.CFrame = hrp.CFrame * CFrame.Angles(0, math.rad(S.spinspeed), 0) end
+			end
+			if S.antifling then
+				local hrp=getHRP(); local bv=hrp and hrp:FindFirstChildOfClass("BodyVelocity"); if bv and bv.Velocity.Magnitude>80 then bv.Velocity=Vector3.new(0,0,0); bv.MaxForce=Vector3.new(0,0,0); task.wait(); if bv.Parent then bv.MaxForce=Vector3.new(1e5,1e5,1e5) end end
+			end
+		end)
+	end
+end)
