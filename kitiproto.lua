@@ -764,6 +764,21 @@ addToggle(me, "РћС‚ РїРµСЂРІРѕРіРѕ Р»РёС†Р°", false, function(on)
 	notify("РљР°РјРµСЂР°", on and "1-Рµ Р»РёС†Рѕ" or "3-Рµ Р»РёС†Рѕ", 2)
 end)
 
+local petsTab = addTab("РџРёС‚РѕРјС†С‹", "рџђѕ")
+addSection(petsTab, "РџРёС‚РѕРјС†С‹")
+addToggle(petsTab, "рџђѕ Р’РєР»СЋС‡РёС‚СЊ РїРёС‚РѕРјС†РµРІ", false, function(on)
+	S.pets = on
+	if on then spawnPets() else clearPets() end
+	notify("РџРёС‚РѕРјС†С‹", on and "РІРєР»СЋС‡РµРЅС‹" or "РІС‹РєР»СЋС‡РµРЅС‹", 2)
+end)
+addSlider(petsTab, "РљРѕР»-РІРѕ РїРёС‚РѕРјС†РµРІ", 1, 10, 3, function(v) S.petCount = v; if S.pets then spawnPets() end end)
+addSlider(petsTab, "Р Р°Р·РјРµСЂ РїРёС‚РѕРјС†Р°", 0.5, 5, 1, function(v) S.petSize = v; if S.pets then spawnPets() end end, 1)
+addSlider(petsTab, "Р”РёСЃС‚Р°РЅС†РёСЏ СЃР»РµРґРѕРІР°РЅРёСЏ", 2, 20, 6, function(v) S.petFollowDist = v end, 1)
+addToggle(petsTab, "рџЊ€ Р Р°РґСѓР¶РЅС‹Рµ РїРёС‚РѕРјС†С‹", false, function(on) S.petRainbow = on end)
+addToggle(petsTab, "вћї РЎР»РµРґРѕРІР°С‚СЊ Р·Р° РёРіСЂРѕРєРѕРј", true, function(on) S.petFollow = on end)
+addButton(petsTab, "рџђѕ Р—Р°СЃРїР°РІРЅРёС‚СЊ РїРёС‚РѕРјС†РµРІ", function() spawnPets(); notify("РџРёС‚РѕРјС†С‹", "Р·Р°СЃРїР°РІРЅРµРЅС‹", 2) end)
+addButton(petsTab, "рџ§№ РЈР±СЂР°С‚СЊ РїРёС‚РѕРјС†РµРІ", function() clearPets(); notify("РџРёС‚РѕРјС†С‹", "СѓР±СЂР°РЅС‹", 2) end)
+
 local cmb = addTab("Р‘РѕР№", "вњ¦")
 addSection(cmb, "Aimbot")
 addToggle(cmb, "Aimbot", false, function(on) S.aimbot = on end)
@@ -1656,6 +1671,21 @@ end)
 notify("KITI В· PROTO", "tablet edition Р·Р°РіСЂСѓР¶РµРЅ. РњРµРЅСЋ: " .. S.menuKey.Name .. " | СЃРєСЂС‹С‚СЊ: RightShift", 5)
 print("[KITI-PROTO] V4 loaded")
 
+
+local petsTab = addTab("Питомцы", "??")
+addSection(petsTab, "Питомцы")
+addToggle(petsTab, "?? Включить питомцев", false, function(on)
+	S.pets = on
+	if on then spawnPets() else clearPets() end
+	notify("Питомцы", on and "включены" or "выключены", 2)
+end)
+addSlider(petsTab, "Кол-во питомцев", 1, 10, 3, function(v) S.petCount = v; if S.pets then spawnPets() end end)
+addSlider(petsTab, "Размер питомца", 0.5, 5, 1, function(v) S.petSize = v; if S.pets then spawnPets() end end, 1)
+addSlider(petsTab, "Дистанция следования", 2, 20, 6, function(v) S.petFollowDist = v end, 1)
+addToggle(petsTab, "?? Радужные питомцы", false, function(on) S.petRainbow = on end)
+addToggle(petsTab, "? Следовать за игроком", true, function(on) S.petFollow = on end)
+addButton(petsTab, "?? Заспавнить питомцев", function() spawnPets(); notify("Питомцы", "заспавнены", 2) end)
+addButton(petsTab, "?? Убрать питомцев", function() clearPets(); notify("Питомцы", "убраны", 2) end)
 
 -- KITI PROTO V6 ADDON: REAL VISUALS + PETS + UTILITIES
 local function getChar() return game.Players.LocalPlayer.Character end
