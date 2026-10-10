@@ -170,12 +170,35 @@ local function addTab(name, icon)
 	return page
 end
 
+local searchBox = new("TextBox", { Size = UDim2.fromOffset(180, 32), Position = UDim2.new(1, -292, 0.5, -16), BackgroundColor3 = T.element, PlaceholderText = "поиск функций...", PlaceholderColor3 = T.sub, Text = "", TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 13, ClearTextOnFocus = false, ZIndex = 3, Parent = topbar })
+corner(searchBox)
+new("UIPadding", { PaddingLeft = UDim.new(0, 14), Parent = searchBox })
+
+local function applySearch(q)
+	q = string.lower(q or "")
+	for _, t in ipairs(pages) do
+		for _, el in ipairs(t.page:GetChildren()) do
+			if el:GetAttribute("isSec") then
+				el.Visible = true
+			elseif el:GetAttribute("kw") ~= nil then
+				el.Visible = (q == "" or string.find(el:GetAttribute("kw"), q, 1, true) ~= nil)
+			end
+		end
+	end
+end
+
+searchBox:GetPropertyChangedSignal("Text"):Connect(function() applySearch(searchBox.Text) end)
+
 local function addSection(page, text)
-	return new("TextLabel", { Size = UDim2.new(1, 0, 0, 20), BackgroundTransparency = 1, Text = string.upper(text), TextColor3 = T.accent1, Font = Enum.Font.GothamBlack, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, Parent = page })
+	local el = new("TextLabel", { Size = UDim2.new(1, 0, 0, 20), BackgroundTransparency = 1, Text = string.upper(text), TextColor3 = T.accent1, Font = Enum.Font.GothamBlack, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, Parent = page })
+	el:SetAttribute("isSec", true)
+	return el
 end
 
 local function addDivider(page)
-	return new("Frame", { Size = UDim2.new(1, 0, 0, 1), BackgroundColor3 = T.off, BackgroundTransparency = 0.5, BorderSizePixel = 0, Parent = page })
+	local el = new("Frame", { Size = UDim2.new(1, 0, 0, 1), BackgroundColor3 = T.off, BackgroundTransparency = 0.5, BorderSizePixel = 0, Parent = page })
+	el:SetAttribute("kw", "")
+	return el
 end
 
 local function addButton(page, text, cb)
@@ -190,12 +213,14 @@ local function addButton(page, text, cb)
 		local ok, err = pcall(cb)
 		if not ok then notify("Ошибка", tostring(err), 5) end
 	end)
+	b:SetAttribute("kw", string.lower(text))
 	return b
 end
 
 local function addToggle(page, text, def, cb)
 	local row = new("Frame", { Size = UDim2.new(1, 0, 0, 38), BackgroundColor3 = T.element, Parent = page })
 	corner(row)
+	row:SetAttribute("kw", string.lower(text))
 	new("TextLabel", { Size = UDim2.new(1, -80, 1, 0), Position = UDim2.fromOffset(14, 0), BackgroundTransparency = 1, Text = text, TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 13, TextXAlignment = Enum.TextXAlignment.Left, Parent = row })
 	local track = new("Frame", { Size = UDim2.fromOffset(44, 22), Position = UDim2.new(1, -58, 0.5, -11), BackgroundColor3 = T.off, BorderSizePixel = 0, Parent = row })
 	corner(track)
@@ -231,6 +256,7 @@ local function addSlider(page, text, mn, mx, def, cb, dec)
 	dec = dec or 0
 	local row = new("Frame", { Size = UDim2.new(1, 0, 0, 52), BackgroundColor3 = T.element, Parent = page })
 	corner(row)
+	row:SetAttribute("kw", string.lower(text))
 	new("TextLabel", { Size = UDim2.new(1, -100, 0, 22), Position = UDim2.fromOffset(14, 6), BackgroundTransparency = 1, Text = text, TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 13, TextXAlignment = Enum.TextXAlignment.Left, Parent = row })
 	local vlab = new("TextLabel", { Size = UDim2.fromOffset(80, 22), Position = UDim2.new(1, -94, 0, 6), BackgroundTransparency = 1, Text = tostring(def), TextColor3 = T.accent1, Font = Enum.Font.GothamBold, TextSize = 13, TextXAlignment = Enum.TextXAlignment.Right, Parent = row })
 	local track = new("TextButton", { Size = UDim2.new(1, -28, 0, 8), Position = UDim2.new(0, 14, 0, 36), BackgroundColor3 = T.off, Text = "", AutoButtonColor = false, Parent = row })
@@ -267,6 +293,7 @@ local function addDropdown(page, text, options, def, cb)
 	local IH = 30
 	local row = new("Frame", { Size = UDim2.new(1, 0, 0, 38), BackgroundColor3 = T.element, Parent = page })
 	corner(row)
+	row:SetAttribute("kw", string.lower(text))
 	local head = new("TextButton", { Size = UDim2.new(1, 0, 0, 38), BackgroundColor3 = Color3.fromRGB(255, 255, 255), BackgroundTransparency = 1, Text = "", Parent = row })
 	new("TextLabel", { Size = UDim2.new(1, -170, 0, 38), Position = UDim2.fromOffset(14, 0), BackgroundTransparency = 1, Text = text, TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 13, TextXAlignment = Enum.TextXAlignment.Left, Parent = head })
 	local cur = new("TextLabel", { Size = UDim2.fromOffset(120, 38), Position = UDim2.new(1, -160, 0, 0), BackgroundTransparency = 1, Text = def or (options[1] or "-"), TextColor3 = T.accent1, Font = Enum.Font.GothamBold, TextSize = 13, TextXAlignment = Enum.TextXAlignment.Right, Parent = head })
@@ -299,6 +326,7 @@ end
 local function addBox(page, placeholder, cb)
 	local box = new("TextBox", { Size = UDim2.new(1, 0, 0, 38), BackgroundColor3 = T.element, PlaceholderText = placeholder, PlaceholderColor3 = T.sub, Text = "", TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 13, ClearTextOnFocus = false, Parent = page })
 	corner(box)
+	box:SetAttribute("kw", string.lower(placeholder))
 	new("UIPadding", { PaddingLeft = UDim.new(0, 12), Parent = box })
 	box.FocusLost:Connect(function(enter) if enter then clickSnd(); pcall(cb, box.Text) end end)
 	return box
@@ -317,7 +345,8 @@ local S = {
 	haze = false, hazeVal = 0.3,
 	beauty = false, sat = 0.15, bloomI = 0.9, sunraysOn = true, dofOn = false,
 	rainbow = false, trail = false, fire = false, godMode = false, autoRespawn = false, freeze = false,
-	espNames = false, espHighlight = false, espRole = true, xray = false, rainbowEsp = false,
+	espNames = false, espHighlight = false, espRole = true, xray = false, rainbowEsp = false, espInfo = false,
+	rainbowWorld = false, drunk = false, soundId = 0,
 	aimbot = false, aimAlways = false, aimKey = Enum.KeyCode.E, aimFov = 150, aimPart = "Head", aimSmooth = 0.5,
 	trigger = false, triggerKey = Enum.KeyCode.Q, hitbox = false, hitboxSize = 6,
 	autoClick = false, autoClickDelay = 0.1,
@@ -517,6 +546,8 @@ addToggle(mov, "🛡 God Mode (клиент)", false, function(on)
 	local h = getHum()
 	if h and on then h.MaxHealth = 9e9; h.Health = 9e9 end
 end)
+addSlider(mov, "Гравитация мира", 0, 300, 196, function(v) workspace.Gravity = v end)
+addSlider(mov, "Высота бедра (HipHeight)", 0, 20, 2, function(v) local h = getHum(); if h then h.HipHeight = v end end, 1)
 
 local vis = addTab("Мир", "◍")
 addSection(vis, "Небо")
@@ -725,6 +756,7 @@ addSlider(cmb, "Задержка (сек)", 0.01, 1, 0.1, function(v) S.autoClic
 local vis2 = addTab("Визуал", "◎")
 addSection(vis2, "Подсветка игроков")
 addToggle(vis2, "ESP имена", false, function(on) S.espNames = on end)
+addToggle(vis2, "ESP: HP и дистанция", false, function(on) S.espInfo = on end)
 addToggle(vis2, "ESP подсветка", false, function(on) S.espHighlight = on end)
 addToggle(vis2, "Цвет по роли (MM2)", true, function(on) S.espRole = on end)
 addToggle(vis2, "ESP боксы", false, function(on)
@@ -940,6 +972,110 @@ end
 addButton(mg, "▶ Запустить игру", function() startTanks() end)
 addButton(mg, "■ Стоп", function() stopTanks() end)
 
+local plr = addTab("Игроки", "👥")
+addSection(plr, "Онлайн-игроки")
+local plrBox = new("Frame", { Size = UDim2.new(1, 0, 0, 0), AutomaticSize = Enum.AutomaticSize.Y, BackgroundTransparency = 1, Parent = plr })
+new("UIListLayout", { Parent = plrBox, Padding = UDim.new(0, 8), SortOrder = Enum.SortOrder.LayoutOrder })
+
+local function buildPlayers()
+	for _, c in ipairs(plrBox:GetChildren()) do if c:IsA("Frame") or c:IsA("TextLabel") then c:Destroy() end end
+	local any = false
+	for _, p in ipairs(Players:GetPlayers()) do
+		if p ~= LP then
+			any = true
+			local rowP = new("Frame", { Size = UDim2.new(1, 0, 0, 44), BackgroundColor3 = T.element, Parent = plrBox })
+			corner(rowP)
+			new("TextLabel", { Size = UDim2.new(1, -250, 1, 0), Position = UDim2.fromOffset(14, 0), BackgroundTransparency = 1, Text = p.Name, TextColor3 = T.text, Font = Enum.Font.GothamBold, TextSize = 13, TextXAlignment = Enum.TextXAlignment.Left, Parent = rowP })
+			local tp = new("TextButton", { Size = UDim2.fromOffset(66, 30), Position = UDim2.new(1, -212, 0.5, -15), BackgroundColor3 = T.accent1, Text = "ТП", TextColor3 = Color3.fromRGB(255, 255, 255), Font = Enum.Font.GothamBold, TextSize = 12, AutoButtonColor = false, Parent = rowP })
+			corner(tp)
+			tp.MouseButton1Click:Connect(function()
+				local hrp = getHRP(); local thrp = hrpOf(p)
+				if hrp and thrp then hrp.CFrame = thrp.CFrame + Vector3.new(0, 3, 0); notify("Телепорт", "к " .. p.Name, 2) end
+			end)
+			local sp = new("TextButton", { Size = UDim2.fromOffset(70, 30), Position = UDim2.new(1, -140, 0.5, -15), BackgroundColor3 = T.element, Text = "Следить", TextColor3 = T.text, Font = Enum.Font.GothamBold, TextSize = 12, AutoButtonColor = false, Parent = rowP })
+			corner(sp)
+			sp.MouseButton1Click:Connect(function()
+				local hum = p.Character and p.Character:FindFirstChildOfClass("Humanoid")
+				if hum then Cam.CameraSubject = hum; notify("Камера", "слежу за " .. p.Name, 2) end
+			end)
+			local cp = new("TextButton", { Size = UDim2.fromOffset(52, 30), Position = UDim2.new(1, -64, 0.5, -15), BackgroundColor3 = T.element, Text = "Copy", TextColor3 = T.text, Font = Enum.Font.GothamBold, TextSize = 11, AutoButtonColor = false, Parent = rowP })
+			corner(cp)
+			cp.MouseButton1Click:Connect(function() if setclipboard then setclipboard(p.Name); notify("Буфер", "ник скопирован", 2) end end)
+		end
+	end
+	if not any then
+		new("TextLabel", { Size = UDim2.new(1, 0, 0, 30), BackgroundTransparency = 1, Text = "других игроков нет", TextColor3 = T.sub, Font = Enum.Font.Gotham, TextSize = 13, Parent = plrBox })
+	end
+end
+
+task.spawn(function()
+	while true do
+		task.wait(1.5)
+		pcall(buildPlayers)
+	end
+end)
+
+local mus = addTab("Звук", "🎵")
+local bgm = new("Sound", { SoundId = "rbxassetid://0", Volume = 2, Looped = false, Parent = SoundService })
+addSection(mus, "Плеер (слышишь только ты)")
+addBox(mus, "Sound ID + Enter", function(t) S.soundId = tonumber(t:gsub("%D", "")) or 0; notify("Звук", "ID = " .. tostring(S.soundId), 2) end)
+addButton(mus, "▶ Играть", function()
+	if not S.soundId or S.soundId == 0 then notify("Звук", "введи ID", 3); return end
+	bgm.SoundId = "rbxassetid://" .. S.soundId
+	pcall(function() bgm:Play() end)
+end)
+addButton(mus, "⏹ Стоп", function() pcall(function() bgm:Stop() end) end)
+addSlider(mus, "Громкость", 0, 10, 2, function(v) bgm.Volume = v end, 1)
+addToggle(mus, "Зациклить", false, function(on) bgm.Looped = on end)
+addDivider(mus)
+addSection(mus, "Быстрые треки")
+for _, tr in ipairs({ { "Roblox default", 9046141279 }, { "Among Us drip", 6584745192 }, { "Elevator music", 6756055776 } }) do
+	addButton(mus, "🎵 " .. tr[1], function()
+		S.soundId = tr[2]
+		bgm.SoundId = "rbxassetid://" .. tr[2]
+		bgm.Looped = true
+		pcall(function() bgm:Play() end)
+		notify("Звук", tr[1], 2)
+	end)
+end
+
+local fun = addTab("Фан", "🎉")
+addSection(fun, "Приколы")
+addToggle(fun, "🌈 Радужный мир", false, function(on) S.rainbowWorld = on end)
+addToggle(fun, "🍺 Пьяная камера", false, function(on) S.drunk = on end)
+addToggle(fun, "🕳 Тёмный космос-мир", false, function(on)
+	local h = getHum()
+	if on then
+		Lighting.Ambient = Color3.fromRGB(0, 0, 0); Lighting.OutdoorAmbient = Color3.fromRGB(0, 0, 0); Lighting.Brightness = 0
+	else
+		Lighting.Ambient = Color3.fromRGB(140, 140, 140); Lighting.OutdoorAmbient = Color3.fromRGB(150, 150, 150); Lighting.Brightness = 2
+	end
+end)
+addButton(fun, "🎊 Конфетти", function()
+	local hrp = getHRP()
+	if not hrp then return end
+	for _ = 1, 30 do
+		local p = new("Part", { Size = Vector3.new(0.35, 0.35, 0.35), Anchored = true, CanCollide = false, Color = Color3.fromHSV(math.random(), 1, 1), Material = Enum.Material.Neon, Parent = workspace })
+		p.CFrame = hrp.CFrame * CFrame.new(math.random(-6, 6), math.random(2, 8), math.random(-6, 6))
+		new("BodyVelocity", { Velocity = Vector3.new(math.random(-15, 15), math.random(12, 26), math.random(-15, 15)), MaxForce = Vector3.new(1e5, 1e5, 1e5), Parent = p })
+		task.delay(3, function() p:Destroy() end)
+	end
+end)
+addButton(fun, "🎈 Спавн шара", function()
+	local hrp = getHRP()
+	if hrp then
+		local p = new("Part", { Shape = Enum.PartType.Ball, Size = Vector3.new(3, 3, 3), Anchored = true, CanCollide = false, Material = Enum.Material.Neon, Color = Color3.fromHSV(math.random(), 1, 1), Parent = workspace })
+		p.CFrame = hrp.CFrame * CFrame.new(0, 5, -6)
+	end
+end)
+addButton(fun, "📸 Мем-текст над головой", function()
+	local head = getChar() and getChar():FindFirstChild("Head")
+	if not head then return end
+	if head:FindFirstChild("MemeTag") then head.MemeTag:Destroy() end
+	local bb = new("BillboardGui", { Name = "MemeTag", Size = UDim2.fromOffset(260, 60), StudsOffset = Vector3.new(0, 3.6, 0), AlwaysOnTop = true, Parent = head })
+	new("TextLabel", { Size = UDim2.fromScale(1, 1), BackgroundTransparency = 1, Text = "Я ТУТ ГЛАВНЫЙ 😎", TextScaled = true, Font = Enum.Font.GothamBlack, TextColor3 = Color3.fromRGB(255, 255, 0), TextStrokeTransparency = 0, Parent = bb })
+end)
+
 local games = addTab("Игры", "🌐")
 
 local GAMES = {
@@ -1068,6 +1204,38 @@ end)
 addDivider(st)
 addSection(st, "Инфо")
 new("TextLabel", { Size = UDim2.new(1, 0, 0, 70), BackgroundTransparency = 1, Text = "KITI · PROTO — tablet edition\nуниверсальный хаб · V4\nсделано по запросу", TextColor3 = T.sub, Font = Enum.Font.Gotham, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Top, Parent = st })
+addDivider(st)
+addSection(st, "Конфиг")
+local function applyAll()
+	local h = getHum()
+	if h then h.WalkSpeed = S.speed; h.UseJumpPower = true; h.JumpPower = S.jump end
+	Cam.FieldOfView = S.fov
+	if S.fog then Lighting.FogStart = 0; Lighting.FogEnd = S.fogEnd; Lighting.FogColor = S.fogColor else Lighting.FogEnd = 100000 end
+end
+addButton(st, "💾 Сохранить настройки", function()
+	if not writefile then notify("Конфиг", "нет writefile", 3); return end
+	local out = {}
+	for k, v in pairs(S) do
+		local t = type(v)
+		if t == "number" or t == "boolean" or t == "string" then out[k] = v end
+	end
+	local ok = pcall(function() writefile("kitiproto.json", HS:JSONEncode(out)) end)
+	notify("Конфиг", ok and "сохранено" or "ошибка записи", 2)
+end)
+addButton(st, "📂 Загрузить настройки", function()
+	if not (readfile and isfile and isfile("kitiproto.json")) then notify("Конфиг", "нет файла", 3); return end
+	local ok, data = pcall(function() return HS:JSONDecode(readfile("kitiproto.json")) end)
+	if ok and type(data) == "table" then
+		for k, v in pairs(data) do
+			local t = type(v)
+			if t == "number" or t == "boolean" or t == "string" then S[k] = v end
+		end
+		applyAll()
+		notify("Конфиг", "загружено", 2)
+	else
+		notify("Конфиг", "ошибка чтения", 3)
+	end
+end)
 
 local watermark = new("TextLabel", { Name = "WM", Parent = sg, BackgroundTransparency = 1, Size = UDim2.new(0, 320, 0, 22), Position = UDim2.fromOffset(14, 10), Text = "KITI · PROTO", TextColor3 = T.accent1, Font = Enum.Font.GothamBlack, TextSize = 16, TextXAlignment = Enum.TextXAlignment.Left, TextStrokeTransparency = 0.7, TextStrokeColor3 = Color3.fromRGB(255, 255, 255), ZIndex = 100 })
 
@@ -1151,6 +1319,16 @@ task.spawn(function()
 			if S.godMode then
 				local h = getHum()
 				if h then h.MaxHealth = 9e9; h.Health = 9e9 end
+			end
+			if S.rainbowWorld then
+				local cc = Color3.fromHSV(tick() % 1, 1, 1)
+				Lighting.Ambient = cc; Lighting.OutdoorAmbient = cc
+				ensureEffects(); colorCorr.TintColor = cc
+			end
+			local hh = getHum()
+			if hh then
+				if S.drunk then hh.CameraOffset = Vector3.new(math.sin(tick() * 3) * 1.5, math.cos(tick() * 2) * 1, 0)
+				else hh.CameraOffset = Vector3.new(0, 0, 0) end
 			end
 			local hrp = getHRP()
 			if hrp then
@@ -1297,7 +1475,15 @@ RS.RenderStepped:Connect(function(dt)
 							new("TextLabel", { Name = "L", Size = UDim2.fromScale(1, 1), BackgroundTransparency = 1, Font = Enum.Font.GothamBold, TextSize = 13, TextStrokeTransparency = 0, Parent = tag })
 						end
 						local lbl = tag:FindFirstChild("L")
-						lbl.Text = p.Name .. " [" .. roleOf(p) .. "]"
+						local info
+						if S.espInfo then
+							local myhrp = getHRP()
+							local d = myhrp and math.floor((myhrp.Position - hrp.Position).Magnitude) or 0
+							info = " [" .. roleOf(p) .. "] " .. math.floor(hum2.Health) .. "hp " .. d .. "m"
+						else
+							info = " [" .. roleOf(p) .. "]"
+						end
+						lbl.Text = p.Name .. info
 						lbl.TextColor3 = col
 					else
 						local tag = head:FindFirstChild("KitiName"); if tag then tag:Destroy() end
