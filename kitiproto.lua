@@ -238,6 +238,8 @@ local function addButton(page, text, cb)
 	return b
 end
 
+local togglesById = {}
+
 local function addToggle(page, text, def, cb)
 	local row = new("Frame", { Size = UDim2.new(1, 0, 0, 38), BackgroundColor3 = T.element, Parent = page })
 	corner(row)
@@ -381,7 +383,7 @@ local S = {
 	theme = "light", rainbowUI = false, binds = {},
 }
 
-local togglesById = {}
+
 
 local DrawingLib = Drawing
 local visuals = {}
