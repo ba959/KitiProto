@@ -229,8 +229,10 @@ local function addButton(page, text, cb)
 	b.MouseLeave:Connect(function() TS:Create(b, TweenInfo.new(0.15), { BackgroundColor3 = T.element }):Play() end)
 	b.MouseButton1Click:Connect(function()
 		clickSnd()
-		TS:Create(b, TweenInfo.new(0.08), { BackgroundColor3 = T.accent1 }):Play()
-		task.delay(0.1, function() TS:Create(b, TweenInfo.new(0.2), { BackgroundColor3 = T.hover }):Play() end)
+		TS:Create(b, TweenInfo.new(0.1, Enum.EasingStyle.Back, Enum.EasingDirection.Out), { BackgroundColor3 = Color3.fromRGB(255, 105, 180), Size = UDim2.new(1, 0, 0, 42) }):Play()
+		task.delay(0.18, function()
+			TS:Create(b, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.InOut), { BackgroundColor3 = T.element, Size = UDim2.new(1, 0, 0, 38) }):Play()
+		end)
 		local ok, err = pcall(cb)
 		if not ok then notify("РћС€РёР±РєР°", tostring(err), 5) end
 	end)
@@ -754,6 +756,28 @@ addButton(me, "РќР°РґРµС‚СЊ Р°РєСЃРµСЃСЃСѓР°СЂ РїРѕ ID", function()
 	end
 end)
 addBox(me, "ID Р°РєСЃРµСЃСЃСѓР°СЂР° (С‡РёСЃР»Рѕ) + Enter", function(txt) S.hatId = tonumber(txt:gsub("%D", "")) or 0; notify("РЁР»СЏРїР°", "ID = " .. tostring(S.hatId), 2) end)
+addDivider(me)
+addSection(me, "Р‘С‹СЃС‚СЂС‹Рµ РїСЂРµСЃРµС‚С‹ Р°РєСЃРµСЃСЃСѓР°СЂРѕРІ")
+for _, hat in ipairs({ { "Dominus", 11502881681 }, { "Crown", 13890882624 }, { "Top Hat", 11500276914 }, { "Wings", 11501051981 }, { "Halo", 11501006121 } }) do
+	addButton(me, "рџЋ© " .. hat[1], function()
+		local c = getChar(); local head = c and c:FindFirstChild("Head")
+		if not head then return end
+		local ok, model = pcall(function() return InsertService:LoadAsset(hat[2]) end)
+		if ok and model then
+			local hatM = model:GetChildren()[1]
+			if hatM then
+				hatM.Parent = head
+				local att = hatM:FindFirstChildOfClass("Attachment") or hatM:FindFirstChild("HatAttachment")
+				local weld = new("WeldConstraint", { Parent = hatM })
+				weld.Part0 = head
+				weld.Part1 = hatM:IsA("BasePart") and hatM or hatM:FindFirstChildWhichIsA("BasePart")
+				notify("РЁР»СЏРїР°", hat[1] .. " РЅР°РґРµС‚Р°", 3)
+			end
+		else
+			notify("РЁР»СЏРїР°", "РЅРµ СѓРґР°Р»РѕСЃСЊ (РЅСѓР¶РµРЅ ID Рё РїСЂР°РІР°)", 4)
+		end
+	end)
+end
 addDivider(me)
 addSection(me, "РљР°РјРµСЂР°")
 addSlider(me, "FOV (РѕР±Р·РѕСЂ)", 40, 120, 70, function(v) S.fov = v; Cam.FieldOfView = v end)
@@ -1663,29 +1687,36 @@ topBtn("вЂ“", -76, function()
 	content.Visible = collapsed
 	tabbar.Visible = collapsed
 end)
+topBtn("в—€", -110, function()
+	TS:Create(win, TweenInfo.new(0.4, Enum.EasingStyle.Quint, Enum.EasingDirection.InOut), { Size = UDim2.fromOffset(0, 0), Position = UDim2.new(0.5, 0, 0.5, 0) }):Play()
+	task.delay(0.45, function()
+		win.Visible = false
+		notify("KITI", "РњРµРЅСЋ СЃРєСЂС‹С‚Рѕ. РќР°Р¶РјРё " .. S.menuKey.Name .. " РёР»Рё RightShift С‡С‚РѕР±С‹ РѕС‚РєСЂС‹С‚СЊ", 4)
+	end)
+end)
 topBtn("Г—", -42, function()
 	sg:Destroy()
-	print("[KITI-PROTO] V4 closed")
+	print("[KITI-PROTO] V6 closed")
 end)
 
 notify("KITI В· PROTO", "tablet edition Р·Р°РіСЂСѓР¶РµРЅ. РњРµРЅСЋ: " .. S.menuKey.Name .. " | СЃРєСЂС‹С‚СЊ: RightShift", 5)
-print("[KITI-PROTO] V4 loaded")
+print("[KITI-PROTO] V6 loaded")
 
 
-local petsTab = addTab("Питомцы", "??")
-addSection(petsTab, "Питомцы")
-addToggle(petsTab, "?? Включить питомцев", false, function(on)
+local petsTab = addTab("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", "??")
+addSection(petsTab, "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")
+addToggle(petsTab, "?? пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ", false, function(on)
 	S.pets = on
 	if on then spawnPets() else clearPets() end
-	notify("Питомцы", on and "включены" or "выключены", 2)
+	notify("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", on and "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" or "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ", 2)
 end)
-addSlider(petsTab, "Кол-во питомцев", 1, 10, 3, function(v) S.petCount = v; if S.pets then spawnPets() end end)
-addSlider(petsTab, "Размер питомца", 0.5, 5, 1, function(v) S.petSize = v; if S.pets then spawnPets() end end, 1)
-addSlider(petsTab, "Дистанция следования", 2, 20, 6, function(v) S.petFollowDist = v end, 1)
-addToggle(petsTab, "?? Радужные питомцы", false, function(on) S.petRainbow = on end)
-addToggle(petsTab, "? Следовать за игроком", true, function(on) S.petFollow = on end)
-addButton(petsTab, "?? Заспавнить питомцев", function() spawnPets(); notify("Питомцы", "заспавнены", 2) end)
-addButton(petsTab, "?? Убрать питомцев", function() clearPets(); notify("Питомцы", "убраны", 2) end)
+addSlider(petsTab, "пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ", 1, 10, 3, function(v) S.petCount = v; if S.pets then spawnPets() end end)
+addSlider(petsTab, "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", 0.5, 5, 1, function(v) S.petSize = v; if S.pets then spawnPets() end end, 1)
+addSlider(petsTab, "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ", 2, 20, 6, function(v) S.petFollowDist = v end, 1)
+addToggle(petsTab, "?? пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", false, function(on) S.petRainbow = on end)
+addToggle(petsTab, "? пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", true, function(on) S.petFollow = on end)
+addButton(petsTab, "?? пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ", function() spawnPets(); notify("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ", 2) end)
+addButton(petsTab, "?? пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ", function() clearPets(); notify("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", "пїЅпїЅпїЅпїЅпїЅпїЅ", 2) end)
 
 -- KITI PROTO V6 ADDON: REAL VISUALS + PETS + UTILITIES
 local function getChar() return game.Players.LocalPlayer.Character end
