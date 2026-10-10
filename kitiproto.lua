@@ -249,7 +249,9 @@ local function addToggle(page, text, def, cb)
 		local ok, err = pcall(cb, on)
 		if not ok then notify("Ошибка", tostring(err), 5) end
 	end)
-	return { Set = function(v, quiet) on = v; paint(true); if not quiet then pcall(cb, on) end end }
+	local obj = { Set = function(v, quiet) on = v; paint(true); if not quiet then pcall(cb, on) end end }
+	togglesById[text] = obj
+	return obj
 end
 
 local function addSlider(page, text, mn, mx, def, cb, dec)
@@ -352,7 +354,13 @@ local S = {
 	autoClick = false, autoClickDelay = 0.1,
 	fov = 70, thirdPerson = false, camMin = 0.5, camMax = 12,
 	clickTp = false, hud = true, watermark = true, crosshair = false, hudExtra = true,
+	antiFling = false, charSpin = false, infiniteYield = false, jumpGlitch = false,
+	skeleton = false, healthbar = false, chams = false, bulletTracer = false, teamCheck = false,
+	petCount = 3, petShape = "Ball", petSize = 1, petTrail = false, petFollow = true, petHue = 0.65, petESP = false,
+	theme = "light", rainbowUI = false, binds = {},
 }
+
+local togglesById = {}
 
 local DrawingLib = Drawing
 local visuals = {}
@@ -1039,6 +1047,29 @@ for _, tr in ipairs({ { "Roblox default", 9046141279 }, { "Among Us drip", 65847
 	end)
 end
 
+local map = addTab("Карта", "🗺")
+addSection(map, "Minimap")
+local mm = new("Frame", { Size = UDim2.fromOffset(380, 280), BackgroundColor3 = T.card, Parent = map })
+corner(mm)
+new("UIListLayout", { Parent = mm, FillDirection = Enum.FillDirection.Vertical, Padding = UDim.new(0, 6) })
+new("TextLabel", { Size = UDim2.new(1, -20, 0, 22), Position = UDim2.fromOffset(10, 6), BackgroundTransparency = 1, Text = "Простая мини-карта (только ты)", TextColor3 = T.sub, Font = Enum.Font.Gotham, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, Parent = mm })
+local mmCan = new("Frame", { Size = UDim2.new(1, -20, 1, -36), Position = UDim2.fromOffset(10, 30), BackgroundColor3 = Color3.fromRGB(240, 242, 252), ClipsDescendants = true, Parent = mm })
+corner(mmCan)
+new("UIStroke", { Color = T.accent1, Thickness = 1, Transparency = 0.6, Parent = mmCan })
+local mmYou = new("Frame", { Size = UDim2.fromOffset(8, 8), AnchorPoint = Vector2.new(0.5, 0.5), BackgroundColor3 = Color3.fromRGB(86, 198, 255), BorderSizePixel = 0, ZIndex = 10, Parent = mmCan })
+corner(mmYou)
+
+task.spawn(function()
+	while true do
+		task.wait(0.15)
+		local hrp = getHRP()
+		if hrp then
+			local c = mmCan.AbsoluteSize
+			mmYou.Position = UDim2.new(0.5, 0, 0.5, 0)
+		end
+	end
+end)
+
 local fun = addTab("Фан", "🎉")
 addSection(fun, "Приколы")
 addToggle(fun, "🌈 Радужный мир", false, function(on) S.rainbowWorld = on end)
@@ -1237,7 +1268,7 @@ addButton(st, "📂 Загрузить настройки", function()
 	end
 end)
 
-local watermark = new("TextLabel", { Name = "WM", Parent = sg, BackgroundTransparency = 1, Size = UDim2.new(0, 320, 0, 22), Position = UDim2.fromOffset(14, 10), Text = "KITI · PROTO", TextColor3 = T.accent1, Font = Enum.Font.GothamBlack, TextSize = 16, TextXAlignment = Enum.TextXAlignment.Left, TextStrokeTransparency = 0.7, TextStrokeColor3 = Color3.fromRGB(255, 255, 255), ZIndex = 100 })
+local watermark = new("TextLabel", { Name = "WM", Parent = sg, BackgroundTransparency = 1, Size = UDim2.new(0, 320, 0, 22), Position = UDim2.fromOffset(14, 10), Text = "KITI · PROTO | RightShift - hide", TextColor3 = T.accent1, Font = Enum.Font.GothamBlack, TextSize = 16, TextXAlignment = Enum.TextXAlignment.Left, TextStrokeTransparency = 0.7, TextStrokeColor3 = Color3.fromRGB(255, 255, 255), ZIndex = 100 })
 
 local hud = new("Frame", { Name = "HUD", Parent = sg, BackgroundColor3 = T.card, BackgroundTransparency = 0.15, Size = UDim2.fromOffset(210, 122), Position = UDim2.new(0, 14, 0, 40), BorderSizePixel = 0, ZIndex = 90 })
 corner(hud, 12)
@@ -1568,9 +1599,14 @@ end)
 
 UIS.InputBegan:Connect(function(i, gp)
 	if gp then return end
-	if i.KeyCode == S.menuKey and i.UserInputType == Enum.UserInputType.Keyboard then
-		win.Visible = not win.Visible
-		if gamesWin then gamesWin.Visible = win.Visible and gamesWin.Visible end
+	if i.UserInputType == Enum.UserInputType.Keyboard then
+		if i.KeyCode == S.menuKey then
+			win.Visible = not win.Visible
+			if gamesWin then gamesWin.Visible = win.Visible and gamesWin.Visible end
+		end
+		if i.KeyCode == Enum.KeyCode.RightShift then
+			win.Visible = not win.Visible
+		end
 	end
 	if S.clickTp and i.UserInputType == Enum.UserInputType.MouseButton1 then
 		local ok = pcall(function()
@@ -1594,5 +1630,5 @@ topBtn("×", -42, function()
 	print("[KITI-PROTO] V4 closed")
 end)
 
-notify("KITI · PROTO", "tablet edition загружен. Меню: " .. S.menuKey.Name, 5)
+notify("KITI · PROTO", "tablet edition загружен. Меню: " .. S.menuKey.Name .. " | скрыть: RightShift", 5)
 print("[KITI-PROTO] V4 loaded")
