@@ -788,6 +788,135 @@ addToggle(me, "РћС‚ РїРµСЂРІРѕРіРѕ Р»РёС†Р°", false, function(on)
 	notify("РљР°РјРµСЂР°", on and "1-Рµ Р»РёС†Рѕ" or "3-Рµ Р»РёС†Рѕ", 2)
 end)
 
+S.particleEnabled = false; S.particleColor = Color3.fromRGB(80, 170, 255)
+S.particleSize = 1.5; S.particleTransparency = 0.2; S.particleSpeed = 1
+S.particleLifetime = 1.2; S.particleRate = 25; S.particleSpread = 360
+S.particleRotation = 0; S.particleOffset = Vector3.new(0, 2, 0)
+S.particleLighting = true; S.particleEmit = true; S.particleBlend = false
+S.particleEmitHead = true; S.particleEmitTorso = true
+
+local particleHead = nil
+local particleTorso = nil
+local function updateParticles()
+	if S.particleEnabled then
+		local c = getChar()
+		if not c then return end
+		local head = c:FindFirstChild("Head")
+		local torso = c:FindFirstChild("UpperTorso") or c:FindFirstChild("Torso")
+		if S.particleEmitHead and head then
+			if not particleHead then
+				particleHead = Instance.new("ParticleEmitter")
+				particleHead.Name = "KitiParticleHead"
+				particleHead.Texture = "rbxassetid://258128463"
+				particleHead.LightEmission = 1
+				particleHead.LightInfluence = S.particleLighting and 0 or 1
+				particleHead.BlendMode = S.particleBlend and Enum.ParticleBlendMode.Additive or Enum.ParticleBlendMode.AlphaBlend
+				particleHead.Parent = head
+			end
+			particleHead.Color = ColorSequence.new(S.particleColor)
+			particleHead.Size = NumberSequence.new(S.particleSize)
+			particleHead.Transparency = NumberSequence.new(S.particleTransparency)
+			particleHead.Speed = NumberRange.new(S.particleSpeed * 2, S.particleSpeed * 3)
+			particleHead.Lifetime = NumberRange.new(S.particleLifetime * 0.7, S.particleLifetime)
+			particleHead.Rate = S.particleRate
+			particleHead.SpreadAngle = Vector2.new(S.particleSpread, S.particleSpread)
+			particleHead.Rotation = NumberRange.new(S.particleRotation, S.particleRotation + 10)
+			particleHead.Offset = S.particleOffset
+			particleHead.EmissionDirection = Enum.NormalId.Top
+			particleHead.Enabled = S.particleEmit
+		else
+			if particleHead then particleHead:Destroy() particleHead = nil end
+		end
+		if S.particleEmitTorso and torso then
+			if not particleTorso then
+				particleTorso = Instance.new("ParticleEmitter")
+				particleTorso.Name = "KitiParticleTorso"
+				particleTorso.Texture = "rbxassetid://258128463"
+				particleTorso.LightEmission = 1
+				particleTorso.LightInfluence = S.particleLighting and 0 or 1
+				particleTorso.BlendMode = S.particleBlend and Enum.ParticleBlendMode.Additive or Enum.ParticleBlendMode.AlphaBlend
+				particleTorso.Parent = torso
+			end
+			particleTorso.Color = ColorSequence.new(S.particleColor)
+			particleTorso.Size = NumberSequence.new(S.particleSize * 0.8)
+			particleTorso.Transparency = NumberSequence.new(S.particleTransparency)
+			particleTorso.Speed = NumberRange.new(S.particleSpeed, S.particleSpeed * 2)
+			particleTorso.Lifetime = NumberRange.new(S.particleLifetime * 0.5, S.particleLifetime)
+			particleTorso.Rate = S.particleRate * 0.5
+			particleTorso.SpreadAngle = Vector2.new(S.particleSpread, S.particleSpread)
+			particleTorso.Rotation = NumberRange.new(S.particleRotation, S.particleRotation + 10)
+			particleTorso.Offset = S.particleOffset
+			particleTorso.EmissionDirection = Enum.NormalId.Front
+			particleTorso.Enabled = S.particleEmit
+		else
+			if particleTorso then particleTorso:Destroy() particleTorso = nil end
+		end
+	else
+		if particleHead then particleHead:Destroy() particleHead = nil end
+		if particleTorso then particleTorso:Destroy() particleTorso = nil end
+	end
+end
+
+local pTab = addTab("Particles", "?")
+addSection(pTab, "Tool / Enabled")
+addToggle(pTab, "Tool / Enabled", false, function(on)
+	S.particleEnabled = on
+	updateParticles()
+	notify("Particles", on and "включены" or "выключены", 2)
+end)
+addDivider(pTab)
+addSection(pTab, "Color")
+addButton(pTab, "?? Цвет частиц", function()
+	local colors = {
+		{ "Синий", Color3.fromRGB(80, 170, 255) },
+		{ "Фиолетовый", Color3.fromRGB(180, 90, 255) },
+		{ "Розовый", Color3.fromRGB(255, 105, 180) },
+		{ "Зелёный", Color3.fromRGB(80, 255, 120) },
+		{ "Оранжевый", Color3.fromRGB(255, 160, 60) },
+		{ "Белый", Color3.fromRGB(255, 255, 255) },
+		{ "Радуга", nil },
+	}
+	local idx = 1
+	local idx2 = 0
+	while true do
+		idx2 = idx2 + 1
+		if idx2 > #colors then idx2 = 1 end
+		S.particleColor = colors[idx2][2] or Color3.fromHSV(tick() % 1, 1, 1)
+		updateParticles()
+		notify("Particles", "Цвет: " .. colors[idx2][1], 2)
+		task.wait(1.5)
+		if not S.particleEnabled then break end
+	end
+end)
+addDivider(pTab)
+addSection(pTab, "Size / Transparency / Speed / Lifetime")
+addSlider(pTab, "Size", 0.1, 8, 1.5, function(v) S.particleSize = v; updateParticles() end, 2)
+addSlider(pTab, "Transparency", 0, 1, 0.2, function(v) S.particleTransparency = v; updateParticles() end, 2)
+addSlider(pTab, "Speed", 0.1, 10, 1, function(v) S.particleSpeed = v; updateParticles() end, 2)
+addSlider(pTab, "Lifetime", 0.1, 5, 1.2, function(v) S.particleLifetime = v; updateParticles() end, 2)
+addDivider(pTab)
+addSection(pTab, "Rate / Spread / Rotation / Offset")
+addSlider(pTab, "Rate", 1, 100, 25, function(v) S.particleRate = v; updateParticles() end)
+addSlider(pTab, "Spread", 0, 360, 360, function(v) S.particleSpread = v; updateParticles() end)
+addSlider(pTab, "Rotation", 0, 360, 0, function(v) S.particleRotation = v; updateParticles() end)
+addSlider(pTab, "Offset Y", -5, 10, 2, function(v) S.particleOffset = Vector3.new(0, v, 0); updateParticles() end, 1)
+addDivider(pTab)
+addSection(pTab, "Lighting / Emit / Blend")
+addToggle(pTab, "Lighting", true, function(on) S.particleLighting = on; updateParticles() end)
+addToggle(pTab, "Emit", true, function(on) S.particleEmit = on; updateParticles() end)
+addToggle(pTab, "Blend (Additive)", false, function(on) S.particleBlend = on; updateParticles() end)
+addDivider(pTab)
+addSection(pTab, "Точки привязки (Emitters)")
+addToggle(pTab, "Head (голова)", true, function(on) S.particleEmitHead = on; updateParticles() end)
+addToggle(pTab, "Torso (торс)", true, function(on) S.particleEmitTorso = on; updateParticles() end)
+
+task.spawn(function()
+	while true do
+		task.wait(0.15)
+		pcall(updateParticles)
+	end
+end)
+
 local petsTab = addTab("РџРёС‚РѕРјС†С‹", "рџђѕ")
 addSection(petsTab, "РџРёС‚РѕРјС†С‹")
 addToggle(petsTab, "рџђѕ Р’РєР»СЋС‡РёС‚СЊ РїРёС‚РѕРјС†РµРІ", false, function(on)
@@ -1702,6 +1831,135 @@ end)
 notify("KITI В· PROTO", "tablet edition Р·Р°РіСЂСѓР¶РµРЅ. РњРµРЅСЋ: " .. S.menuKey.Name .. " | СЃРєСЂС‹С‚СЊ: RightShift", 5)
 print("[KITI-PROTO] V6 loaded")
 
+
+S.particleEnabled = false; S.particleColor = Color3.fromRGB(80, 170, 255)
+S.particleSize = 1.5; S.particleTransparency = 0.2; S.particleSpeed = 1
+S.particleLifetime = 1.2; S.particleRate = 25; S.particleSpread = 360
+S.particleRotation = 0; S.particleOffset = Vector3.new(0, 2, 0)
+S.particleLighting = true; S.particleEmit = true; S.particleBlend = false
+S.particleEmitHead = true; S.particleEmitTorso = true
+
+local particleHead = nil
+local particleTorso = nil
+local function updateParticles()
+	if S.particleEnabled then
+		local c = getChar()
+		if not c then return end
+		local head = c:FindFirstChild("Head")
+		local torso = c:FindFirstChild("UpperTorso") or c:FindFirstChild("Torso")
+		if S.particleEmitHead and head then
+			if not particleHead then
+				particleHead = Instance.new("ParticleEmitter")
+				particleHead.Name = "KitiParticleHead"
+				particleHead.Texture = "rbxassetid://258128463"
+				particleHead.LightEmission = 1
+				particleHead.LightInfluence = S.particleLighting and 0 or 1
+				particleHead.BlendMode = S.particleBlend and Enum.ParticleBlendMode.Additive or Enum.ParticleBlendMode.AlphaBlend
+				particleHead.Parent = head
+			end
+			particleHead.Color = ColorSequence.new(S.particleColor)
+			particleHead.Size = NumberSequence.new(S.particleSize)
+			particleHead.Transparency = NumberSequence.new(S.particleTransparency)
+			particleHead.Speed = NumberRange.new(S.particleSpeed * 2, S.particleSpeed * 3)
+			particleHead.Lifetime = NumberRange.new(S.particleLifetime * 0.7, S.particleLifetime)
+			particleHead.Rate = S.particleRate
+			particleHead.SpreadAngle = Vector2.new(S.particleSpread, S.particleSpread)
+			particleHead.Rotation = NumberRange.new(S.particleRotation, S.particleRotation + 10)
+			particleHead.Offset = S.particleOffset
+			particleHead.EmissionDirection = Enum.NormalId.Top
+			particleHead.Enabled = S.particleEmit
+		else
+			if particleHead then particleHead:Destroy() particleHead = nil end
+		end
+		if S.particleEmitTorso and torso then
+			if not particleTorso then
+				particleTorso = Instance.new("ParticleEmitter")
+				particleTorso.Name = "KitiParticleTorso"
+				particleTorso.Texture = "rbxassetid://258128463"
+				particleTorso.LightEmission = 1
+				particleTorso.LightInfluence = S.particleLighting and 0 or 1
+				particleTorso.BlendMode = S.particleBlend and Enum.ParticleBlendMode.Additive or Enum.ParticleBlendMode.AlphaBlend
+				particleTorso.Parent = torso
+			end
+			particleTorso.Color = ColorSequence.new(S.particleColor)
+			particleTorso.Size = NumberSequence.new(S.particleSize * 0.8)
+			particleTorso.Transparency = NumberSequence.new(S.particleTransparency)
+			particleTorso.Speed = NumberRange.new(S.particleSpeed, S.particleSpeed * 2)
+			particleTorso.Lifetime = NumberRange.new(S.particleLifetime * 0.5, S.particleLifetime)
+			particleTorso.Rate = S.particleRate * 0.5
+			particleTorso.SpreadAngle = Vector2.new(S.particleSpread, S.particleSpread)
+			particleTorso.Rotation = NumberRange.new(S.particleRotation, S.particleRotation + 10)
+			particleTorso.Offset = S.particleOffset
+			particleTorso.EmissionDirection = Enum.NormalId.Front
+			particleTorso.Enabled = S.particleEmit
+		else
+			if particleTorso then particleTorso:Destroy() particleTorso = nil end
+		end
+	else
+		if particleHead then particleHead:Destroy() particleHead = nil end
+		if particleTorso then particleTorso:Destroy() particleTorso = nil end
+	end
+end
+
+local pTab = addTab("Particles", "?")
+addSection(pTab, "Tool / Enabled")
+addToggle(pTab, "Tool / Enabled", false, function(on)
+	S.particleEnabled = on
+	updateParticles()
+	notify("Particles", on and "включены" or "выключены", 2)
+end)
+addDivider(pTab)
+addSection(pTab, "Color")
+addButton(pTab, "?? Цвет частиц", function()
+	local colors = {
+		{ "Синий", Color3.fromRGB(80, 170, 255) },
+		{ "Фиолетовый", Color3.fromRGB(180, 90, 255) },
+		{ "Розовый", Color3.fromRGB(255, 105, 180) },
+		{ "Зелёный", Color3.fromRGB(80, 255, 120) },
+		{ "Оранжевый", Color3.fromRGB(255, 160, 60) },
+		{ "Белый", Color3.fromRGB(255, 255, 255) },
+		{ "Радуга", nil },
+	}
+	local idx = 1
+	local idx2 = 0
+	while true do
+		idx2 = idx2 + 1
+		if idx2 > #colors then idx2 = 1 end
+		S.particleColor = colors[idx2][2] or Color3.fromHSV(tick() % 1, 1, 1)
+		updateParticles()
+		notify("Particles", "Цвет: " .. colors[idx2][1], 2)
+		task.wait(1.5)
+		if not S.particleEnabled then break end
+	end
+end)
+addDivider(pTab)
+addSection(pTab, "Size / Transparency / Speed / Lifetime")
+addSlider(pTab, "Size", 0.1, 8, 1.5, function(v) S.particleSize = v; updateParticles() end, 2)
+addSlider(pTab, "Transparency", 0, 1, 0.2, function(v) S.particleTransparency = v; updateParticles() end, 2)
+addSlider(pTab, "Speed", 0.1, 10, 1, function(v) S.particleSpeed = v; updateParticles() end, 2)
+addSlider(pTab, "Lifetime", 0.1, 5, 1.2, function(v) S.particleLifetime = v; updateParticles() end, 2)
+addDivider(pTab)
+addSection(pTab, "Rate / Spread / Rotation / Offset")
+addSlider(pTab, "Rate", 1, 100, 25, function(v) S.particleRate = v; updateParticles() end)
+addSlider(pTab, "Spread", 0, 360, 360, function(v) S.particleSpread = v; updateParticles() end)
+addSlider(pTab, "Rotation", 0, 360, 0, function(v) S.particleRotation = v; updateParticles() end)
+addSlider(pTab, "Offset Y", -5, 10, 2, function(v) S.particleOffset = Vector3.new(0, v, 0); updateParticles() end, 1)
+addDivider(pTab)
+addSection(pTab, "Lighting / Emit / Blend")
+addToggle(pTab, "Lighting", true, function(on) S.particleLighting = on; updateParticles() end)
+addToggle(pTab, "Emit", true, function(on) S.particleEmit = on; updateParticles() end)
+addToggle(pTab, "Blend (Additive)", false, function(on) S.particleBlend = on; updateParticles() end)
+addDivider(pTab)
+addSection(pTab, "Точки привязки (Emitters)")
+addToggle(pTab, "Head (голова)", true, function(on) S.particleEmitHead = on; updateParticles() end)
+addToggle(pTab, "Torso (торс)", true, function(on) S.particleEmitTorso = on; updateParticles() end)
+
+task.spawn(function()
+	while true do
+		task.wait(0.15)
+		pcall(updateParticles)
+	end
+end)
 
 local petsTab = addTab("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", "??")
 addSection(petsTab, "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")
