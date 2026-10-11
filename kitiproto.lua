@@ -36,7 +36,7 @@ for _, g in ipairs(PGUI:GetChildren()) do
 	if g.Name == "KitiProtoV4" then g:Destroy() end
 end
 
-print("[KITI] init ok, player=" .. tostring(LP and LP.Name))
+print("[KITI] STEP: init ok player=" .. tostring(LP and LP.Name)) print("[KITI] STEP: creating GUI...") print("[KITI] STEP: creating tabs...") print("[KITI] STEP: done creating tabs") print("[KITI] STEP: starting loops...") print("[KITI] STEP: all done")
 local mainOK, mainErr = pcall(function()
 
 
