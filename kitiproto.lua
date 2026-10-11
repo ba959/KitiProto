@@ -1977,9 +1977,6 @@ addButton(petsTab, "?? ·········· ········", function() spawnP
 addButton(petsTab, "?? ······ ········", function() clearPets(); notify("·······", "······", 2) end)
 
 -- KITI PROTO V6 ADDON: REAL VISUALS + PETS + UTILITIES
-local function getChar() return game.Players.LocalPlayer.Character end
-local function getHRP() local c=getChar(); return c and c:FindFirstChild("HumanoidRootPart") end
-local function getHum() local c=getChar(); return c and c:FindFirstChilDOFClass("Humanoid") end
 
 S.skel = false; S.HPbar = false; S.chams = false; S.btrac = false; S.team = true; S.pets = false
 S.petModel = "Ball"; S.petCount = 3; S.petSize = 1; S.petColor = Color3.fromRGB(126,108,255); S.petRainbow = false; S.petFollowDist = 6
