@@ -2028,6 +2028,190 @@ local function applyTheme()
 	T.bg=T.bg; T.card=t.card; T.text=t.text; T.sub=t.sub; T.accent1=t.accent1; T.accent2=t.accent2
 end
 
+local hellTab = addTab("Ад", "??")
+addSection(hellTab, "Зловещий мир")
+addButton(hellTab, "?? Включить ад", function()
+	Lighting.Ambient = Color3.fromRGB(60, 20, 20)
+	Lighting.OutdoorAmbient = Color3.fromRGB(80, 30, 30)
+	Lighting.Brightness = 0.8
+	Lighting.ClockTime = 0
+	Lighting.FogColor = Color3.fromRGB(120, 40, 40)
+	Lighting.FogEnd = 800
+	Lighting.FogStart = 0
+	local sky = Lighting:FindFirstChildOfClass("Sky")
+	if not sky then sky = Instance.new("Sky") sky.Parent = Lighting end
+	sky.SkyboxBk = "rbxassetid://159454299"
+	sky.SkyboxDn = "rbxassetid://159454296"
+	sky.SkyboxFt = "rbxassetid://159454293"
+	sky.SkyboxLf = "rbxassetid://159454286"
+	sky.SkyboxRt = "rbxassetid://159454300"
+	sky.SkyboxUp = "rbxassetid://159454288"
+	sky.StarCount = 0
+	sky.CelestialBodiesShown = false
+	for _, d in ipairs(workspace:GetDescendants()) do
+		if d:IsA("BasePart") and d.Anchored and d.Size.Y > 50 then
+			d.Color = Color3.fromRGB(60, 30, 30)
+			d.Material = Enum.Material.Slate
+		end
+	end
+	local portal = Instance.new("Part")
+	portal.Shape = Enum.PartType.Ball
+	portal.Size = Vector3.new(30, 30, 30)
+	portal.Position = Vector3.new(0, 50, -200)
+	portal.Anchored = true
+	portal.CanCollide = false
+	portal.Material = Enum.Material.Neon
+	portal.Color = Color3.fromRGB(40, 10, 10)
+	portal.Parent = workspace
+	local ring = Instance.new("Part")
+	ring.Shape = Enum.PartType.Cylinder
+	ring.Size = Vector3.new(2, 40, 40)
+	ring.CFrame = portal.CFrame * CFrame.Angles(0, 0, math.rad(90))
+	ring.Anchored = true
+	ring.CanCollide = false
+	ring.Material = Enum.Material.Neon
+	ring.Color = Color3.fromRGB(180, 90, 255)
+	ring.Parent = workspace
+	local pe = Instance.new("ParticleEmitter", ring)
+	pe.Texture = "rbxassetid://258128463"
+	pe.Rate = 80
+	pe.Lifetime = NumberRange.new(0.5, 1.5)
+	pe.Speed = NumberRange.new(5, 15)
+	pe.SpreadAngle = Vector2.new(360, 360)
+	pe.Color = ColorSequence.new(Color3.fromRGB(180, 90, 255))
+	pe.Size = NumberSequence.new(1)
+	pe.LightEmission = 1
+	task.spawn(function()
+		while ring.Parent do
+			ring.CFrame = ring.CFrame * CFrame.Angles(0, math.rad(1), 0)
+			task.wait(0.03)
+		end
+	end)
+	notify("Ад", "зловещий мир включён", 3)
+end)
+addButton(hellTab, "? Обычный мир", function()
+	Lighting.Ambient = Color3.fromRGB(140, 140, 140)
+	Lighting.OutdoorAmbient = Color3.fromRGB(150, 150, 150)
+	Lighting.Brightness = 2
+	Lighting.ClockTime = 14
+	Lighting.FogEnd = 100000
+	Lighting.FogStart = 0
+	clearSky()
+	notify("Ад", "обычный мир", 2)
+end)
+
+local topBar = new("Frame", { Size = UDim2.fromOffset(220, 36), Position = UDim2.new(1, -230, 0, 8), BackgroundColor3 = Color3.fromRGB(20, 22, 32), BackgroundTransparency = 0.15, BorderSizePixel = 0, Active = true, Draggable = true, ZIndex = 60, Parent = sg })
+corner(topBar, 12)
+stroke(topBar, Color3.fromRGB(126, 108, 255), 1, 0.5)
+
+local function topToggle(label, state, cb)
+	local t = new("TextButton", { Size = UDim2.fromOffset(50, 24), Position = UDim2.fromOffset(8, 6), BackgroundColor3 = state and Color3.fromRGB(0, 200, 100) or Color3.fromRGB(80, 80, 90), Text = label, TextColor3 = Color3.fromRGB(255, 255, 255), Font = Enum.Font.GothamBold, TextSize = 10, AutoButtonColor = false, ZIndex = 61, Parent = topBar })
+	corner(t, 6)
+	t.MouseButton1Click:Connect(function()
+		state = not state
+		t.BackgroundColor3 = state and Color3.fromRGB(0, 200, 100) or Color3.fromRGB(80, 80, 90)
+		t.Text = label .. (state and " ON" or " OFF")
+		cb(state)
+	end)
+	t.Text = label .. (state and " ON" or " OFF")
+	return t
+end
+
+local aimBtn = topToggle("Aim", false, function(on) togglesById["Aimbot"]:Set(on) end)
+aimBtn.Position = UDim2.fromOffset(8, 6)
+local espBtn = topToggle("ESP", false, function(on) togglesById["ESP имена"]:Set(on) end)
+espBtn.Position = UDim2.fromOffset(64, 6)
+local trigBtn = topToggle("TRIG", false, function(on) togglesById["Triggerbot"]:Set(on) end)
+trigBtn.Position = UDim2.fromOffset(120, 6)
+local gearBtn = new("TextButton", { Size = UDim2.fromOffset(36, 24), Position = UDim2.new(1, -42, 0, 6), BackgroundColor3 = Color3.fromRGB(126, 108, 255), Text = "?", TextColor3 = Color3.fromRGB(255, 255, 255), Font = Enum.Font.GothamBold, TextSize = 14, AutoButtonColor = false, ZIndex = 61, Parent = topBar })
+corner(gearBtn, 8)
+gearBtn.MouseButton1Click:Connect(function() clickSnd(); win.Visible = not win.Visible end)
+
+local recLbl = new("TextLabel", { Size = UDim2.new(0, 160, 0, 20), Position = UDim2.new(1, -180, 0, 48), BackgroundTransparency = 1, Text = "? Recording has started", TextColor3 = Color3.fromRGB(255, 80, 80), Font = Enum.Font.GothamBold, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Right, ZIndex = 60, Parent = sg })
+
+local sideBar = new("Frame", { Size = UDim2.fromOffset(44, 300), Position = UDim2.new(0, 8, 0.5, -150), BackgroundColor3 = Color3.fromRGB(20, 22, 32), BackgroundTransparency = 0.1, BorderSizePixel = 0, Active = true, Draggable = true, ZIndex = 55, Parent = sg })
+corner(sideBar, 14)
+stroke(sideBar, Color3.fromRGB(126, 108, 255), 1, 0.5)
+local statueBtn = new("TextButton", { Size = UDim2.fromOffset(32, 32), Position = UDim2.new(0.5, -16, 16), BackgroundColor3 = Color3.fromRGB(126, 108, 255), Text = "??", TextColor3 = Color3.fromRGB(255, 255, 255), Font = Enum.Font.GothamBold, TextSize = 16, AutoButtonColor = false, ZIndex = 56, Parent = sideBar })
+corner(statueBtn, 10)
+statueBtn.MouseButton1Click:Connect(function() clickSnd(); notify("SideBar", "Профиль", 2) end)
+local globeBtn = new("TextButton", { Size = UDim2.fromOffset(32, 32), Position = UDim2.new(0.5, -16, 60), BackgroundColor3 = Color3.fromRGB(80, 80, 90), Text = "??", TextColor3 = Color3.fromRGB(255, 255, 255), Font = Enum.Font.GothamBold, TextSize = 16, AutoButtonColor = false, ZIndex = 56, Parent = sideBar })
+corner(globeBtn, 10)
+globeBtn.MouseButton1Click:Connect(function() clickSnd(); hellTab.btn.MouseButton1Click:Fire() end)
+local skullBtn = new("TextButton", { Size = UDim2.fromOffset(32, 32), Position = UDim2.new(0.5, -16, 104), BackgroundColor3 = Color3.fromRGB(80, 80, 90), Text = "??", TextColor3 = Color3.fromRGB(255, 255, 255), Font = Enum.Font.GothamBold, TextSize = 16, AutoButtonColor = false, ZIndex = 56, Parent = sideBar })
+corner(skullBtn, 10)
+skullBtn.MouseButton1Click:Connect(function() clickSnd(); notify("SideBar", "Ад", 2) end)
+
+local avatarImg = new("ImageLabel", { Size = UDim2.fromOffset(64, 64), Position = UDim2.new(1, -74, 1, -74), BackgroundColor3 = Color3.fromRGB(20, 22, 32), BorderSizePixel = 0, Image = "rbxassetid://6764432320", ZIndex = 58, Parent = sg })
+corner(avatarImg, 12)
+new("UIStroke", { Color = Color3.fromRGB(126, 108, 255), Thickness = 1, Parent = avatarImg })
+
+local skeletonConn = nil
+local function drawSkeleton(p, col)
+	local c = p.Character
+	if not c then return end
+	local hrp = c:FindFirstChild("HumanoidRootPart")
+	if not hrp then return end
+	local parts = {"Head", "UpperTorso", "LowerTorso", "LeftUpperArm", "LeftLowerArm", "LeftHand", "RightUpperArm", "RightLowerArm", "RightHand", "LeftUpperLeg", "LeftLowerLeg", "LeftFoot", "RightUpperLeg", "RightLowerLeg", "RightFoot"}
+	local joints = {}
+	for _, n in ipairs(parts) do
+		local pr = c:FindFirstChild(n)
+		if pr then joints[n] = pr end
+	end
+	local v = visuals[p]
+	if not v.bones then
+		v.bones = {}
+		for i = 1, 15 do
+			v.bones[i] = DrawingLib and DrawingLib.new("Line") or nil
+			if v.bones[i] then v.bones[i].Thickness = 1 v.bones[i].Transparency = 0.4 end
+		end
+	end
+	local segs = {}
+	local function seg(a, b)
+		if joints[a] and joints[b] then table.insert(segs, {joints[a], joints[b]}) end
+	end
+	seg("Head", "UpperTorso") seg("Head", "Torso")
+	seg("UpperTorso", "LowerTorso") seg("Torso", "LowerTorso")
+	seg("UpperTorso", "LeftUpperArm") seg("UpperTorso", "RightUpperArm")
+	seg("LeftUpperArm", "LeftLowerArm") seg("LeftLowerArm", "LeftHand")
+	seg("RightUpperArm", "RightLowerArm") seg("RightLowerArm", "RightHand")
+	seg("LowerTorso", "LeftUpperLeg") seg("LowerTorso", "RightUpperLeg")
+	seg("LeftUpperLeg", "LeftLowerLeg") seg("LeftLowerLeg", "LeftFoot")
+	seg("RightUpperLeg", "RightLowerLeg") seg("RightLowerLeg", "RightFoot")
+	for i, s in ipairs(segs) do
+		if i <= #v.bones then
+			local line = v.bones[i]
+			local a = w2s(s[1].Position)
+			local b = w2s(s[2].Position)
+			if a and b then
+				line.From = Vector2.new(a.X, a.Y)
+				line.To = Vector2.new(b.X, b.Y)
+				line.Color = col
+				line.Visible = true
+			else line.Visible = false end
+		end
+	end
+	for i = #segs + 1, #v.bones do v.bones[i].Visible = false end
+end
+
+task.spawn(function()
+	while true do
+		task.wait(0.12)
+		pcall(function()
+			if S.skel then
+				for _, p in ipairs(Players:GetPlayers()) do
+					if p ~= LP and p.Character then
+						local hum = p.Character:FindFirstChildOfClass("Humanoid")
+						if hum and hum.Health > 0 then
+							drawSkeleton(p, S.rainbowEsp and Color3.fromHSV(tick() % 1, 1, 1) or roleColor(p))
+						end
+					end
+				end
+			end
+		end)
+	end
+end)
+
 task.spawn(function()
 	while true do
 		task.wait(0.1)
