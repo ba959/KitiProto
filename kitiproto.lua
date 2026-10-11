@@ -26,7 +26,7 @@ end, "services")
 
 safe(function()
 	LP = Players.LocalPlayer
-	Cam = workspace.CurrentCamera
+	Cam = workSpace.CurrentCamera
 	PGUI = LP:WaitForChild("PlayerGui")
 end, "player")
 
@@ -80,9 +80,9 @@ local sg = new("ScreenGui", {
 
 local cfg = { sounds = true }
 
-local sndHover = new("Sound", { SoundId = "rbxassetid://6895079852", Volume = 0.25, Parent = SoundService })
-local sndClick = new("Sound", { SoundId = "rbxassetid://6895079853", Volume = 0.35, Parent = SoundService })
-local sndOpen = new("Sound", { SoundId = "rbxassetid://6895079851", Volume = 0.4, Parent = SoundService })
+local sndHover = new("Sound", { SoundID = "rbxassetid://6895079852", Volume = 0.25, Parent = SoundService })
+local sndClick = new("Sound", { SoundID = "rbxassetid://6895079853", Volume = 0.35, Parent = SoundService })
+local sndOpen = new("Sound", { SoundID = "rbxassetid://6895079851", Volume = 0.4, Parent = SoundService })
 local function playSnd(s)
 	if not cfg.sounds then return end
 	pcall(function() s.TimePosition = 0; s:Play() end)
@@ -120,14 +120,14 @@ end
 
 local WIN_W, WIN_H = 700, 460
 
-local shadow = new("Frame", { Size = UDim2.fromOffset(WIN_W + 8, WIN_H + 8), Position = UDim2.new(0.5, -WIN_W / 2 - 4, 0.5, -WIN_H / 2 + 6), BackgroundColor3 = Color3.fromRGB(150, 160, 200), BackgroundTransparency = 0.75, BorderSizePixel = 0, ZIndex = 0, Parent = sg })
+local shadow = new("Frame", { Size = UDim2.fromOffset(WIN_W + 8, WIN_H + 8), Position = UDim2.new(0.5, -WIN_W / 2 - 4, 0.5, -WIN_H / 2 + 6), BackgroundColor3 = Color3.fromRGB(8, 10, 16), BackgroundTransparency = 0.35, BorderSizePixel = 0, ZIndex = 0, Parent = sg })
 corner(shadow, 18)
 
-local win = new("Frame", { Size = UDim2.fromOffset(WIN_W, WIN_H), Position = UDim2.new(0.5, -WIN_W / 2, 0.5, -WIN_H / 2), BackgroundColor3 = T.bg, BorderSizePixel = 0, Active = true, Draggable = true, ClipsDescendants = true, ZIndex = 1, Parent = sg })
+local win = new("Frame", { Size = UDim2.fromOffset(WIN_W, WIN_H), Position = UDim2.new(0.5, -WIN_W / 2, 0.5, -WIN_H / 2), BackgroundColor3 = T.bg, BackgroundTransparency = 0.08, BorderSizePixel = 0, Active = true, Draggable = true, ClipsDescendants = true, ZIndex = 1, Parent = sg })
 corner(win, 18)
 local winStroke = stroke(win, T.accent1, 1.4, 0.5)
 
-local topbar = new("Frame", { Size = UDim2.new(1, 0, 0, 54), BackgroundColor3 = T.card, BorderSizePixel = 0, ZIndex = 2, Parent = win })
+local topbar = new("Frame", { Size = UDim2.new(1, 0, 0, 54), BackgroundColor3 = T.card, BackgroundTransparency = 0.04, BorderSizePixel = 0, ZIndex = 2, Parent = win })
 local logo = new("Frame", { Size = UDim2.fromOffset(34, 34), Position = UDim2.fromOffset(16, 10), BorderSizePixel = 0, ZIndex = 3, Parent = topbar })
 corner(logo)
 grad(logo, T.accent1, T.accent2, 30)
@@ -145,15 +145,15 @@ local function topBtn(text, xoff, cb)
 	return b
 end
 
-local tabbar = new("ScrollingFrame", { Size = UDim2.new(1, -32, 0, 40), Position = UDim2.fromOffset(16, 62), BackgroundColor3 = T.card, BorderSizePixel = 0, ZIndex = 2, Parent = win, ScrollBarThickness = 0, ScrollingDirection = Enum.ScrollingDirection.X, CanvasSize = UDim2.new(0, 0, 0, 0), AutomaticCanvasSize = Enum.AutomaticSize.X, ScrollingEnabled = true })
+local tabbar = new("ScrollingFrame", { Size = UDim2.new(1, -32, 0, 40), Position = UDim2.fromOffset(16, 62), BackgroundColor3 = T.card, BackgroundTransparency = 0.15, BorderSizePixel = 0, ZIndex = 2, Parent = win, ScrollBarThickness = 0, ScrollingDirection = Enum.ScrollingDirection.X, CanvasSize = UDim2.new(0, 0, 0, 0), AutomaticCanvasSize = Enum.AutomaticSize.X, ScrollingEnabled = true })
 corner(tabbar, 12)
-new("UIListLayout", { Parent = tabbar, Padding = UDim.new(0, 4), FillDirection = Enum.FillDirection.Horizontal, VerticalAlignment = Enum.VerticalAlignment.Center, SortOrder = Enum.SortOrder.LayoutOrder })
+new("UIListLayout", { Parent = tabbar, Padding = UDim.new(0, 4), FillDirection = Enum.FillDirection.Horizontal, VerticalAlignment = Enum.VerticalAlignment.CEnter, SortOrder = Enum.SortOrder.LayoutOrder })
 new("UIPadding", { PaddingLeft = UDim.new(0, 6), PaddingRight = UDim.new(0, 6), Parent = tabbar })
 
-local content = new("Frame", { Size = UDim2.new(1, -32, 1, -122), Position = UDim2.fromOffset(16, 110), BackgroundColor3 = T.card, BorderSizePixel = 0, ZIndex = 2, Parent = win })
+local content = new("Frame", { Size = UDim2.new(1, -32, 1, -122), Position = UDim2.fromOffset(16, 110), BackgroundColor3 = T.card, BackgroundTransparency = 0.05, BorderSizePixel = 0, ZIndex = 2, Parent = win })
 corner(content, 14)
 
-local shine = new("Frame", { Size = UDim2.new(1, 0, 1, 0), BackgroundColor3 = Color3.fromRGB(255, 255, 255), BackgroundTransparency = 0.88, BorderSizePixel = 0, ZIndex = 50, Parent = win })
+local shine = new("Frame", { Size = UDim2.new(1, 0, 1, 0), BackgroundColor3 = Color3.fromRGB(200, 210, 255), BackgroundTransparency = 0.94, BorderSizePixel = 0, ZIndex = 50, Parent = win })
 corner(shine, 18)
 local shineGrad = new("UIGradient", { Transparency = NumberSequence.new({ NumberSequenceKeypoint.new(0, 1), NumberSequenceKeypoint.new(0.45, 0.85), NumberSequenceKeypoint.new(0.5, 0), NumberSequenceKeypoint.new(0.55, 0.85), NumberSequenceKeypoint.new(1, 1) }), Rotation = 20, Parent = shine })
 
@@ -176,7 +176,7 @@ local function addTab(name, icon)
 			t.btn.TextColor3 = on and Color3.fromRGB(255, 255, 255) or T.sub
 			if on then
 				t.btn.BackgroundColor3 = T.accent1
-				local g = t.btn:FindFirstChildOfClass("UIGradient")
+				local g = t.btn:FindFirstChilDOFClass("UIGradient")
 				if not g then g = grad(t.btn, T.accent1, T.accent2, 30) end
 			end
 		end
@@ -240,7 +240,7 @@ local function addButton(page, text, cb)
 	return b
 end
 
-local togglesById = {}
+local togglesByID = {}
 
 local function addToggle(page, text, def, cb)
 	local row = new("Frame", { Size = UDim2.new(1, 0, 0, 38), BackgroundColor3 = T.element, Parent = page })
@@ -321,10 +321,10 @@ local function addDropdown(page, text, options, def, cb)
 	local row = new("Frame", { Size = UDim2.new(1, 0, 0, 38), BackgroundColor3 = T.element, Parent = page })
 	corner(row)
 	row:SetAttribute("kw", string.lower(text))
-	local head = new("TextButton", { Size = UDim2.new(1, 0, 0, 38), BackgroundColor3 = Color3.fromRGB(255, 255, 255), BackgroundTransparency = 1, Text = "", Parent = row })
-	new("TextLabel", { Size = UDim2.new(1, -170, 0, 38), Position = UDim2.fromOffset(14, 0), BackgroundTransparency = 1, Text = text, TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 13, TextXAlignment = Enum.TextXAlignment.Left, Parent = head })
-	local cur = new("TextLabel", { Size = UDim2.fromOffset(120, 38), Position = UDim2.new(1, -160, 0, 0), BackgroundTransparency = 1, Text = def or (options[1] or "-"), TextColor3 = T.accent1, Font = Enum.Font.GothamBold, TextSize = 13, TextXAlignment = Enum.TextXAlignment.Right, Parent = head })
-	local arrow = new("TextLabel", { Size = UDim2.fromOffset(20, 38), Position = UDim2.new(1, -28, 0, 0), BackgroundTransparency = 1, Text = "v", TextColor3 = T.sub, Font = Enum.Font.GothamBold, TextSize = 13, Parent = head })
+	local Head = new("TextButton", { Size = UDim2.new(1, 0, 0, 38), BackgroundColor3 = Color3.fromRGB(255, 255, 255), BackgroundTransparency = 1, Text = "", Parent = row })
+	new("TextLabel", { Size = UDim2.new(1, -170, 0, 38), Position = UDim2.fromOffset(14, 0), BackgroundTransparency = 1, Text = text, TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 13, TextXAlignment = Enum.TextXAlignment.Left, Parent = Head })
+	local cur = new("TextLabel", { Size = UDim2.fromOffset(120, 38), Position = UDim2.new(1, -160, 0, 0), BackgroundTransparency = 1, Text = def or (options[1] or "-"), TextColor3 = T.accent1, Font = Enum.Font.GothamBold, TextSize = 13, TextXAlignment = Enum.TextXAlignment.Right, Parent = Head })
+	local arrow = new("TextLabel", { Size = UDim2.fromOffset(20, 38), Position = UDim2.new(1, -28, 0, 0), BackgroundTransparency = 1, Text = "v", TextColor3 = T.sub, Font = Enum.Font.GothamBold, TextSize = 13, Parent = Head })
 	local open = false
 	local opts = {}
 	for i, opt in ipairs(options) do
@@ -340,8 +340,8 @@ local function addDropdown(page, text, options, def, cb)
 			pcall(cb, opt)
 		end)
 	end
-	head.MouseEnter:Connect(function() hoverSnd() end)
-	head.MouseButton1Click:Connect(function()
+	Head.MouseEnter:Connect(function() hoverSnd() end)
+	Head.MouseButton1Click:Connect(function()
 		clickSnd(); open = not open
 		for _, o in ipairs(opts) do o.Visible = open end
 		arrow.Text = open and "^" or "v"
@@ -355,34 +355,34 @@ local function addBox(page, placeholder, cb)
 	corner(box)
 	box:SetAttribute("kw", string.lower(placeholder))
 	new("UIPadding", { PaddingLeft = UDim.new(0, 12), Parent = box })
-	box.FocusLost:Connect(function(enter) if enter then clickSnd(); pcall(cb, box.Text) end end)
+	box.FocusLost:Connect(function(Enter) if Enter then clickSnd(); pcall(cb, box.Text) end end)
 	return box
 end
 
 local function getChar() return LP.Character end
 local function getHRP() local c = LP.Character; return c and c:FindFirstChild("HumanoidRootPart") end
-local function getHum() local c = LP.Character; return c and c:FindFirstChildOfClass("Humanoid") end
+local function getHum() local c = LP.Character; return c and c:FindFirstChilDOFClass("Humanoid") end
 local function hrpOf(p) local c = p and p.Character; return c and c:FindFirstChild("HumanoidRootPart") end
 
 local S = {
-	speed = 16, jump = 50, menuKey = Enum.KeyCode.RightControl,
-	fly = false, flySpeed = 60, noclip = false, infJump = false, antiAfk = false,
-	fullbright = false, clockLock = false, clock = 14,
+	Speed = 16, jump = 50, menuKey = Enum.KeyCode.RightControl,
+	Fly = false, FlySpeed = 60, Noclip = false, infJump = false, antiAfk = false,
+	Fullbright = false, clockLock = false, clock = 14,
 	fog = false, fogEnd = 350, fogColor = Color3.fromRGB(255, 255, 255),
 	haze = false, hazeVal = 0.3,
-	beauty = false, sat = 0.15, bloomI = 0.9, sunraysOn = true, dofOn = false,
-	rainbow = false, trail = false, fire = false, godMode = false, autoRespawn = false, freeze = false,
-	espNames = false, espHighlight = false, espRole = true, xray = false, rainbowEsp = false, espInfo = false,
-	rainbowWorld = false, drunk = false, soundId = 0,
-	aimbot = false, aimAlways = false, aimKey = Enum.KeyCode.E, aimFov = 150, aimPart = "Head", aimSmooth = 0.5,
-	trigger = false, triggerKey = Enum.KeyCode.Q, hitbox = false, hitboxSize = 6,
+	beauty = false, sat = 0.15, bloomI = 0.9, sunraysOn = true, DOFOn = false,
+	rainbow = false, trail = false, fire = false, godMode = false, autoRESPawn = false, freeze = false,
+	ESPNames = false, ESPHighlight = false, ESPRole = true, xray = false, rainbowESP = false, ESPInfo = false,
+	rainbowWorld = false, drunk = false, soundID = 0,
+	Aimbot = false, AimAlways = false, AimKey = Enum.KeyCode.E, AimFOV = 150, AimPart = "Head", AimSmooth = 0.5,
+	TRIGger = false, TRIGgerKey = Enum.KeyCode.Q, hitbox = false, hitboxSize = 6,
 	autoClick = false, autoClickDelay = 0.1,
-	fov = 70, thirdPerson = false, camMin = 0.5, camMax = 12,
-	clickTp = false, hud = true, watermark = true, crosshair = false, hudExtra = true,
+	FOV = 70, thirdPerson = false, camMin = 0.5, camMax = 12,
+	clickTp = false, HUD = true, Watermark = true, crosshair = false, HUDExtra = true,
 	antiFling = false, charSpin = false, infiniteYield = false, jumpGlitch = false,
-	skeleton = false, healthbar = false, chams = false, bulletTracer = false, teamCheck = false,
+	Skeleton = false, healthbar = false, chams = false, bulletTracer = false, teamCheck = false,
 	petCount = 3, petShape = "Ball", petSize = 1, petTrail = false, petFollow = true, petHue = 0.65, petESP = false,
-	theme = "light", rainbowUI = false, binds = {},
+	theme = "dark", rainbowUI = false, binds = {}, menuOpacity = 0.9, menuScale = 1, glow = false, smoothGui = true,
 }
 
 
@@ -421,7 +421,7 @@ local function roleOf(p)
 end
 
 local function roleColor(p)
-	if not S.espRole then return Color3.fromRGB(255, 80, 80) end
+	if not S.ESPRole then return Color3.fromRGB(255, 80, 80) end
 	local r = roleOf(p)
 	if r == "MURDERER" then return Color3.fromRGB(240, 70, 70) end
 	if r == "SHERIFF" then return Color3.fromRGB(70, 150, 255) end
@@ -429,16 +429,16 @@ local function roleColor(p)
 end
 
 local function findTarget()
-	local center = Vector2.new(Cam.ViewportSize.X / 2, Cam.ViewportSize.Y / 2)
-	local best, bestD, bestPos = nil, S.aimFov, nil
+	local cEnter = Vector2.new(Cam.ViewportSize.X / 2, Cam.ViewportSize.Y / 2)
+	local best, bestD, bestPos = nil, S.AimFOV, nil
 	for _, p in ipairs(Players:GetPlayers()) do
 		if p ~= LP and p.Character then
-			local hum = p.Character:FindFirstChildOfClass("Humanoid")
-			local part = p.Character:FindFirstChild(S.aimPart) or p.Character:FindFirstChild("HumanoidRootPart")
+			local hum = p.Character:FindFirstChilDOFClass("Humanoid")
+			local part = p.Character:FindFirstChild(S.AimPart) or p.Character:FindFirstChild("HumanoidRootPart")
 			if hum and hum.Health > 0 and part then
 				local sp, on = Cam:WorldToViewportPoint(part.Position)
 				if on then
-					local d = (Vector2.new(sp.X, sp.Y) - center).Magnitude
+					local d = (Vector2.new(sp.X, sp.Y) - cEnter).Magnitude
 					if d < bestD then bestD = d; best = p; bestPos = part.Position end
 				end
 			end
@@ -448,16 +448,16 @@ local function findTarget()
 end
 
 local atmosphere = nil
-local colorCorr = nil
+local ColorCorr = nil
 local bloom = nil
-local dof = nil
+local DOF = nil
 local sunrays = nil
 
 local function ensureEffects()
 	if not atmosphere then atmosphere = new("Atmosphere", { Parent = Lighting }) end
-	if not colorCorr then colorCorr = new("ColorCorrectionEffect", { Parent = Lighting }) end
-	if not bloom then bloom = new("BloomEffect", { Parent = Lighting }) end
-	if not dof then dof = new("DepthOfFieldEffect", { Parent = Lighting }) end
+	if not ColorCorr then ColorCorr = new("ColorCorrectionEffect", { Parent = Lighting }) end
+	if not bloom then bloom = new("bloomEffect", { Parent = Lighting }) end
+	if not DOF then DOF = new("DepthOfFieldEffect", { Parent = Lighting }) end
 	if not sunrays then sunrays = new("SunRaysEffect", { Parent = Lighting }) end
 end
 
@@ -468,7 +468,7 @@ local SKY_SETS = {
 }
 
 local function getSky()
-	local sky = Lighting:FindFirstChildOfClass("Sky")
+	local sky = Lighting:FindFirstChilDOFClass("Sky")
 	if not sky then sky = new("Sky", { Parent = Lighting }) end
 	return sky
 end
@@ -477,14 +477,14 @@ local function applySkySet(set)
 	local sky = getSky()
 	sky.SkyboxOrientation = Vector3.new(0, 0, 0)
 	for i = 1, 6 do
-		local id = set[i]
+		local ID = set[i]
 		pcall(function() sky[SKY_FACES[i]] = "rbxassetid://" .. tostring(id) end)
 	end
 	return sky
 end
 
 local function clearSky()
-	local sky = Lighting:FindFirstChildOfClass("Sky")
+	local sky = Lighting:FindFirstChilDOFClass("Sky")
 	if sky then sky:Destroy() end
 end
 
@@ -496,52 +496,52 @@ local function setMood(mode)
 		clearSky()
 		Lighting.ClockTime = 14; Lighting.Brightness = 2.2
 		Lighting.Ambient = Color3.fromRGB(140, 140, 140); Lighting.OutdoorAmbient = Color3.fromRGB(150, 150, 150)
-		colorCorr.TintColor = Color3.fromRGB(255, 255, 255); colorCorr.Saturation = 0
+		ColorCorr.TintColor = Color3.fromRGB(255, 255, 255); ColorCorr.Saturation = 0
 	elseif mode == "Закат" then
 		clearSky()
 		Lighting.ClockTime = 17.4; Lighting.Brightness = 1.8
 		Lighting.Ambient = Color3.fromRGB(150, 110, 95); Lighting.OutdoorAmbient = Color3.fromRGB(210, 130, 95)
 		Lighting.FogColor = Color3.fromRGB(255, 170, 120); Lighting.FogEnd = 900
 		atmosphere.Color = Color3.fromRGB(255, 190, 150); atmosphere.Density = 0.28
-		colorCorr.TintColor = Color3.fromRGB(255, 225, 200); colorCorr.Saturation = 0.12
+		ColorCorr.TintColor = Color3.fromRGB(255, 225, 200); ColorCorr.Saturation = 0.12
 	elseif mode == "Ночь" then
 		clearSky()
 		Lighting.ClockTime = 0; Lighting.Brightness = 0.8
 		Lighting.Ambient = Color3.fromRGB(55, 60, 95); Lighting.OutdoorAmbient = Color3.fromRGB(40, 45, 80)
-		colorCorr.TintColor = Color3.fromRGB(200, 210, 255); colorCorr.Saturation = 0
+		ColorCorr.TintColor = Color3.fromRGB(200, 210, 255); ColorCorr.Saturation = 0
 	elseif mode == "Космос" then
 		local sky = applySkySet(SKY_SETS["Космос"])
 		sky.StarCount = 0; sky.CelestialBodiesShown = false
 		Lighting.ClockTime = 0; Lighting.Brightness = 0.4
 		Lighting.Ambient = Color3.fromRGB(40, 40, 70); Lighting.OutdoorAmbient = Color3.fromRGB(30, 30, 60)
-		colorCorr.TintColor = Color3.fromRGB(190, 200, 255); colorCorr.Saturation = 0.2
+		ColorCorr.TintColor = Color3.fromRGB(190, 200, 255); ColorCorr.Saturation = 0.2
 		Lighting.ExposureCompensation = 0.2
 	elseif mode == "Галактика" then
 		local sky = applySkySet(SKY_SETS["Галактика"])
 		sky.StarCount = 0; sky.CelestialBodiesShown = false
 		Lighting.ClockTime = 0; Lighting.Brightness = 0.5
 		Lighting.Ambient = Color3.fromRGB(50, 45, 85); Lighting.OutdoorAmbient = Color3.fromRGB(45, 40, 90)
-		colorCorr.TintColor = Color3.fromRGB(210, 190, 255); colorCorr.Saturation = 0.25
+		ColorCorr.TintColor = Color3.fromRGB(210, 190, 255); ColorCorr.Saturation = 0.25
 	elseif mode == "Неон" then
 		clearSky()
 		Lighting.ClockTime = 2; Lighting.Brightness = 2.2
 		Lighting.Ambient = Color3.fromRGB(60, 40, 90); Lighting.OutdoorAmbient = Color3.fromRGB(50, 30, 80)
 		Lighting.FogColor = Color3.fromRGB(120, 60, 200); Lighting.FogEnd = 450
 		atmosphere.Color = Color3.fromRGB(150, 80, 255); atmosphere.Density = 0.35
-		colorCorr.TintColor = Color3.fromRGB(200, 150, 255); colorCorr.Saturation = 0.4
+		ColorCorr.TintColor = Color3.fromRGB(200, 150, 255); ColorCorr.Saturation = 0.4
 	end
 	notify("Небо", mode, 2)
 end
 
 local mov = addTab("Движение", "➤")
 addSection(mov, "Скорость")
-addSlider(mov, "WalkSpeed", 16, 500, 16, function(v) S.speed = v end)
+addSlider(mov, "WalkSpeed", 16, 500, 16, function(v) S.Speed = v end)
 addSlider(mov, "JumpPower", 50, 500, 50, function(v) S.jump = v; local h = getHum(); if h then h.UseJumpPower = true; h.JumpPower = v end end)
 addToggle(mov, "Бесконечный прыжок", false, function(on) S.infJump = on end)
 addDivider(mov)
 addSection(mov, "Полёт")
 addToggle(mov, "Fly", false, function(on)
-	S.fly = on
+	S.Fly = on
 	if not on then
 		local hrp = getHRP()
 		if hrp then
@@ -551,35 +551,35 @@ addToggle(mov, "Fly", false, function(on)
 	end
 	notify("Fly", on and "включён" or "выключен", 2)
 end)
-addSlider(mov, "Fly speed", 10, 500, 60, function(v) S.flySpeed = v end)
+addSlider(mov, "Fly Speed", 10, 500, 60, function(v) S.FlySpeed = v end)
 addDivider(mov)
 addSection(mov, "Прочее")
-addToggle(mov, "Noclip (сквозь стены)", false, function(on) S.noclip = on end)
+addToggle(mov, "Noclip (сквозь стены)", false, function(on) S.Noclip = on end)
 addToggle(mov, "Anti-AFK", false, function(on) S.antiAfk = on end)
 addToggle(mov, "Click TP (лкм)", false, function(on) S.clickTp = on; notify("Click TP", on and "вкл" or "выкл", 2) end)
 addButton(mov, "Reset персонажа", function() local h = getHum(); if h then h.Health = 0 end end)
 addDivider(mov)
-addSection(mov, "Телепорт")
+addSection(mov, "телепорт")
 addBox(mov, "X (число) + Enter", function(t) S.tpX = tonumber(t) end)
 addBox(mov, "Y (число) + Enter", function(t) S.tpY = tonumber(t) end)
 addBox(mov, "Z (число) + Enter", function(t) S.tpZ = tonumber(t) end)
-addButton(mov, "📍 Телепорт по координатам", function()
+addButton(mov, "📍 телепорт по координатам", function()
 	local hrp = getHRP()
-	if hrp and S.tpX and S.tpY and S.tpZ then hrp.CFrame = CFrame.new(S.tpX, S.tpY, S.tpZ); notify("Телепорт", "готово", 2)
-	else notify("Телепорт", "введи X, Y и Z", 3) end
+	if hrp and S.tpX and S.tpY and S.tpZ then hrp.CFrame = CFrame.new(S.tpX, S.tpY, S.tpZ); notify("телепорт", "готово", 2)
+	else notify("телепорт", "введи X, Y и Z", 3) end
 end)
 addButton(mov, "⬆ Вверх на 50", function() local hrp = getHRP(); if hrp then hrp.CFrame = hrp.CFrame + Vector3.new(0, 50, 0) end end)
 addButton(mov, "⬇ Вниз на 50", function() local hrp = getHRP(); if hrp then hrp.CFrame = hrp.CFrame - Vector3.new(0, 50, 0) end end)
 addDivider(mov)
 addSection(mov, "Дополнительно")
 addToggle(mov, "❄ Заморозить себя", false, function(on) S.freeze = on; local hrp = getHRP(); if hrp then hrp.Anchored = on end end)
-addToggle(mov, "♻ Авто-респавн", false, function(on) S.autoRespawn = on; Players.RespawnTime = on and 0 or 5 end)
+addToggle(mov, "♻ Авто-респавн", false, function(on) S.autoRESPawn = on; Players.RESPawnTime = on and 0 or 5 end)
 addToggle(mov, "🛡 God Mode (клиент)", false, function(on)
 	S.godMode = on
 	local h = getHum()
 	if h and on then h.MaxHealth = 9e9; h.Health = 9e9 end
 end)
-addSlider(mov, "Гравитация мира", 0, 300, 196, function(v) workspace.Gravity = v end)
+addSlider(mov, "Гравитация мира", 0, 300, 196, function(v) workSpace.Gravity = v end)
 addSlider(mov, "Высота бедра (HipHeight)", 0, 20, 2, function(v) local h = getHum(); if h then h.HipHeight = v end end, 1)
 
 local vis = addTab("Мир", "◍")
@@ -594,7 +594,7 @@ addButton(vis, "↩ Сбросить небо", function() clearSky(); notify("�
 addBox(vis, "Skybox ID (текстура на все стороны) + Enter", function(id)
 	if id ~= "" then
 		local url = "rbxassetid://" .. id:gsub("%D", "")
-		local sky = Lighting:FindFirstChildOfClass("Sky")
+		local sky = Lighting:FindFirstChilDOFClass("Sky")
 		if not sky then sky = new("Sky", { Parent = Lighting }) end
 		for _, prop in ipairs({ "SkyboxBk", "SkyboxDn", "SkyboxFt", "SkyboxLf", "SkyboxRt", "SkyboxUp" }) do
 			pcall(function() sky[prop] = url end)
@@ -610,17 +610,17 @@ addToggle(vis, "Туман вкл/выкл", false, function(on)
 	notify("Туман", on and "включён" or "выключен", 2)
 end)
 addSlider(vis, "Плотность (меньше = гуще)", 20, 5000, 350, function(v) S.fogEnd = v end)
-addButton(vis, "Туман: белый", function() S.fogColor = Color3.fromRGB(255, 255, 255) end)
-addButton(vis, "Туман: синий", function() S.fogColor = Color3.fromRGB(90, 130, 220) end)
+addButton(vis, "Туман: Белый", function() S.fogColor = Color3.fromRGB(255, 255, 255) end)
+addButton(vis, "Туман: Синий", function() S.fogColor = Color3.fromRGB(90, 130, 220) end)
 addButton(vis, "Туман: фиолетовый", function() S.fogColor = Color3.fromRGB(150, 80, 220) end)
-addButton(vis, "Туман: зелёный", function() S.fogColor = Color3.fromRGB(70, 200, 120) end)
+addButton(vis, "Туман: Зелёный", function() S.fogColor = Color3.fromRGB(70, 200, 120) end)
 addButton(vis, "Туман: чёрный", function() S.fogColor = Color3.fromRGB(0, 0, 0) end)
 addToggle(vis, "Дымка (атмосфера)", false, function(on) S.haze = on end)
 addSlider(vis, "Плотность дымки", 0, 1, 0.3, function(v) S.hazeVal = v end, 2)
 addDivider(vis)
 addSection(vis, "Освещение")
 addToggle(vis, "Fullbright", false, function(on)
-	S.fullbright = on
+	S.Fullbright = on
 	if on then
 		Lighting.Brightness = 3; Lighting.ClockTime = 14; Lighting.GlobalShadows = false
 		Lighting.Ambient = Color3.fromRGB(160, 160, 160); Lighting.FogEnd = 100000
@@ -628,7 +628,7 @@ addToggle(vis, "Fullbright", false, function(on)
 		Lighting.Brightness = 2; Lighting.GlobalShadows = true
 	end
 end)
-addToggle(vis, "Зафиксировать время суток", false, function(on) S.clockLock = on; if on then Lighting.ClockTime = S.clock end end)
+addToggle(vis, "Зафиксировать Время суток", false, function(on) S.clockLock = on; if on then Lighting.ClockTime = S.clock end end)
 addSlider(vis, "Время суток", 0, 24, 14, function(v) S.clock = v; if S.clockLock then Lighting.ClockTime = v end end, 1)
 
 local me = addTab("Персонаж", "☺")
@@ -667,15 +667,15 @@ addButton(me, "⚪ Белый", function() local c = getChar(); if c then for _,
 addDivider(me)
 addSection(me, "Размер и вид")
 addButton(me, "🐜 Крошка", function()
-	local c = getChar(); local h = c and c:FindFirstChildOfClass("Humanoid")
+	local c = getChar(); local h = c and c:FindFirstChilDOFClass("Humanoid")
 	if h then h.BodyWidthScale = 0.4; h.BodyHeightScale = 0.4; h.BodyDepthScale = 0.4; h.HeadScale = 0.6 end
 end)
 addButton(me, "🦖 Гигант", function()
-	local c = getChar(); local h = c and c:FindFirstChildOfClass("Humanoid")
+	local c = getChar(); local h = c and c:FindFirstChilDOFClass("Humanoid")
 	if h then h.BodyWidthScale = 2.5; h.BodyHeightScale = 2.5; h.BodyDepthScale = 2.5; h.HeadScale = 2 end
 end)
 addButton(me, "↩ Обычный размер", function()
-	local c = getChar(); local h = c and c:FindFirstChildOfClass("Humanoid")
+	local c = getChar(); local h = c and c:FindFirstChilDOFClass("Humanoid")
 	if h then h.BodyWidthScale = 1; h.BodyHeightScale = 1; h.BodyDepthScale = 1; h.HeadScale = 1 end
 end)
 addButton(me, "🧹 Убрать все аксессуары", function()
@@ -695,9 +695,9 @@ addButton(me, "👯 Копировать внешность ближайшего
 			end
 		end
 	end
-	local c = getChar(); local h = c and c:FindFirstChildOfClass("Humanoid")
+	local c = getChar(); local h = c and c:FindFirstChilDOFClass("Humanoid")
 	if best and best.Character and h and c then
-		local bh = best.Character:FindFirstChildOfClass("Humanoid")
+		local bh = best.Character:FindFirstChilDOFClass("Humanoid")
 		if bh then
 			h.BodyWidthScale = bh.BodyWidthScale; h.BodyHeightScale = bh.BodyHeightScale
 			h.BodyDepthScale = bh.BodyDepthScale; h.HeadScale = bh.HeadScale
@@ -706,9 +706,9 @@ addButton(me, "👯 Копировать внешность ближайшего
 			if d:IsA("Accessory") or d:IsA("Accoutrement") then
 				local cl = d:Clone(); cl.Parent = c
 				local ap = cl:FindFirstChildWhichIsA("BasePart")
-				local head = c:FindFirstChild("Head")
-				if ap and head then
-					local w = new("WeldConstraint", { Parent = ap }); w.Part0 = head; w.Part1 = ap; ap.CFrame = head.CFrame
+				local Head = c:FindFirstChild("Head")
+				if ap and Head then
+					local w = new("WeldConstraint", { Parent = ap }); w.Part0 = Head; w.Part1 = ap; ap.CFrame = Head.CFrame
 				end
 			end
 		end
@@ -718,60 +718,60 @@ addButton(me, "👯 Копировать внешность ближайшего
 	end
 end)
 addButton(me, "💃 Танец", function()
-	local c = getChar(); local h = c and c:FindFirstChildOfClass("Humanoid")
+	local c = getChar(); local h = c and c:FindFirstChilDOFClass("Humanoid")
 	if h then
-		local a = new("Animation", { AnimationId = "rbxassetid://507771019", Parent = h })
-		local t = h:FindFirstChildOfClass("Animator"); if not t then t = new("Animator", { Parent = h }) end
+		local a = new("Animation", { AnimationID = "rbxassetid://507771019", Parent = h })
+		local t = h:FindFirstChilDOFClass("Animator"); if not t then t = new("Animator", { Parent = h }) end
 		pcall(function() t:LoadAnimation(a):Play() end)
 	end
 end)
-addToggle(me, "🌈 Радужный персонаж", false, function(on) S.rainbow = on end)
+addToggle(me, "🌈 РАдужный персонаж", false, function(on) S.rainbow = on end)
 addToggle(me, "✨ Шлейф частиц", false, function(on) S.trail = on end)
 addToggle(me, "🔥 Огонь на персонаже", false, function(on) S.fire = on end)
 addDivider(me)
 addSection(me, "Шляпа / аксессуар")
 addToggle(me, "🎩 Копировать шапки с игрока", false, function(on)
-	S.copyHats = on
+	S.CopyHats = on
 	if not on then
 		local c = getChar()
 		if c then for _, d in ipairs(c:GetChildren()) do if d:IsA("Accessory") or d:IsA("Hat") then d:Destroy() end end end
 	end
 end)
-addButton(me, "Надеть аксессуар по ID", function()
-	local c = getChar(); local head = c and c:FindFirstChild("Head")
-	if not head then return end
+addButton(me, "НАдеть аксессуар по ID", function()
+	local c = getChar(); local Head = c and c:FindFirstChild("Head")
+	if not Head then return end
 	local ok, model = pcall(function() return InsertService:LoadAsset(S.hatId or 0) end)
 	if ok and model then
 		local hat = model:GetChildren()[1]
 		if hat then
-			hat.Parent = head
-			local att = hat:FindFirstChildOfClass("Attachment") or hat:FindFirstChild("HatAttachment")
+			hat.Parent = Head
+			local att = hat:FindFirstChilDOFClass("Attachment") or hat:FindFirstChild("HatAttachment")
 			local weld = new("WeldConstraint", { Parent = hat })
-			weld.Part0 = head
+			weld.Part0 = Head
 			weld.Part1 = hat:IsA("BasePart") and hat or hat:FindFirstChildWhichIsA("BasePart")
-			notify("Шляпа", "надета", 3)
+			notify("Шляпа", "нАдета", 3)
 		end
 	else
 		notify("Шляпа", "не удалось (нужен ID и права)", 4)
 	end
 end)
-addBox(me, "ID аксессуара (число) + Enter", function(txt) S.hatId = tonumber(txt:gsub("%D", "")) or 0; notify("Шляпа", "ID = " .. tostring(S.hatId), 2) end)
+addBox(me, "ID аксессуара (число) + Enter", function(txt) S.hatID = tonumber(txt:gsub("%D", "")) or 0; notify("Шляпа", "ID = " .. tostring(S.hatId), 2) end)
 addDivider(me)
 addSection(me, "Быстрые пресеты аксессуаров")
 for _, hat in ipairs({ { "Dominus", 11502881681 }, { "Crown", 13890882624 }, { "Top Hat", 11500276914 }, { "Wings", 11501051981 }, { "Halo", 11501006121 } }) do
 	addButton(me, "🎩 " .. hat[1], function()
-		local c = getChar(); local head = c and c:FindFirstChild("Head")
-		if not head then return end
+		local c = getChar(); local Head = c and c:FindFirstChild("Head")
+		if not Head then return end
 		local ok, model = pcall(function() return InsertService:LoadAsset(hat[2]) end)
 		if ok and model then
 			local hatM = model:GetChildren()[1]
 			if hatM then
-				hatM.Parent = head
-				local att = hatM:FindFirstChildOfClass("Attachment") or hatM:FindFirstChild("HatAttachment")
+				hatM.Parent = Head
+				local att = hatM:FindFirstChilDOFClass("Attachment") or hatM:FindFirstChild("HatAttachment")
 				local weld = new("WeldConstraint", { Parent = hatM })
-				weld.Part0 = head
+				weld.Part0 = Head
 				weld.Part1 = hatM:IsA("BasePart") and hatM or hatM:FindFirstChildWhichIsA("BasePart")
-				notify("Шляпа", hat[1] .. " надета", 3)
+				notify("Шляпа", hat[1] .. " нАдета", 3)
 			end
 		else
 			notify("Шляпа", "не удалось (нужен ID и права)", 4)
@@ -780,7 +780,7 @@ for _, hat in ipairs({ { "Dominus", 11502881681 }, { "Crown", 13890882624 }, { "
 end
 addDivider(me)
 addSection(me, "Камера")
-addSlider(me, "FOV (обзор)", 40, 120, 70, function(v) S.fov = v; Cam.FieldOfView = v end)
+addSlider(me, "FOV (обзор)", 40, 120, 70, function(v) S.FOV = v; Cam.FielDOFView = v end)
 addSlider(me, "Мин. зум", 0.5, 30, 0.5, function(v) S.camMin = v; LP.CameraMinZoomDistance = v end, 1)
 addSlider(me, "Макс. зум (отдаление)", 4, 120, 12, function(v) S.camMax = v; LP.CameraMaxZoomDistance = v end, 1)
 addToggle(me, "От первого лица", false, function(on)
@@ -789,8 +789,8 @@ addToggle(me, "От первого лица", false, function(on)
 end)
 
 S.particleEnabled = false; S.particleColor = Color3.fromRGB(80, 170, 255)
-S.particleSize = 1.5; S.particleTransparency = 0.2; S.particleSpeed = 1
-S.particleLifetime = 1.2; S.particleRate = 25; S.particleSpread = 360
+S.particleSize = 1.5; S.particleTransparency = 0.2; S.particlESPeed = 1
+S.particleLifetime = 1.2; S.particleRate = 25; S.particlESPread = 360
 S.particleRotation = 0; S.particleOffset = Vector3.new(0, 2, 0)
 S.particleLighting = true; S.particleEmit = true; S.particleBlend = false
 S.particleEmitHead = true; S.particleEmitTorso = true
@@ -801,9 +801,9 @@ local function updateParticles()
 	if S.particleEnabled then
 		local c = getChar()
 		if not c then return end
-		local head = c:FindFirstChild("Head")
-		local torso = c:FindFirstChild("UpperTorso") or c:FindFirstChild("Torso")
-		if S.particleEmitHead and head then
+		local Head = c:FindFirstChild("Head")
+		local Torso = c:FindFirstChild("UpperTorso") or c:FindFirstChild("Torso")
+		if S.particleEmitHead and Head then
 			if not particleHead then
 				particleHead = Instance.new("ParticleEmitter")
 				particleHead.Name = "KitiParticleHead"
@@ -811,15 +811,15 @@ local function updateParticles()
 				particleHead.LightEmission = 1
 				particleHead.LightInfluence = S.particleLighting and 0 or 1
 				particleHead.BlendMode = S.particleBlend and Enum.ParticleBlendMode.Additive or Enum.ParticleBlendMode.AlphaBlend
-				particleHead.Parent = head
+				particleHead.Parent = Head
 			end
 			particleHead.Color = ColorSequence.new(S.particleColor)
 			particleHead.Size = NumberSequence.new(S.particleSize)
 			particleHead.Transparency = NumberSequence.new(S.particleTransparency)
-			particleHead.Speed = NumberRange.new(S.particleSpeed * 2, S.particleSpeed * 3)
+			particleHead.Speed = NumberRange.new(S.particlESPeed * 2, S.particlESPeed * 3)
 			particleHead.Lifetime = NumberRange.new(S.particleLifetime * 0.7, S.particleLifetime)
 			particleHead.Rate = S.particleRate
-			particleHead.SpreadAngle = Vector2.new(S.particleSpread, S.particleSpread)
+			particleHead.SpreadAngle = Vector2.new(S.particlESPread, S.particlESPread)
 			particleHead.Rotation = NumberRange.new(S.particleRotation, S.particleRotation + 10)
 			particleHead.Offset = S.particleOffset
 			particleHead.EmissionDirection = Enum.NormalId.Top
@@ -827,7 +827,7 @@ local function updateParticles()
 		else
 			if particleHead then particleHead:Destroy() particleHead = nil end
 		end
-		if S.particleEmitTorso and torso then
+		if S.particleEmitTorso and Torso then
 			if not particleTorso then
 				particleTorso = Instance.new("ParticleEmitter")
 				particleTorso.Name = "KitiParticleTorso"
@@ -835,15 +835,15 @@ local function updateParticles()
 				particleTorso.LightEmission = 1
 				particleTorso.LightInfluence = S.particleLighting and 0 or 1
 				particleTorso.BlendMode = S.particleBlend and Enum.ParticleBlendMode.Additive or Enum.ParticleBlendMode.AlphaBlend
-				particleTorso.Parent = torso
+				particleTorso.Parent = Torso
 			end
 			particleTorso.Color = ColorSequence.new(S.particleColor)
 			particleTorso.Size = NumberSequence.new(S.particleSize * 0.8)
 			particleTorso.Transparency = NumberSequence.new(S.particleTransparency)
-			particleTorso.Speed = NumberRange.new(S.particleSpeed, S.particleSpeed * 2)
+			particleTorso.Speed = NumberRange.new(S.particlESPeed, S.particlESPeed * 2)
 			particleTorso.Lifetime = NumberRange.new(S.particleLifetime * 0.5, S.particleLifetime)
 			particleTorso.Rate = S.particleRate * 0.5
-			particleTorso.SpreadAngle = Vector2.new(S.particleSpread, S.particleSpread)
+			particleTorso.SpreadAngle = Vector2.new(S.particlESPread, S.particlESPread)
 			particleTorso.Rotation = NumberRange.new(S.particleRotation, S.particleRotation + 10)
 			particleTorso.Offset = S.particleOffset
 			particleTorso.EmissionDirection = Enum.NormalId.Front
@@ -862,28 +862,28 @@ addSection(pTab, "Tool / Enabled")
 addToggle(pTab, "Tool / Enabled", false, function(on)
 	S.particleEnabled = on
 	updateParticles()
-	notify("Particles", on and "��������" or "���������", 2)
+	notify("Particles", on and "········" or "·········", 2)
 end)
 addDivider(pTab)
 addSection(pTab, "Color")
-addButton(pTab, "?? ���� ������", function()
-	local colors = {
-		{ "�����", Color3.fromRGB(80, 170, 255) },
-		{ "����������", Color3.fromRGB(180, 90, 255) },
-		{ "�������", Color3.fromRGB(255, 105, 180) },
-		{ "������", Color3.fromRGB(80, 255, 120) },
-		{ "���������", Color3.fromRGB(255, 160, 60) },
-		{ "�����", Color3.fromRGB(255, 255, 255) },
-		{ "������", nil },
+addButton(pTab, "?? ···· ······", function()
+	local Colors = {
+		{ "·····", Color3.fromRGB(80, 170, 255) },
+		{ "··········", Color3.fromRGB(180, 90, 255) },
+		{ "·······", Color3.fromRGB(255, 105, 180) },
+		{ "······", Color3.fromRGB(80, 255, 120) },
+		{ "·········", Color3.fromRGB(255, 160, 60) },
+		{ "·····", Color3.fromRGB(255, 255, 255) },
+		{ "······", nil },
 	}
 	local idx = 1
 	local idx2 = 0
 	while true do
 		idx2 = idx2 + 1
-		if idx2 > #colors then idx2 = 1 end
-		S.particleColor = colors[idx2][2] or Color3.fromHSV(tick() % 1, 1, 1)
+		if idx2 > #Colors then idx2 = 1 end
+		S.particleColor = Colors[idx2][2] or Color3.fromHSV(tick() % 1, 1, 1)
 		updateParticles()
-		notify("Particles", "����: " .. colors[idx2][1], 2)
+		notify("Particles", "····: " .. Colors[idx2][1], 2)
 		task.wait(1.5)
 		if not S.particleEnabled then break end
 	end
@@ -892,12 +892,12 @@ addDivider(pTab)
 addSection(pTab, "Size / Transparency / Speed / Lifetime")
 addSlider(pTab, "Size", 0.1, 8, 1.5, function(v) S.particleSize = v; updateParticles() end, 2)
 addSlider(pTab, "Transparency", 0, 1, 0.2, function(v) S.particleTransparency = v; updateParticles() end, 2)
-addSlider(pTab, "Speed", 0.1, 10, 1, function(v) S.particleSpeed = v; updateParticles() end, 2)
+addSlider(pTab, "Speed", 0.1, 10, 1, function(v) S.particlESPeed = v; updateParticles() end, 2)
 addSlider(pTab, "Lifetime", 0.1, 5, 1.2, function(v) S.particleLifetime = v; updateParticles() end, 2)
 addDivider(pTab)
 addSection(pTab, "Rate / Spread / Rotation / Offset")
 addSlider(pTab, "Rate", 1, 100, 25, function(v) S.particleRate = v; updateParticles() end)
-addSlider(pTab, "Spread", 0, 360, 360, function(v) S.particleSpread = v; updateParticles() end)
+addSlider(pTab, "Spread", 0, 360, 360, function(v) S.particlESPread = v; updateParticles() end)
 addSlider(pTab, "Rotation", 0, 360, 0, function(v) S.particleRotation = v; updateParticles() end)
 addSlider(pTab, "Offset Y", -5, 10, 2, function(v) S.particleOffset = Vector3.new(0, v, 0); updateParticles() end, 1)
 addDivider(pTab)
@@ -906,9 +906,9 @@ addToggle(pTab, "Lighting", true, function(on) S.particleLighting = on; updatePa
 addToggle(pTab, "Emit", true, function(on) S.particleEmit = on; updateParticles() end)
 addToggle(pTab, "Blend (Additive)", false, function(on) S.particleBlend = on; updateParticles() end)
 addDivider(pTab)
-addSection(pTab, "����� �������� (Emitters)")
-addToggle(pTab, "Head (������)", true, function(on) S.particleEmitHead = on; updateParticles() end)
-addToggle(pTab, "Torso (����)", true, function(on) S.particleEmitTorso = on; updateParticles() end)
+addSection(pTab, "····· ········ (Emitters)")
+addToggle(pTab, "Head (······)", true, function(on) S.particleEmitHead = on; updateParticles() end)
+addToggle(pTab, "Torso (····)", true, function(on) S.particleEmitTorso = on; updateParticles() end)
 
 task.spawn(function()
 	while true do
@@ -927,21 +927,21 @@ end)
 addSlider(petsTab, "Кол-во питомцев", 1, 10, 3, function(v) S.petCount = v; if S.pets then spawnPets() end end)
 addSlider(petsTab, "Размер питомца", 0.5, 5, 1, function(v) S.petSize = v; if S.pets then spawnPets() end end, 1)
 addSlider(petsTab, "Дистанция следования", 2, 20, 6, function(v) S.petFollowDist = v end, 1)
-addToggle(petsTab, "🌈 Радужные питомцы", false, function(on) S.petRainbow = on end)
+addToggle(petsTab, "🌈 РАдужные Питомцы", false, function(on) S.petRainbow = on end)
 addToggle(petsTab, "➿ Следовать за игроком", true, function(on) S.petFollow = on end)
 addButton(petsTab, "🐾 Заспавнить питомцев", function() spawnPets(); notify("Питомцы", "заспавнены", 2) end)
 addButton(petsTab, "🧹 Убрать питомцев", function() clearPets(); notify("Питомцы", "убраны", 2) end)
 
 local cmb = addTab("Бой", "✦")
 addSection(cmb, "Aimbot")
-addToggle(cmb, "Aimbot", false, function(on) S.aimbot = on end)
-addToggle(cmb, "Всегда целиться", false, function(on) S.aimAlways = on end)
-addSlider(cmb, "FOV", 20, 400, 150, function(v) S.aimFov = v end)
-addSlider(cmb, "Плавность", 0, 1, 0.5, function(v) S.aimSmooth = v end, 2)
-addDropdown(cmb, "Часть тела", { "Head", "HumanoidRootPart", "UpperTorso" }, "Head", function(v) S.aimPart = v end)
+addToggle(cmb, "Aimbot", false, function(on) S.Aimbot = on end)
+addToggle(cmb, "Всегда целиться", false, function(on) S.AimAlways = on end)
+addSlider(cmb, "FOV", 20, 400, 150, function(v) S.AimFOV = v end)
+addSlider(cmb, "Плавность", 0, 1, 0.5, function(v) S.AimSmooth = v end, 2)
+addDropdown(cmb, "Часть тела", { "Head", "HumanoidRootPart", "UpperTorso" }, "Head", function(v) S.AimPart = v end)
 addDivider(cmb)
 addSection(cmb, "Триггер и хитбоксы")
-addToggle(cmb, "Triggerbot", false, function(on) S.trigger = on end)
+addToggle(cmb, "TRIGgerbot", false, function(on) S.TRIGger = on end)
 addToggle(cmb, "Расширить хитбоксы", false, function(on)
 	S.hitbox = on
 	if not on then for _, p in ipairs(Players:GetPlayers()) do local hrp = hrpOf(p); if hrp then hrp.Size = Vector3.new(2, 2, 1) end end end
@@ -950,35 +950,35 @@ addSlider(cmb, "Размер хитбокса", 2, 15, 6, function(v) S.hitboxSi
 addDivider(cmb)
 addSection(cmb, "Авто-кликер")
 addToggle(cmb, "Авто-клик (левая кнопка)", false, function(on) S.autoClick = on end)
-addSlider(cmb, "Задержка (сек)", 0.01, 1, 0.1, function(v) S.autoClickDelay = v end, 2)
+addSlider(cmb, "ЗАдержка (сек)", 0.01, 1, 0.1, function(v) S.autoClickDelay = v end, 2)
 
 local vis2 = addTab("Визуал", "◎")
 addSection(vis2, "Подсветка игроков")
-addToggle(vis2, "ESP имена", false, function(on) S.espNames = on end)
-addToggle(vis2, "ESP: HP и дистанция", false, function(on) S.espInfo = on end)
-addToggle(vis2, "ESP подсветка", false, function(on) S.espHighlight = on end)
-addToggle(vis2, "Цвет по роли (MM2)", true, function(on) S.espRole = on end)
+addToggle(vis2, "ESP имена", false, function(on) S.ESPNames = on end)
+addToggle(vis2, "ESP: HP и дистанция", false, function(on) S.ESPInfo = on end)
+addToggle(vis2, "ESP подсветка", false, function(on) S.ESPHighlight = on end)
+addToggle(vis2, "Цвет по роли (MM2)", true, function(on) S.ESPRole = on end)
 addToggle(vis2, "ESP боксы", false, function(on)
 	if on and not DrawingLib then notify("ESP", "Drawing недоступен", 5); return end
-	S.espBox = on
+	S.ESPBox = on
 end)
 addToggle(vis2, "ESP трассеры", false, function(on)
 	if on and not DrawingLib then notify("ESP", "Drawing недоступен", 5); return end
-	S.espTracer = on
+	S.ESPTracer = on
 end)
 addDivider(vis2)
 addSection(vis2, "HUD")
-addToggle(vis2, "Watermark", true, function(on) S.watermark = on end)
-addToggle(vis2, "HUD (FPS/ping/коорд.)", true, function(on) S.hud = on end)
+addToggle(vis2, "Watermark", true, function(on) S.Watermark = on end)
+addToggle(vis2, "HUD (FPS/ping/коорд.)", true, function(on) S.HUD = on end)
 addToggle(vis2, "Прицел (crosshair)", false, function(on) S.crosshair = on end)
 addDivider(vis2)
 addSection(vis2, "Мир и HUD")
-addToggle(vis2, "🌈 Радужный ESP", false, function(on) S.rainbowEsp = on end)
+addToggle(vis2, "🌈 РАдужный ESP", false, function(on) S.rainbowESP = on end)
 addToggle(vis2, "X-Ray (прозрачные стены)", false, function(on)
 	S.xray = on
 	if not on then
 		pcall(function()
-			for _, d in ipairs(workspace:GetDescendants()) do
+			for _, d in ipairs(workSpace:GetDescendants()) do
 				if d:IsA("BasePart") then
 					local o = d:GetAttribute("KitiOrigT")
 					if o ~= nil then d.Transparency = o; d:SetAttribute("KitiOrigT", nil) end
@@ -988,7 +988,7 @@ addToggle(vis2, "X-Ray (прозрачные стены)", false, function(on)
 	end
 	notify("X-Ray", on and "включён" or "выключен", 2)
 end)
-addToggle(vis2, "HUD: время и игроки", true, function(on) S.hudExtra = on end)
+addToggle(vis2, "HUD: время и игроки", true, function(on) S.HUDExtra = on end)
 
 local perf = addTab("Бусты", "⚡")
 addSection(perf, "Производительность")
@@ -1010,10 +1010,10 @@ addToggle(perf, "✨ Boost красоты", false, function(on)
 	S.beauty = on
 	if not on then
 		pcall(function()
-			local a = Lighting:FindFirstChildOfClass("Atmosphere"); if a then a.Density = 0 end
-			local b = Lighting:FindFirstChildOfClass("BloomEffect"); if b then b.Intensity = 0 end
-			local dd = Lighting:FindFirstChildOfClass("DepthOfFieldEffect"); if dd then dd.FarIntensity = 0; dd.NearIntensity = 0 end
-			local s = Lighting:FindFirstChildOfClass("SunRaysEffect"); if s then s.Intensity = 0 end
+			local a = Lighting:FindFirstChilDOFClass("Atmosphere"); if a then a.Density = 0 end
+			local b = Lighting:FindFirstChilDOFClass("bloomEffect"); if b then b.Intensity = 0 end
+			local dd = Lighting:FindFirstChilDOFClass("DepthOfFieldEffect"); if dd then dd.FarIntensity = 0; dd.NearIntensity = 0 end
+			local s = Lighting:FindFirstChilDOFClass("SunRaysEffect"); if s then s.Intensity = 0 end
 		end)
 	end
 	notify("Красота", on and "включена" or "выключена", 2)
@@ -1021,23 +1021,23 @@ end)
 addSlider(perf, "Насыщенность", 0, 1, 0.15, function(v) S.sat = v end, 2)
 addSlider(perf, "Свечение (bloom)", 0, 3, 0.9, function(v) S.bloomI = v end, 2)
 addToggle(perf, "Лучи солнца", true, function(on) S.sunraysOn = on end)
-addToggle(perf, "Глубина резкости (DOF)", false, function(on) S.dofOn = on end)
+addToggle(perf, "Глубина резкости (DOF)", false, function(on) S.DOFOn = on end)
 addButton(perf, "↩ Сбросить эффекты", function()
 	for _, v in ipairs(Lighting:GetChildren()) do
-		if v:IsA("Atmosphere") or v:IsA("BloomEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("DepthOfFieldEffect") or v:IsA("SunRaysEffect") then v:Destroy() end
+		if v:IsA("Atmosphere") or v:IsA("bloomEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("DepthOfFieldEffect") or v:IsA("SunRaysEffect") then v:Destroy() end
 	end
-	atmosphere, colorCorr, bloom, dof, sunrays = nil, nil, nil, nil, nil
+	atmosphere, ColorCorr, bloom, DOF, sunrays = nil, nil, nil, nil, nil
 	Lighting.EnvironmentDiffuseScale = 1; Lighting.EnvironmentSpecularScale = 1; Lighting.ExposureCompensation = 0
 	notify("Эффекты", "сброшены", 2)
 end)
 
 local mg = addTab("Танчики", "🚀")
-addSection(mg, "Мини-игра: ТАНЧИКИ")
+addSection(mg, "Мини-игра: Танчики")
 local info = new("TextLabel", { Size = UDim2.new(1, 0, 0, 34), BackgroundTransparency = 1, Text = "Управление: W/A/S/D — движение, Space — выстрел. Уничтожай врагов!", TextColor3 = T.sub, Font = Enum.Font.Gotham, TextSize = 12, TextWrapped = true, TextXAlignment = Enum.TextXAlignment.Left, Parent = mg })
 local field = new("Frame", { Size = UDim2.fromOffset(560, 250), BackgroundColor3 = Color3.fromRGB(16, 18, 28), BorderSizePixel = 0, ClipsDescendants = true, Parent = mg })
 corner(field, 12)
 local scoreLbl = new("TextLabel", { Size = UDim2.fromOffset(200, 24), Position = UDim2.fromOffset(12, 6), BackgroundTransparency = 1, Text = "Счёт: 0", TextColor3 = Color3.fromRGB(140, 255, 200), Font = Enum.Font.GothamBold, TextSize = 15, TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 20, Parent = field })
-local hpLbl = new("TextLabel", { Size = UDim2.fromOffset(200, 24), Position = UDim2.new(1, -212, 0, 6), BackgroundTransparency = 1, Text = "HP: 100", TextColor3 = Color3.fromRGB(255, 140, 140), Font = Enum.Font.GothamBold, TextSize = 15, TextXAlignment = Enum.TextXAlignment.Right, ZIndex = 20, Parent = field })
+local HPLbl = new("TextLabel", { Size = UDim2.fromOffset(200, 24), Position = UDim2.new(1, -212, 0, 6), BackgroundTransparency = 1, Text = "HP: 100", TextColor3 = Color3.fromRGB(255, 140, 140), Font = Enum.Font.GothamBold, TextSize = 15, TextXAlignment = Enum.TextXAlignment.Right, ZIndex = 20, Parent = field })
 local overLbl = new("TextLabel", { Size = UDim2.fromScale(1, 1), BackgroundTransparency = 1, Text = "", TextColor3 = Color3.fromRGB(255, 255, 255), Font = Enum.Font.GothamBlack, TextSize = 30, ZIndex = 40, Visible = false, Parent = field })
 
 local tank = { x = 280, y = 210, r = 13, cd = 0 }
@@ -1048,7 +1048,7 @@ local tankBarrel = new("Frame", { Size = UDim2.fromOffset(4, 16), AnchorPoint = 
 local enemies = {}
 local bullets = {}
 local score = 0
-local hp = 100
+local HP = 100
 local mgActive = false
 local mgConn = nil
 local spawnTimer = 0
@@ -1065,10 +1065,10 @@ local function startTanks()
 	if mgState.running then return end
 	mgState.running = true
 	clearField()
-	score = 0; hp = 100; spawnTimer = 0
+	score = 0; HP = 100; spawnTimer = 0
 	tank.x, tank.y = 280, 210
-	scoreLbl.Text = "Счёт: 0"; hpLbl.Text = "HP: 100"; overLbl.Text = ""
-	scoreLbl.Visible = true; hpLbl.Visible = true; overLbl.Visible = false
+	scoreLbl.Text = "Счёт: 0"; HPLbl.Text = "HP: 100"; overLbl.Text = ""
+	scoreLbl.Visible = true; HPLbl.Visible = true; overLbl.Visible = false
 	mgConn = RS.Heartbeat:Connect(function(dt)
 		if not mgState.running then return end
 		pcall(function()
@@ -1143,10 +1143,10 @@ local function startTanks()
 				elseif not dead then
 					local dx, dy = tank.x - b.x, tank.y - b.y
 					if dx * dx + dy * dy < 15 * 15 then
-						hp = hp - 20
-						hpLbl.Text = "HP: " .. math.max(0, hp)
+						HP = HP - 20
+						HPLbl.Text = "HP: " .. math.max(0, HP)
 						dead = true
-						if hp <= 0 then
+						if HP <= 0 then
 							mgState.running = false
 							overLbl.Text = "ИГРА ОКОНЧЕНА\nСчёт: " .. score
 							overLbl.Visible = true
@@ -1168,11 +1168,11 @@ local function stopTanks()
 	notify("Танчики", "остановлено", 2)
 end
 
-addButton(mg, "▶ Запустить игру", function() startTanks() end)
+addButton(mg, "▶ запустить игру", function() startTanks() end)
 addButton(mg, "■ Стоп", function() stopTanks() end)
 
 local plr = addTab("Игроки", "👥")
-addSection(plr, "Онлайн-игроки")
+addSection(plr, "онлайн-игроки")
 local plrBox = new("Frame", { Size = UDim2.new(1, 0, 0, 0), AutomaticSize = Enum.AutomaticSize.Y, BackgroundTransparency = 1, Parent = plr })
 new("UIListLayout", { Parent = plrBox, Padding = UDim.new(0, 8), SortOrder = Enum.SortOrder.LayoutOrder })
 
@@ -1189,12 +1189,12 @@ local function buildPlayers()
 			corner(tp)
 			tp.MouseButton1Click:Connect(function()
 				local hrp = getHRP(); local thrp = hrpOf(p)
-				if hrp and thrp then hrp.CFrame = thrp.CFrame + Vector3.new(0, 3, 0); notify("Телепорт", "к " .. p.Name, 2) end
+				if hrp and thrp then hrp.CFrame = thrp.CFrame + Vector3.new(0, 3, 0); notify("телепорт", "к " .. p.Name, 2) end
 			end)
 			local sp = new("TextButton", { Size = UDim2.fromOffset(70, 30), Position = UDim2.new(1, -140, 0.5, -15), BackgroundColor3 = T.element, Text = "Следить", TextColor3 = T.text, Font = Enum.Font.GothamBold, TextSize = 12, AutoButtonColor = false, Parent = rowP })
 			corner(sp)
 			sp.MouseButton1Click:Connect(function()
-				local hum = p.Character and p.Character:FindFirstChildOfClass("Humanoid")
+				local hum = p.Character and p.Character:FindFirstChilDOFClass("Humanoid")
 				if hum then Cam.CameraSubject = hum; notify("Камера", "слежу за " .. p.Name, 2) end
 			end)
 			local cp = new("TextButton", { Size = UDim2.fromOffset(52, 30), Position = UDim2.new(1, -64, 0.5, -15), BackgroundColor3 = T.element, Text = "Copy", TextColor3 = T.text, Font = Enum.Font.GothamBold, TextSize = 11, AutoButtonColor = false, Parent = rowP })
@@ -1215,12 +1215,12 @@ task.spawn(function()
 end)
 
 local mus = addTab("Звук", "🎵")
-local bgm = new("Sound", { SoundId = "rbxassetid://0", Volume = 2, Looped = false, Parent = SoundService })
+local bgm = new("Sound", { SoundID = "rbxassetid://0", Volume = 2, Looped = false, Parent = SoundService })
 addSection(mus, "Плеер (слышишь только ты)")
-addBox(mus, "Sound ID + Enter", function(t) S.soundId = tonumber(t:gsub("%D", "")) or 0; notify("Звук", "ID = " .. tostring(S.soundId), 2) end)
+addBox(mus, "Sound ID + Enter", function(t) S.soundID = tonumber(t:gsub("%D", "")) or 0; notify("Звук", "ID = " .. tostring(S.soundId), 2) end)
 addButton(mus, "▶ Играть", function()
-	if not S.soundId or S.soundId == 0 then notify("Звук", "введи ID", 3); return end
-	bgm.SoundId = "rbxassetid://" .. S.soundId
+	if not S.soundId or S.soundID == 0 then notify("Звук", "введи ID", 3); return end
+	bgm.SoundID = "rbxassetid://" .. S.soundId
 	pcall(function() bgm:Play() end)
 end)
 addButton(mus, "⏹ Стоп", function() pcall(function() bgm:Stop() end) end)
@@ -1230,8 +1230,8 @@ addDivider(mus)
 addSection(mus, "Быстрые треки")
 for _, tr in ipairs({ { "Roblox default", 9046141279 }, { "Among Us drip", 6584745192 }, { "Elevator music", 6756055776 } }) do
 	addButton(mus, "🎵 " .. tr[1], function()
-		S.soundId = tr[2]
-		bgm.SoundId = "rbxassetid://" .. tr[2]
+		S.soundID = tr[2]
+		bgm.SoundID = "rbxassetid://" .. tr[2]
 		bgm.Looped = true
 		pcall(function() bgm:Play() end)
 		notify("Звук", tr[1], 2)
@@ -1263,7 +1263,7 @@ end)
 
 local fun = addTab("Фан", "🎉")
 addSection(fun, "Приколы")
-addToggle(fun, "🌈 Радужный мир", false, function(on) S.rainbowWorld = on end)
+addToggle(fun, "🌈 РАдужный мир", false, function(on) S.rainbowWorld = on end)
 addToggle(fun, "🍺 Пьяная камера", false, function(on) S.drunk = on end)
 addToggle(fun, "🕳 Тёмный космос-мир", false, function(on)
 	local h = getHum()
@@ -1277,7 +1277,7 @@ addButton(fun, "🎊 Конфетти", function()
 	local hrp = getHRP()
 	if not hrp then return end
 	for _ = 1, 30 do
-		local p = new("Part", { Size = Vector3.new(0.35, 0.35, 0.35), Anchored = true, CanCollide = false, Color = Color3.fromHSV(math.random(), 1, 1), Material = Enum.Material.Neon, Parent = workspace })
+		local p = new("Part", { Size = Vector3.new(0.35, 0.35, 0.35), Anchored = true, CanCollide = false, Color = Color3.fromHSV(math.random(), 1, 1), Material = Enum.Material.Neon, Parent = workSpace })
 		p.CFrame = hrp.CFrame * CFrame.new(math.random(-6, 6), math.random(2, 8), math.random(-6, 6))
 		new("BodyVelocity", { Velocity = Vector3.new(math.random(-15, 15), math.random(12, 26), math.random(-15, 15)), MaxForce = Vector3.new(1e5, 1e5, 1e5), Parent = p })
 		task.delay(3, function() p:Destroy() end)
@@ -1286,15 +1286,15 @@ end)
 addButton(fun, "🎈 Спавн шара", function()
 	local hrp = getHRP()
 	if hrp then
-		local p = new("Part", { Shape = Enum.PartType.Ball, Size = Vector3.new(3, 3, 3), Anchored = true, CanCollide = false, Material = Enum.Material.Neon, Color = Color3.fromHSV(math.random(), 1, 1), Parent = workspace })
+		local p = new("Part", { Shape = Enum.PartType.Ball, Size = Vector3.new(3, 3, 3), Anchored = true, CanCollide = false, Material = Enum.Material.Neon, Color = Color3.fromHSV(math.random(), 1, 1), Parent = workSpace })
 		p.CFrame = hrp.CFrame * CFrame.new(0, 5, -6)
 	end
 end)
-addButton(fun, "📸 Мем-текст над головой", function()
-	local head = getChar() and getChar():FindFirstChild("Head")
-	if not head then return end
-	if head:FindFirstChild("MemeTag") then head.MemeTag:Destroy() end
-	local bb = new("BillboardGui", { Name = "MemeTag", Size = UDim2.fromOffset(260, 60), StudsOffset = Vector3.new(0, 3.6, 0), AlwaysOnTop = true, Parent = head })
+addButton(fun, "📸 Мем-текст нАд головой", function()
+	local Head = getChar() and getChar():FindFirstChild("Head")
+	if not Head then return end
+	if Head:FindFirstChild("MemeTag") then Head.MemeTag:Destroy() end
+	local bb = new("BillboardGui", { Name = "MemeTag", Size = UDim2.fromOffset(260, 60), StudsOffset = Vector3.new(0, 3.6, 0), AlwaysOnTop = true, Parent = Head })
 	new("TextLabel", { Size = UDim2.fromScale(1, 1), BackgroundTransparency = 1, Text = "Я ТУТ ГЛАВНЫЙ 😎", TextScaled = true, Font = Enum.Font.GothamBlack, TextColor3 = Color3.fromRGB(255, 255, 0), TextStrokeTransparency = 0, Parent = bb })
 end)
 
@@ -1316,10 +1316,10 @@ local GAMES = {
 }
 
 local function teleportGame(placeId, name)
-	notify("Телепорт", "заходим в " .. name .. "...", 4)
+	notify("телепорт", "заходим в " .. name .. "...", 4)
 	task.spawn(function()
 		local ok, err = pcall(function() TPS:Teleport(placeId, LP) end)
-		if not ok then notify("Телепорт", "не удалось: " .. tostring(err), 5) end
+		if not ok then notify("телепорт", "не удалось: " .. tostring(err), 5) end
 	end)
 end
 
@@ -1364,7 +1364,7 @@ addButton(srv, "Server hop", function()
 			if s.playing < s.maxPlayers and s.id ~= game.JobId then TPS:TeleportToPlaceInstance(game.PlaceId, s.id, LP); return end
 		end
 	end)
-	if not ok then notify("Server", "server hop недоступен (HTTP)", 5) end
+	if not ok then notify("Server", "Server hop недоступен (HTTP)", 5) end
 end)
 addButton(srv, "Скопировать Job ID", function() if setclipboard then setclipboard(game.JobId); notify("Server", "скопировано", 3) else notify("Server", "нет setclipboard", 4) end end)
 addButton(srv, "Скопировать ID игры", function() if setclipboard then setclipboard(tostring(game.PlaceId)); notify("Server", "скопировано", 3) else notify("Server", "нет setclipboard", 4) end end)
@@ -1430,8 +1430,8 @@ addDivider(st)
 addSection(st, "Конфиг")
 local function applyAll()
 	local h = getHum()
-	if h then h.WalkSpeed = S.speed; h.UseJumpPower = true; h.JumpPower = S.jump end
-	Cam.FieldOfView = S.fov
+	if h then h.WalkSpeed = S.Speed; h.UseJumpPower = true; h.JumpPower = S.jump end
+	Cam.FielDOFView = S.FOV
 	if S.fog then Lighting.FogStart = 0; Lighting.FogEnd = S.fogEnd; Lighting.FogColor = S.fogColor else Lighting.FogEnd = 100000 end
 end
 addButton(st, "💾 Сохранить настройки", function()
@@ -1459,19 +1459,19 @@ addButton(st, "📂 Загрузить настройки", function()
 	end
 end)
 
-local watermark = new("TextLabel", { Name = "WM", Parent = sg, BackgroundTransparency = 1, Size = UDim2.new(0, 320, 0, 22), Position = UDim2.fromOffset(14, 10), Text = "KITI · PROTO | RightShift - hide", TextColor3 = T.accent1, Font = Enum.Font.GothamBlack, TextSize = 16, TextXAlignment = Enum.TextXAlignment.Left, TextStrokeTransparency = 0.7, TextStrokeColor3 = Color3.fromRGB(255, 255, 255), ZIndex = 100 })
+local Watermark = new("TextLabel", { Name = "WM", Parent = sg, BackgroundTransparency = 1, Size = UDim2.new(0, 320, 0, 22), Position = UDim2.fromOffset(14, 10), Text = "KITI · PROTO | RightShift - hide", TextColor3 = T.accent1, Font = Enum.Font.GothamBlack, TextSize = 16, TextXAlignment = Enum.TextXAlignment.Left, TextStrokeTransparency = 0.7, TextStrokeColor3 = Color3.fromRGB(255, 255, 255), ZIndex = 100 })
 
-local hud = new("Frame", { Name = "HUD", Parent = sg, BackgroundColor3 = T.card, BackgroundTransparency = 0.15, Size = UDim2.fromOffset(210, 122), Position = UDim2.new(0, 14, 0, 40), BorderSizePixel = 0, ZIndex = 90 })
-corner(hud, 12)
-stroke(hud, T.accent1, 1.2, 0.5)
-new("UIListLayout", { Parent = hud, Padding = UDim.new(0, 3), SortOrder = Enum.SortOrder.LayoutOrder })
-new("UIPadding", { PaddingTop = UDim.new(0, 10), PaddingLeft = UDim.new(0, 14), Parent = hud })
-new("TextLabel", { Size = UDim2.new(1, -14, 0, 16), BackgroundTransparency = 1, Text = "KITI HUD", TextColor3 = T.accent1, Font = Enum.Font.GothamBlack, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, Parent = hud })
-local hudFps = new("TextLabel", { Size = UDim2.new(1, -14, 0, 15), BackgroundTransparency = 1, Text = "FPS: -", TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, Parent = hud })
-local hudPing = new("TextLabel", { Size = UDim2.new(1, -14, 0, 15), BackgroundTransparency = 1, Text = "Ping: -", TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, Parent = hud })
-local hudPos = new("TextLabel", { Size = UDim2.new(1, -14, 0, 15), BackgroundTransparency = 1, Text = "Pos: -", TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, Parent = hud })
-local hudTime = new("TextLabel", { Size = UDim2.new(1, -14, 0, 15), BackgroundTransparency = 1, Text = "Time: -", TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, Parent = hud })
-local hudPl = new("TextLabel", { Size = UDim2.new(1, -14, 0, 15), BackgroundTransparency = 1, Text = "Players: -", TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, Parent = hud })
+local HUD = new("Frame", { Name = "HUD", Parent = sg, BackgroundColor3 = T.card, BackgroundTransparency = 0.15, Size = UDim2.fromOffset(210, 122), Position = UDim2.new(0, 14, 0, 40), BorderSizePixel = 0, ZIndex = 90 })
+corner(HUD, 12)
+stroke(HUD, T.accent1, 1.2, 0.5)
+new("UIListLayout", { Parent = HUD, Padding = UDim.new(0, 3), SortOrder = Enum.SortOrder.LayoutOrder })
+new("UIPadding", { PaddingTop = UDim.new(0, 10), PaddingLeft = UDim.new(0, 14), Parent = HUD })
+new("TextLabel", { Size = UDim2.new(1, -14, 0, 16), BackgroundTransparency = 1, Text = "KITI HUD", TextColor3 = T.accent1, Font = Enum.Font.GothamBlack, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, Parent = HUD })
+local HUDFps = new("TextLabel", { Size = UDim2.new(1, -14, 0, 15), BackgroundTransparency = 1, Text = "FPS: -", TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, Parent = HUD })
+local HUDPing = new("TextLabel", { Size = UDim2.new(1, -14, 0, 15), BackgroundTransparency = 1, Text = "Ping: -", TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, Parent = HUD })
+local HUDPos = new("TextLabel", { Size = UDim2.new(1, -14, 0, 15), BackgroundTransparency = 1, Text = "Pos: -", TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, Parent = HUD })
+local HUDTime = new("TextLabel", { Size = UDim2.new(1, -14, 0, 15), BackgroundTransparency = 1, Text = "Time: -", TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, Parent = HUD })
+local HUDPl = new("TextLabel", { Size = UDim2.new(1, -14, 0, 15), BackgroundTransparency = 1, Text = "Players: -", TextColor3 = T.text, Font = Enum.Font.Gotham, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, Parent = HUD })
 
 task.spawn(function()
 	local pname = "game " .. tostring(game.PlaceId)
@@ -1483,19 +1483,19 @@ local frames = 0
 task.spawn(function()
 	while true do
 		task.wait(1)
-		if S.hud then
-			hudFps.Text = "FPS: " .. frames
+		if S.HUD then
+			HUDFps.Text = "FPS: " .. frames
 			local ping = 0
 			pcall(function() ping = math.floor(Stats.Network.ServerStatsItem["Data Ping"]:GetValue()) end)
-			hudPing.Text = "Ping: " .. ping .. " ms"
+			HUDPing.Text = "Ping: " .. ping .. " ms"
 			local hrp = getHRP()
-			if hrp then hudPos.Text = string.format("Pos: %d, %d, %d", hrp.Position.X, hrp.Position.Y, hrp.Position.Z) end
-			if S.hudExtra then
-				hudTime.Visible = true; hudPl.Visible = true
-				hudTime.Text = string.format("Time: %02d:%02d", math.floor(Lighting.ClockTime) % 24, math.floor((Lighting.ClockTime % 1) * 60))
-				hudPl.Text = "Players: " .. #Players:GetPlayers() .. " / " .. Players.MaxPlayers
+			if hrp then HUDPos.Text = string.format("Pos: %d, %d, %d", hrp.Position.X, hrp.Position.Y, hrp.Position.Z) end
+			if S.HUDExtra then
+				HUDTime.Visible = true; HUDPl.Visible = true
+				HUDTime.Text = string.format("Time: %02d:%02d", math.floor(Lighting.ClockTime) % 24, math.floor((Lighting.ClockTime % 1) * 60))
+				HUDPl.Text = "Players: " .. #Players:GetPlayers() .. " / " .. Players.MaxPlayers
 			else
-				hudTime.Visible = false; hudPl.Visible = false
+				HUDTime.Visible = false; HUDPl.Visible = false
 			end
 		end
 		frames = 0
@@ -1522,12 +1522,12 @@ task.spawn(function()
 				if S.beauty then
 					atmosphere.Color = Color3.fromRGB(200, 210, 255); atmosphere.Decay = Color3.fromRGB(120, 140, 200)
 					atmosphere.Haze = 1.2; atmosphere.Glare = 0.15
-					colorCorr.Saturation = S.sat; colorCorr.Contrast = 0.08
+					ColorCorr.Saturation = S.sat; ColorCorr.Contrast = 0.08
 					bloom.Intensity = S.bloomI; bloom.Size = 24; bloom.Threshold = 0.9
 					sunrays.Intensity = S.sunraysOn and 0.1 or 0; sunrays.Spread = 1
-					if S.dofOn then
-						dof.FarIntensity = 0.18; dof.FocusDistance = 40; dof.InFocusRadius = 25; dof.NearIntensity = 0.12
-					else dof.FarIntensity = 0; dof.NearIntensity = 0 end
+					if S.DOFOn then
+						DOF.FarIntensity = 0.18; DOF.FocusDistance = 40; DOF.InFocusRadius = 25; DOF.NearIntensity = 0.12
+					else DOF.FarIntensity = 0; DOF.NearIntensity = 0 end
 					Lighting.EnvironmentDiffuseScale = 0.4; Lighting.EnvironmentSpecularScale = 0.5
 				else
 					atmosphere.Color = S.fogColor
@@ -1545,7 +1545,7 @@ task.spawn(function()
 			if S.rainbowWorld then
 				local cc = Color3.fromHSV(tick() % 1, 1, 1)
 				Lighting.Ambient = cc; Lighting.OutdoorAmbient = cc
-				ensureEffects(); colorCorr.TintColor = cc
+				ensureEffects(); ColorCorr.TintColor = cc
 			end
 			local hh = getHum()
 			if hh then
@@ -1580,7 +1580,7 @@ task.spawn(function()
 		if S.xray then
 			pcall(function()
 				local mychar = LP.Character
-				for _, d in ipairs(workspace:GetDescendants()) do
+				for _, d in ipairs(workSpace:GetDescendants()) do
 					if d:IsA("BasePart") and not (mychar and d:IsDescendantOf(mychar)) then
 						if d:GetAttribute("KitiOrigT") == nil then d:SetAttribute("KitiOrigT", d.Transparency) end
 						d.Transparency = 0.65
@@ -1596,7 +1596,7 @@ task.spawn(function()
 		if S.autoClick then
 			pcall(function()
 				if mouse1click then mouse1click()
-				else VU:Button1Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame); task.wait(0.02); VU:Button1Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame) end
+				else VU:Button1Down(Vector2.new(0, 0), workSpace.CurrentCamera.CFrame); task.wait(0.02); VU:Button1Up(Vector2.new(0, 0), workSpace.CurrentCamera.CFrame) end
 			end)
 			task.wait(S.autoClickDelay)
 		else
@@ -1607,19 +1607,19 @@ end)
 
 local cross = DrawingLib and DrawingLib.new and DrawingLib.new("Circle") or nil
 if cross then cross.Filled = false; cross.Thickness = 1.5; cross.Color = Color3.fromRGB(255, 255, 255); cross.Transparency = 0.3; cross.Visible = false end
-local fovCircle = DrawingLib and DrawingLib.new and DrawingLib.new("Circle") or nil
-if fovCircle then fovCircle.Filled = false; fovCircle.Thickness = 1.5; fovCircle.Color = T.accent1; fovCircle.Transparency = 0.4; fovCircle.Visible = false end
+local FOVCircle = DrawingLib and DrawingLib.new and DrawingLib.new("Circle") or nil
+if FOVCircle then FOVCircle.Filled = false; FOVCircle.Thickness = 1.5; FOVCircle.Color = T.accent1; FOVCircle.Transparency = 0.4; FOVCircle.Visible = false end
 
 RS.RenderStepped:Connect(function(dt)
 	frames = frames + 1
 	local ok = pcall(function()
-		local center = Vector2.new(Cam.ViewportSize.X / 2, Cam.ViewportSize.Y / 2)
-		hud.Visible = S.hud
-		watermark.Visible = S.watermark
-		if cross then cross.Position = center; cross.Radius = 6; cross.Visible = S.crosshair end
-		if fovCircle then fovCircle.Position = center; fovCircle.Radius = S.aimFov; fovCircle.Visible = S.aimbot end
+		local cEnter = Vector2.new(Cam.ViewportSize.X / 2, Cam.ViewportSize.Y / 2)
+		HUD.Visible = S.HUD
+		Watermark.Visible = S.Watermark
+		if cross then cross.Position = cEnter; cross.Radius = 6; cross.Visible = S.crosshair end
+		if FOVCircle then FOVCircle.Position = cEnter; FOVCircle.Radius = S.AimFOV; FOVCircle.Visible = S.Aimbot end
 
-		if S.noclip then
+		if S.Noclip then
 			local c = getChar()
 			if c then for _, d in ipairs(c:GetDescendants()) do if d:IsA("BasePart") then d.CanCollide = false end end end
 		end
@@ -1634,9 +1634,9 @@ RS.RenderStepped:Connect(function(dt)
 		end
 
 		local hum = getHum()
-		if hum and hum.WalkSpeed ~= S.speed then hum.WalkSpeed = S.speed end
+		if hum and hum.WalkSpeed ~= S.Speed then hum.WalkSpeed = S.Speed end
 
-		if S.copyHats then
+		if S.CopyHats then
 			local myHead = getChar() and getChar():FindFirstChild("Head")
 			if myHead then
 				for _, p in ipairs(Players:GetPlayers()) do
@@ -1647,11 +1647,11 @@ RS.RenderStepped:Connect(function(dt)
 								if (acc:IsA("Accessory") or acc:IsA("Hat")) and not myHead:FindFirstChild(acc.Name) then
 									local cl = acc:Clone()
 									cl.Parent = myHead
-									local hp0 = cl:IsA("BasePart") and cl or cl:FindFirstChildWhichIsA("BasePart")
-									if hp0 then
-										local weld = new("WeldConstraint", { Parent = hp0 })
-										weld.Part0 = myHead; weld.Part1 = hp0
-										hp0.CFrame = myHead.CFrame
+									local HP0 = cl:IsA("BasePart") and cl or cl:FindFirstChildWhichIsA("BasePart")
+									if HP0 then
+										local weld = new("WeldConstraint", { Parent = HP0 })
+										weld.Part0 = myHead; weld.Part1 = HP0
+										HP0.CFrame = myHead.CFrame
 									end
 								end
 							end
@@ -1663,54 +1663,54 @@ RS.RenderStepped:Connect(function(dt)
 
 		if S.clockLock then Lighting.ClockTime = S.clock end
 
-		if S.aimbot then
-			local firing = S.aimAlways or UIS:IsKeyDown(S.aimKey)
+		if S.Aimbot then
+			local firing = S.AimAlways or UIS:IsKeyDown(S.AimKey)
 			if firing then
 				local _, tpos = findTarget()
 				if tpos then
 					local goal = CFrame.new(Cam.CFrame.Position, tpos)
-					if S.aimSmooth <= 0.01 then Cam.CFrame = goal else Cam.CFrame = Cam.CFrame:Lerp(goal, 1 - S.aimSmooth) end
+					if S.AimSmooth <= 0.01 then Cam.CFrame = goal else Cam.CFrame = Cam.CFrame:Lerp(goal, 1 - S.AimSmooth) end
 				end
 			end
 		end
 
-		if S.trigger and UIS:IsKeyDown(S.triggerKey) then
+		if S.TRIGger and UIS:IsKeyDown(S.TRIGgerKey) then
 			if findTarget() then
 				local c = getChar()
-				local tool = c and c:FindFirstChildOfClass("Tool")
+				local tool = c and c:FindFirstChilDOFClass("Tool")
 				if tool then pcall(function() tool:Activate() end) end
 			end
 		end
 
-		if S.espNames or S.espBox or S.espTracer or S.espHighlight then
+		if S.ESPNames or S.ESPBox or S.ESPTracer or S.ESPHighlight then
 			for _, p in ipairs(Players:GetPlayers()) do
 				local c = p.Character
-				local head = c and c:FindFirstChild("Head")
+				local Head = c and c:FindFirstChild("Head")
 				local hrp = c and c:FindFirstChild("HumanoidRootPart")
-				local hum2 = c and c:FindFirstChildOfClass("Humanoid")
-				if p ~= LP and head and hrp and hum2 and hum2.Health > 0 then
-					local col = S.rainbowEsp and Color3.fromHSV(tick() % 1, 1, 1) or roleColor(p)
-					if S.espNames then
-						local tag = head:FindFirstChild("KitiName")
+				local hum2 = c and c:FindFirstChilDOFClass("Humanoid")
+				if p ~= LP and Head and hrp and hum2 and hum2.Health > 0 then
+					local col = S.rainbowESP and Color3.fromHSV(tick() % 1, 1, 1) or roleColor(p)
+					if S.ESPNames then
+						local tag = Head:FindFirstChild("KitiName")
 						if not tag then
-							tag = new("BillboardGui", { Name = "KitiName", Size = UDim2.fromOffset(220, 40), StudsOffset = Vector3.new(0, 2.6, 0), AlwaysOnTop = true, Parent = head })
+							tag = new("BillboardGui", { Name = "KitiName", Size = UDim2.fromOffset(220, 40), StudsOffset = Vector3.new(0, 2.6, 0), AlwaysOnTop = true, Parent = Head })
 							new("TextLabel", { Name = "L", Size = UDim2.fromScale(1, 1), BackgroundTransparency = 1, Font = Enum.Font.GothamBold, TextSize = 13, TextStrokeTransparency = 0, Parent = tag })
 						end
 						local lbl = tag:FindFirstChild("L")
 						local info
-						if S.espInfo then
+						if S.ESPInfo then
 							local myhrp = getHRP()
 							local d = myhrp and math.floor((myhrp.Position - hrp.Position).Magnitude) or 0
-							info = " [" .. roleOf(p) .. "] " .. math.floor(hum2.Health) .. "hp " .. d .. "m"
+							info = " [" .. roleOf(p) .. "] " .. math.floor(hum2.Health) .. "HP " .. d .. "m"
 						else
 							info = " [" .. roleOf(p) .. "]"
 						end
 						lbl.Text = p.Name .. info
 						lbl.TextColor3 = col
 					else
-						local tag = head:FindFirstChild("KitiName"); if tag then tag:Destroy() end
+						local tag = Head:FindFirstChild("KitiName"); if tag then tag:Destroy() end
 					end
-					if S.espHighlight then
+					if S.ESPHighlight then
 						local hl = c:FindFirstChild("KitiHL")
 						if not hl then hl = new("Highlight", { Name = "KitiHL", FillTransparency = 0.6, OutlineTransparency = 0, DepthMode = Enum.HighlightDepthMode.AlwaysOnTop, Parent = c }) end
 						hl.FillColor = col; hl.OutlineColor = col
@@ -1721,18 +1721,18 @@ RS.RenderStepped:Connect(function(dt)
 						local v = visuals[p]
 						if not v then v = { box = DrawingLib.new("Square"), tracer = DrawingLib.new("Line") }; v.box.Thickness = 1.5; v.box.Filled = false; v.tracer.Thickness = 1.5; visuals[p] = v end
 						v.box.Transparency = 0.2; v.tracer.Transparency = 0.4; v.box.Color = col; v.tracer.Color = col
-						local top = w2s(head.Position + Vector3.new(0, 0.7, 0))
+						local top = w2s(Head.Position + Vector3.new(0, 0.7, 0))
 						local bot = w2s(hrp.Position - Vector3.new(0, 3, 0))
-						if top and bot and S.espBox then
+						if top and bot and S.ESPBox then
 							local h = math.abs(bot.Y - top.Y); local w = h * 0.55
 							v.box.Position = Vector2.new(top.X - w / 2, math.min(top.Y, bot.Y)); v.box.Size = Vector2.new(w, h); v.box.Visible = true
 						else v.box.Visible = false end
-						if top and S.espTracer then
+						if top and S.ESPTracer then
 							v.tracer.From = Vector2.new(Cam.ViewportSize.X / 2, Cam.ViewportSize.Y); v.tracer.To = Vector2.new(top.X, top.Y); v.tracer.Visible = true
 						else v.tracer.Visible = false end
 					end
 				else
-					if head then local tag = head:FindFirstChild("KitiName"); if tag then tag:Destroy() end end
+					if Head then local tag = Head:FindFirstChild("KitiName"); if tag then tag:Destroy() end end
 					if c then local hl = c:FindFirstChild("KitiHL"); if hl then hl:Destroy() end end
 					if visuals[p] then clearVisual(visuals[p]); visuals[p] = nil end
 				end
@@ -1742,13 +1742,13 @@ RS.RenderStepped:Connect(function(dt)
 				local c = p.Character
 				if c then
 					local hl = c:FindFirstChild("KitiHL"); if hl then hl:Destroy() end
-					local head = c:FindFirstChild("Head"); if head then local tag = head:FindFirstChild("KitiName"); if tag then tag:Destroy() end end
+					local Head = c:FindFirstChild("Head"); if Head then local tag = Head:FindFirstChild("KitiName"); if tag then tag:Destroy() end end
 				end
 				if visuals[p] then clearVisual(visuals[p]); visuals[p] = nil end
 			end
 		end
 
-		if S.fly then
+		if S.Fly then
 			local hrp = getHRP()
 			if hrp then
 				if not hrp:FindFirstChild("KitiFly") then
@@ -1766,7 +1766,7 @@ RS.RenderStepped:Connect(function(dt)
 					if UIS:IsKeyDown(Enum.KeyCode.D) then dir = dir + Cam.CFrame.RightVector end
 					if UIS:IsKeyDown(Enum.KeyCode.Space) then dir = dir + Vector3.new(0, 1, 0) end
 					if UIS:IsKeyDown(Enum.KeyCode.LeftControl) then dir = dir - Vector3.new(0, 1, 0) end
-					if dir.Magnitude > 0 then bv.Velocity = dir.Unit * S.flySpeed else bv.Velocity = Vector3.new(0, 0, 0) end
+					if dir.Magnitude > 0 then bv.Velocity = dir.Unit * S.FlySpeed else bv.Velocity = Vector3.new(0, 0, 0) end
 				end
 			end
 		end
@@ -1803,7 +1803,7 @@ UIS.InputBegan:Connect(function(i, gp)
 		local ok = pcall(function()
 			local unitRay = Cam:ViewportPointToRay(Cam.ViewportSize.X / 2, Cam.ViewportSize.Y / 2)
 			local ray = Ray.new(unitRay.Origin, unitRay.Direction * 3000)
-			local hit = workspace:FindPartOnRay(ray, LP.Character)
+			local hit = workSpace:FindPartOnRay(ray, LP.Character)
 			local hrp = getHRP()
 			if hit and hrp then hrp.CFrame = CFrame.new(hit.Position + Vector3.new(0, 3, 0)) end
 		end)
@@ -1833,8 +1833,8 @@ print("[KITI-PROTO] V6 loaded")
 
 
 S.particleEnabled = false; S.particleColor = Color3.fromRGB(80, 170, 255)
-S.particleSize = 1.5; S.particleTransparency = 0.2; S.particleSpeed = 1
-S.particleLifetime = 1.2; S.particleRate = 25; S.particleSpread = 360
+S.particleSize = 1.5; S.particleTransparency = 0.2; S.particlESPeed = 1
+S.particleLifetime = 1.2; S.particleRate = 25; S.particlESPread = 360
 S.particleRotation = 0; S.particleOffset = Vector3.new(0, 2, 0)
 S.particleLighting = true; S.particleEmit = true; S.particleBlend = false
 S.particleEmitHead = true; S.particleEmitTorso = true
@@ -1845,9 +1845,9 @@ local function updateParticles()
 	if S.particleEnabled then
 		local c = getChar()
 		if not c then return end
-		local head = c:FindFirstChild("Head")
-		local torso = c:FindFirstChild("UpperTorso") or c:FindFirstChild("Torso")
-		if S.particleEmitHead and head then
+		local Head = c:FindFirstChild("Head")
+		local Torso = c:FindFirstChild("UpperTorso") or c:FindFirstChild("Torso")
+		if S.particleEmitHead and Head then
 			if not particleHead then
 				particleHead = Instance.new("ParticleEmitter")
 				particleHead.Name = "KitiParticleHead"
@@ -1855,15 +1855,15 @@ local function updateParticles()
 				particleHead.LightEmission = 1
 				particleHead.LightInfluence = S.particleLighting and 0 or 1
 				particleHead.BlendMode = S.particleBlend and Enum.ParticleBlendMode.Additive or Enum.ParticleBlendMode.AlphaBlend
-				particleHead.Parent = head
+				particleHead.Parent = Head
 			end
 			particleHead.Color = ColorSequence.new(S.particleColor)
 			particleHead.Size = NumberSequence.new(S.particleSize)
 			particleHead.Transparency = NumberSequence.new(S.particleTransparency)
-			particleHead.Speed = NumberRange.new(S.particleSpeed * 2, S.particleSpeed * 3)
+			particleHead.Speed = NumberRange.new(S.particlESPeed * 2, S.particlESPeed * 3)
 			particleHead.Lifetime = NumberRange.new(S.particleLifetime * 0.7, S.particleLifetime)
 			particleHead.Rate = S.particleRate
-			particleHead.SpreadAngle = Vector2.new(S.particleSpread, S.particleSpread)
+			particleHead.SpreadAngle = Vector2.new(S.particlESPread, S.particlESPread)
 			particleHead.Rotation = NumberRange.new(S.particleRotation, S.particleRotation + 10)
 			particleHead.Offset = S.particleOffset
 			particleHead.EmissionDirection = Enum.NormalId.Top
@@ -1871,7 +1871,7 @@ local function updateParticles()
 		else
 			if particleHead then particleHead:Destroy() particleHead = nil end
 		end
-		if S.particleEmitTorso and torso then
+		if S.particleEmitTorso and Torso then
 			if not particleTorso then
 				particleTorso = Instance.new("ParticleEmitter")
 				particleTorso.Name = "KitiParticleTorso"
@@ -1879,15 +1879,15 @@ local function updateParticles()
 				particleTorso.LightEmission = 1
 				particleTorso.LightInfluence = S.particleLighting and 0 or 1
 				particleTorso.BlendMode = S.particleBlend and Enum.ParticleBlendMode.Additive or Enum.ParticleBlendMode.AlphaBlend
-				particleTorso.Parent = torso
+				particleTorso.Parent = Torso
 			end
 			particleTorso.Color = ColorSequence.new(S.particleColor)
 			particleTorso.Size = NumberSequence.new(S.particleSize * 0.8)
 			particleTorso.Transparency = NumberSequence.new(S.particleTransparency)
-			particleTorso.Speed = NumberRange.new(S.particleSpeed, S.particleSpeed * 2)
+			particleTorso.Speed = NumberRange.new(S.particlESPeed, S.particlESPeed * 2)
 			particleTorso.Lifetime = NumberRange.new(S.particleLifetime * 0.5, S.particleLifetime)
 			particleTorso.Rate = S.particleRate * 0.5
-			particleTorso.SpreadAngle = Vector2.new(S.particleSpread, S.particleSpread)
+			particleTorso.SpreadAngle = Vector2.new(S.particlESPread, S.particlESPread)
 			particleTorso.Rotation = NumberRange.new(S.particleRotation, S.particleRotation + 10)
 			particleTorso.Offset = S.particleOffset
 			particleTorso.EmissionDirection = Enum.NormalId.Front
@@ -1906,28 +1906,28 @@ addSection(pTab, "Tool / Enabled")
 addToggle(pTab, "Tool / Enabled", false, function(on)
 	S.particleEnabled = on
 	updateParticles()
-	notify("Particles", on and "��������" or "���������", 2)
+	notify("Particles", on and "········" or "·········", 2)
 end)
 addDivider(pTab)
 addSection(pTab, "Color")
-addButton(pTab, "?? ���� ������", function()
-	local colors = {
-		{ "�����", Color3.fromRGB(80, 170, 255) },
-		{ "����������", Color3.fromRGB(180, 90, 255) },
-		{ "�������", Color3.fromRGB(255, 105, 180) },
-		{ "������", Color3.fromRGB(80, 255, 120) },
-		{ "���������", Color3.fromRGB(255, 160, 60) },
-		{ "�����", Color3.fromRGB(255, 255, 255) },
-		{ "������", nil },
+addButton(pTab, "?? ···· ······", function()
+	local Colors = {
+		{ "·····", Color3.fromRGB(80, 170, 255) },
+		{ "··········", Color3.fromRGB(180, 90, 255) },
+		{ "·······", Color3.fromRGB(255, 105, 180) },
+		{ "······", Color3.fromRGB(80, 255, 120) },
+		{ "·········", Color3.fromRGB(255, 160, 60) },
+		{ "·····", Color3.fromRGB(255, 255, 255) },
+		{ "······", nil },
 	}
 	local idx = 1
 	local idx2 = 0
 	while true do
 		idx2 = idx2 + 1
-		if idx2 > #colors then idx2 = 1 end
-		S.particleColor = colors[idx2][2] or Color3.fromHSV(tick() % 1, 1, 1)
+		if idx2 > #Colors then idx2 = 1 end
+		S.particleColor = Colors[idx2][2] or Color3.fromHSV(tick() % 1, 1, 1)
 		updateParticles()
-		notify("Particles", "����: " .. colors[idx2][1], 2)
+		notify("Particles", "····: " .. Colors[idx2][1], 2)
 		task.wait(1.5)
 		if not S.particleEnabled then break end
 	end
@@ -1936,12 +1936,12 @@ addDivider(pTab)
 addSection(pTab, "Size / Transparency / Speed / Lifetime")
 addSlider(pTab, "Size", 0.1, 8, 1.5, function(v) S.particleSize = v; updateParticles() end, 2)
 addSlider(pTab, "Transparency", 0, 1, 0.2, function(v) S.particleTransparency = v; updateParticles() end, 2)
-addSlider(pTab, "Speed", 0.1, 10, 1, function(v) S.particleSpeed = v; updateParticles() end, 2)
+addSlider(pTab, "Speed", 0.1, 10, 1, function(v) S.particlESPeed = v; updateParticles() end, 2)
 addSlider(pTab, "Lifetime", 0.1, 5, 1.2, function(v) S.particleLifetime = v; updateParticles() end, 2)
 addDivider(pTab)
 addSection(pTab, "Rate / Spread / Rotation / Offset")
 addSlider(pTab, "Rate", 1, 100, 25, function(v) S.particleRate = v; updateParticles() end)
-addSlider(pTab, "Spread", 0, 360, 360, function(v) S.particleSpread = v; updateParticles() end)
+addSlider(pTab, "Spread", 0, 360, 360, function(v) S.particlESPread = v; updateParticles() end)
 addSlider(pTab, "Rotation", 0, 360, 0, function(v) S.particleRotation = v; updateParticles() end)
 addSlider(pTab, "Offset Y", -5, 10, 2, function(v) S.particleOffset = Vector3.new(0, v, 0); updateParticles() end, 1)
 addDivider(pTab)
@@ -1950,9 +1950,9 @@ addToggle(pTab, "Lighting", true, function(on) S.particleLighting = on; updatePa
 addToggle(pTab, "Emit", true, function(on) S.particleEmit = on; updateParticles() end)
 addToggle(pTab, "Blend (Additive)", false, function(on) S.particleBlend = on; updateParticles() end)
 addDivider(pTab)
-addSection(pTab, "����� �������� (Emitters)")
-addToggle(pTab, "Head (������)", true, function(on) S.particleEmitHead = on; updateParticles() end)
-addToggle(pTab, "Torso (����)", true, function(on) S.particleEmitTorso = on; updateParticles() end)
+addSection(pTab, "····· ········ (Emitters)")
+addToggle(pTab, "Head (······)", true, function(on) S.particleEmitHead = on; updateParticles() end)
+addToggle(pTab, "Torso (····)", true, function(on) S.particleEmitTorso = on; updateParticles() end)
 
 task.spawn(function()
 	while true do
@@ -1961,29 +1961,29 @@ task.spawn(function()
 	end
 end)
 
-local petsTab = addTab("�������", "??")
-addSection(petsTab, "�������")
-addToggle(petsTab, "?? �������� ��������", false, function(on)
+local petsTab = addTab("·······", "??")
+addSection(petsTab, "·······")
+addToggle(petsTab, "?? ········ ········", false, function(on)
 	S.pets = on
 	if on then spawnPets() else clearPets() end
-	notify("�������", on and "��������" or "���������", 2)
+	notify("·······", on and "········" or "·········", 2)
 end)
-addSlider(petsTab, "���-�� ��������", 1, 10, 3, function(v) S.petCount = v; if S.pets then spawnPets() end end)
-addSlider(petsTab, "������ �������", 0.5, 5, 1, function(v) S.petSize = v; if S.pets then spawnPets() end end, 1)
-addSlider(petsTab, "��������� ����������", 2, 20, 6, function(v) S.petFollowDist = v end, 1)
-addToggle(petsTab, "?? �������� �������", false, function(on) S.petRainbow = on end)
-addToggle(petsTab, "? ��������� �� �������", true, function(on) S.petFollow = on end)
-addButton(petsTab, "?? ���������� ��������", function() spawnPets(); notify("�������", "����������", 2) end)
-addButton(petsTab, "?? ������ ��������", function() clearPets(); notify("�������", "������", 2) end)
+addSlider(petsTab, "···-·· ········", 1, 10, 3, function(v) S.petCount = v; if S.pets then spawnPets() end end)
+addSlider(petsTab, "······ ·······", 0.5, 5, 1, function(v) S.petSize = v; if S.pets then spawnPets() end end, 1)
+addSlider(petsTab, "········· ··········", 2, 20, 6, function(v) S.petFollowDist = v end, 1)
+addToggle(petsTab, "?? ········ ·······", false, function(on) S.petRainbow = on end)
+addToggle(petsTab, "? ········· ·· ·······", true, function(on) S.petFollow = on end)
+addButton(petsTab, "?? ·········· ········", function() spawnPets(); notify("·······", "··········", 2) end)
+addButton(petsTab, "?? ······ ········", function() clearPets(); notify("·······", "······", 2) end)
 
 -- KITI PROTO V6 ADDON: REAL VISUALS + PETS + UTILITIES
 local function getChar() return game.Players.LocalPlayer.Character end
 local function getHRP() local c=getChar(); return c and c:FindFirstChild("HumanoidRootPart") end
-local function getHum() local c=getChar(); return c and c:FindFirstChildOfClass("Humanoid") end
+local function getHum() local c=getChar(); return c and c:FindFirstChilDOFClass("Humanoid") end
 
-S.skel = false; S.hpbar = false; S.chams = false; S.btrac = false; S.team = true; S.pets = false
+S.skel = false; S.HPbar = false; S.chams = false; S.btrac = false; S.team = true; S.pets = false
 S.petModel = "Ball"; S.petCount = 3; S.petSize = 1; S.petColor = Color3.fromRGB(126,108,255); S.petRainbow = false; S.petFollowDist = 6
-S.theme = "light"; S.rainbowUI = false; S.spin = false; S.spinspeed = 15; S.antifling = false; S.aimvis = false; S.arrows = false; S.atmos = false; S.atmosdens = 0.25
+S.theme = "dark"; S.rainbowUI = false; S.spin = false; S.spinSpeed = 15; S.antifling = false; S.Aimvis = false; S.arrows = false; S.atmos = false; S.atmosdens = 0.25
 S.tracersAll = false; S.box3d = false; S.name3d = false; S.outline = false
 
 local pets = {}
@@ -2003,7 +2003,7 @@ local function spawnPets()
 		part.Color = S.petRainbow and Color3.fromHSV(tick()%1,1,1) or S.petColor
 		part.CanCollide = false
 		part.Anchored = false
-		part.Parent = workspace
+		part.Parent = workSpace
 		local bp = Instance.new("BodyPosition", part)
 		bp.MaxForce = Vector3.new(1e5,1e5,1e5)
 		local bg = Instance.new("BodyGyro", part)
@@ -2028,9 +2028,9 @@ local function applyTheme()
 	T.bg=T.bg; T.card=t.card; T.text=t.text; T.sub=t.sub; T.accent1=t.accent1; T.accent2=t.accent2
 end
 
-local hellTab = addTab("��", "??")
-addSection(hellTab, "�������� ���")
-addButton(hellTab, "?? �������� ��", function()
+local hellTab = addTab("··", "??")
+addSection(hellTab, "········ ···")
+addButton(hellTab, "?? ········ ··", function()
 	Lighting.Ambient = Color3.fromRGB(60, 20, 20)
 	Lighting.OutdoorAmbient = Color3.fromRGB(80, 30, 30)
 	Lighting.Brightness = 0.8
@@ -2038,7 +2038,7 @@ addButton(hellTab, "?? �������� ��", function()
 	Lighting.FogColor = Color3.fromRGB(120, 40, 40)
 	Lighting.FogEnd = 800
 	Lighting.FogStart = 0
-	local sky = Lighting:FindFirstChildOfClass("Sky")
+	local sky = Lighting:FindFirstChilDOFClass("Sky")
 	if not sky then sky = Instance.new("Sky") sky.Parent = Lighting end
 	sky.SkyboxBk = "rbxassetid://159454299"
 	sky.SkyboxDn = "rbxassetid://159454296"
@@ -2048,7 +2048,7 @@ addButton(hellTab, "?? �������� ��", function()
 	sky.SkyboxUp = "rbxassetid://159454288"
 	sky.StarCount = 0
 	sky.CelestialBodiesShown = false
-	for _, d in ipairs(workspace:GetDescendants()) do
+	for _, d in ipairs(workSpace:GetDescendants()) do
 		if d:IsA("BasePart") and d.Anchored and d.Size.Y > 50 then
 			d.Color = Color3.fromRGB(60, 30, 30)
 			d.Material = Enum.Material.Slate
@@ -2062,7 +2062,7 @@ addButton(hellTab, "?? �������� ��", function()
 	portal.CanCollide = false
 	portal.Material = Enum.Material.Neon
 	portal.Color = Color3.fromRGB(40, 10, 10)
-	portal.Parent = workspace
+	portal.Parent = workSpace
 	local ring = Instance.new("Part")
 	ring.Shape = Enum.PartType.Cylinder
 	ring.Size = Vector3.new(2, 40, 40)
@@ -2071,7 +2071,7 @@ addButton(hellTab, "?? �������� ��", function()
 	ring.CanCollide = false
 	ring.Material = Enum.Material.Neon
 	ring.Color = Color3.fromRGB(180, 90, 255)
-	ring.Parent = workspace
+	ring.Parent = workSpace
 	local pe = Instance.new("ParticleEmitter", ring)
 	pe.Texture = "rbxassetid://258128463"
 	pe.Rate = 80
@@ -2087,9 +2087,9 @@ addButton(hellTab, "?? �������� ��", function()
 			task.wait(0.03)
 		end
 	end)
-	notify("��", "�������� ��� �������", 3)
+	notify("··", "········ ··· ·······", 3)
 end)
-addButton(hellTab, "? ������� ���", function()
+addButton(hellTab, "? ······· ···", function()
 	Lighting.Ambient = Color3.fromRGB(140, 140, 140)
 	Lighting.OutdoorAmbient = Color3.fromRGB(150, 150, 150)
 	Lighting.Brightness = 2
@@ -2097,7 +2097,7 @@ addButton(hellTab, "? ������� ���", function()
 	Lighting.FogEnd = 100000
 	Lighting.FogStart = 0
 	clearSky()
-	notify("��", "������� ���", 2)
+	notify("··", "······· ···", 2)
 end)
 
 local topBar = new("Frame", { Size = UDim2.fromOffset(220, 36), Position = UDim2.new(1, -230, 0, 8), BackgroundColor3 = Color3.fromRGB(20, 22, 32), BackgroundTransparency = 0.15, BorderSizePixel = 0, Active = true, Draggable = true, ZIndex = 60, Parent = sg })
@@ -2117,36 +2117,36 @@ local function topToggle(label, state, cb)
 	return t
 end
 
-local aimBtn = topToggle("Aim", false, function(on) togglesById["Aimbot"]:Set(on) end)
-aimBtn.Position = UDim2.fromOffset(8, 6)
-local espBtn = topToggle("ESP", false, function(on) togglesById["ESP �����"]:Set(on) end)
-espBtn.Position = UDim2.fromOffset(64, 6)
-local trigBtn = topToggle("TRIG", false, function(on) togglesById["Triggerbot"]:Set(on) end)
-trigBtn.Position = UDim2.fromOffset(120, 6)
+local AimBtn = topToggle("Aim", false, function(on) togglesById["Aimbot"]:Set(on) end)
+AimBtn.Position = UDim2.fromOffset(8, 6)
+local ESPBtn = topToggle("ESP", false, function(on) togglesById["ESP ·····"]:Set(on) end)
+ESPBtn.Position = UDim2.fromOffset(64, 6)
+local TRIGBtn = topToggle("TRIG", false, function(on) togglesById["TRIGgerbot"]:Set(on) end)
+TRIGBtn.Position = UDim2.fromOffset(120, 6)
 local gearBtn = new("TextButton", { Size = UDim2.fromOffset(36, 24), Position = UDim2.new(1, -42, 0, 6), BackgroundColor3 = Color3.fromRGB(126, 108, 255), Text = "?", TextColor3 = Color3.fromRGB(255, 255, 255), Font = Enum.Font.GothamBold, TextSize = 14, AutoButtonColor = false, ZIndex = 61, Parent = topBar })
 corner(gearBtn, 8)
 gearBtn.MouseButton1Click:Connect(function() clickSnd(); win.Visible = not win.Visible end)
 
 local recLbl = new("TextLabel", { Size = UDim2.new(0, 160, 0, 20), Position = UDim2.new(1, -180, 0, 48), BackgroundTransparency = 1, Text = "? Recording has started", TextColor3 = Color3.fromRGB(255, 80, 80), Font = Enum.Font.GothamBold, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Right, ZIndex = 60, Parent = sg })
 
-local sideBar = new("Frame", { Size = UDim2.fromOffset(44, 300), Position = UDim2.new(0, 8, 0.5, -150), BackgroundColor3 = Color3.fromRGB(20, 22, 32), BackgroundTransparency = 0.1, BorderSizePixel = 0, Active = true, Draggable = true, ZIndex = 55, Parent = sg })
-corner(sideBar, 14)
-stroke(sideBar, Color3.fromRGB(126, 108, 255), 1, 0.5)
-local statueBtn = new("TextButton", { Size = UDim2.fromOffset(32, 32), Position = UDim2.new(0.5, -16, 16), BackgroundColor3 = Color3.fromRGB(126, 108, 255), Text = "??", TextColor3 = Color3.fromRGB(255, 255, 255), Font = Enum.Font.GothamBold, TextSize = 16, AutoButtonColor = false, ZIndex = 56, Parent = sideBar })
+local SideBar = new("Frame", { Size = UDim2.fromOffset(44, 300), Position = UDim2.new(0, 8, 0.5, -150), BackgroundColor3 = Color3.fromRGB(20, 22, 32), BackgroundTransparency = 0.1, BorderSizePixel = 0, Active = true, Draggable = true, ZIndex = 55, Parent = sg })
+corner(SideBar, 14)
+stroke(SideBar, Color3.fromRGB(126, 108, 255), 1, 0.5)
+local statueBtn = new("TextButton", { Size = UDim2.fromOffset(32, 32), Position = UDim2.new(0.5, -16, 16), BackgroundColor3 = Color3.fromRGB(126, 108, 255), Text = "??", TextColor3 = Color3.fromRGB(255, 255, 255), Font = Enum.Font.GothamBold, TextSize = 16, AutoButtonColor = false, ZIndex = 56, Parent = SideBar })
 corner(statueBtn, 10)
-statueBtn.MouseButton1Click:Connect(function() clickSnd(); notify("SideBar", "�������", 2) end)
-local globeBtn = new("TextButton", { Size = UDim2.fromOffset(32, 32), Position = UDim2.new(0.5, -16, 60), BackgroundColor3 = Color3.fromRGB(80, 80, 90), Text = "??", TextColor3 = Color3.fromRGB(255, 255, 255), Font = Enum.Font.GothamBold, TextSize = 16, AutoButtonColor = false, ZIndex = 56, Parent = sideBar })
+statueBtn.MouseButton1Click:Connect(function() clickSnd(); notify("SideBar", "·······", 2) end)
+local globeBtn = new("TextButton", { Size = UDim2.fromOffset(32, 32), Position = UDim2.new(0.5, -16, 60), BackgroundColor3 = Color3.fromRGB(80, 80, 90), Text = "??", TextColor3 = Color3.fromRGB(255, 255, 255), Font = Enum.Font.GothamBold, TextSize = 16, AutoButtonColor = false, ZIndex = 56, Parent = SideBar })
 corner(globeBtn, 10)
 globeBtn.MouseButton1Click:Connect(function() clickSnd(); hellTab.btn.MouseButton1Click:Fire() end)
-local skullBtn = new("TextButton", { Size = UDim2.fromOffset(32, 32), Position = UDim2.new(0.5, -16, 104), BackgroundColor3 = Color3.fromRGB(80, 80, 90), Text = "??", TextColor3 = Color3.fromRGB(255, 255, 255), Font = Enum.Font.GothamBold, TextSize = 16, AutoButtonColor = false, ZIndex = 56, Parent = sideBar })
+local skullBtn = new("TextButton", { Size = UDim2.fromOffset(32, 32), Position = UDim2.new(0.5, -16, 104), BackgroundColor3 = Color3.fromRGB(80, 80, 90), Text = "??", TextColor3 = Color3.fromRGB(255, 255, 255), Font = Enum.Font.GothamBold, TextSize = 16, AutoButtonColor = false, ZIndex = 56, Parent = SideBar })
 corner(skullBtn, 10)
-skullBtn.MouseButton1Click:Connect(function() clickSnd(); notify("SideBar", "��", 2) end)
+skullBtn.MouseButton1Click:Connect(function() clickSnd(); notify("SideBar", "··", 2) end)
 
 local avatarImg = new("ImageLabel", { Size = UDim2.fromOffset(64, 64), Position = UDim2.new(1, -74, 1, -74), BackgroundColor3 = Color3.fromRGB(20, 22, 32), BorderSizePixel = 0, Image = "rbxassetid://6764432320", ZIndex = 58, Parent = sg })
 corner(avatarImg, 12)
 new("UIStroke", { Color = Color3.fromRGB(126, 108, 255), Thickness = 1, Parent = avatarImg })
 
-local skeletonConn = nil
+local SkeletonConn = nil
 local function drawSkeleton(p, col)
 	local c = p.Character
 	if not c then return end
@@ -2201,9 +2201,9 @@ task.spawn(function()
 			if S.skel then
 				for _, p in ipairs(Players:GetPlayers()) do
 					if p ~= LP and p.Character then
-						local hum = p.Character:FindFirstChildOfClass("Humanoid")
+						local hum = p.Character:FindFirstChilDOFClass("Humanoid")
 						if hum and hum.Health > 0 then
-							drawSkeleton(p, S.rainbowEsp and Color3.fromHSV(tick() % 1, 1, 1) or roleColor(p))
+							drawSkeleton(p, S.rainbowESP and Color3.fromHSV(tick() % 1, 1, 1) or roleColor(p))
 						end
 					end
 				end
@@ -2220,7 +2220,7 @@ task.spawn(function()
 				local hrp=getHRP(); if hrp then
 					for i,v in ipairs(pets) do
 						if v.Parent then
-							local bp=v:FindFirstChildOfClass("BodyPosition")
+							local bp=v:FindFirstChilDOFClass("BodyPosition")
 							if bp then bp.Position = hrp.Position + Vector3.new(math.sin(tick()*2 + i)*S.petFollowDist, math.sin(tick()+i)*2+4, math.cos(tick()*2 + i)*S.petFollowDist) end
 							if S.petRainbow then v.Color = Color3.fromHSV(tick()%1,1,1) end
 						end
@@ -2228,10 +2228,10 @@ task.spawn(function()
 				else clearPets() end
 			else clearPets() end
 			if S.spin then
-				local hrp=getHRP(); if hrp then hrp.CFrame = hrp.CFrame * CFrame.Angles(0, math.rad(S.spinspeed), 0) end
+				local hrp=getHRP(); if hrp then hrp.CFrame = hrp.CFrame * CFrame.Angles(0, math.rad(S.spinSpeed), 0) end
 			end
 			if S.antifling then
-				local hrp=getHRP(); local bv=hrp and hrp:FindFirstChildOfClass("BodyVelocity"); if bv and bv.Velocity.Magnitude>80 then bv.Velocity=Vector3.new(0,0,0); bv.MaxForce=Vector3.new(0,0,0); task.wait(); if bv.Parent then bv.MaxForce=Vector3.new(1e5,1e5,1e5) end end
+				local hrp=getHRP(); local bv=hrp and hrp:FindFirstChilDOFClass("BodyVelocity"); if bv and bv.Velocity.Magnitude>80 then bv.Velocity=Vector3.new(0,0,0); bv.MaxForce=Vector3.new(0,0,0); task.wait(); if bv.Parent then bv.MaxForce=Vector3.new(1e5,1e5,1e5) end end
 			end
 		end)
 	end
@@ -2241,3 +2241,76 @@ if not mainOK then
   warn('[KITI] MAIN ERROR: ' .. tostring(mainErr))
   print('[KITI] MAIN ERROR: ' .. tostring(mainErr))
 end
+
+local menuSettingsTab = addTab("Настройки меню", "🎨")
+addSection(menuSettingsTab, "Тема и прозрачность")
+addDropdown(menuSettingsTab, "Тема", { "dark", "light", "neon", "amoled" }, "dark", function(v) S.theme = v; applyTheme() end)
+addSlider(menuSettingsTab, "Прозрачность меню", 0, 0.5, 0.08, function(v) win.BackgroundTransparency = v end, 2)
+addSlider(menuSettingsTab, "Размер меню", 0.7, 1.3, 1, function(v) win.Size = UDim2.fromOffset(WIN_W * v, WIN_H * v) end, 2)
+addToggle(menuSettingsTab, "Свечение вокруг меню", false, function(on) S.glow = on end)
+addToggle(menuSettingsTab, "Плавные анимации", true, function(on) S.smoothGui = on end)
+addDivider(menuSettingsTab)
+addSection(menuSettingsTab, "Быстрые действия")
+addButton(menuSettingsTab, "🔄 Перезагрузить скрипт", function() loadstring(game:HttpGet("https://raw.githubusercontent.com/ba959/KitiProto/main/kitiproto.lua"))() end)
+addButton(menuSettingsTab, "📋 Скопировать loadstring", function() if setclipboard then setclipboard("loadstring(game:HttpGet('https://raw.githubusercontent.com/ba959/KitiProto/main/kitiproto.lua'))()") notify("Буфер", "loadstring скопирован", 2) end end)
+addButton(menuSettingsTab, "🗑 Удалить меню", function() sg:Destroy() end)
+
+local shooterTab = addTab("Шутер", "🔫")
+addSection(shooterTab, "Аимбот")
+addToggle(shooterTab, "Aimbot", false, function(on) S.aimbot = on end)
+addToggle(shooterTab, "Всегда целиться", false, function(on) S.aimAlways = on end)
+addSlider(shooterTab, "FOV аимбота", 20, 400, 150, function(v) S.aimFov = v end)
+addSlider(shooterTab, "Плавность", 0, 1, 0.5, function(v) S.aimSmooth = v end, 2)
+addDropdown(shooterTab, "Часть тела", { "Head", "HumanoidRootPart", "UpperTorso" }, "Head", function(v) S.aimPart = v end)
+addDivider(shooterTab)
+addSection(shooterTab, "Триггер и хитбоксы")
+addToggle(shooterTab, "Triggerbot", false, function(on) S.trigger = on end)
+addToggle(shooterTab, "Расширить хитбоксы", false, function(on) S.hitbox = on end)
+addSlider(shooterTab, "Размер хитбокса", 2, 15, 6, function(v) S.hitboxSize = v end)
+addDivider(shooterTab)
+addSection(shooterTab, "Авто-кликер")
+addToggle(shooterTab, "Авто-клик", false, function(on) S.autoClick = on end)
+addSlider(shooterTab, "Задержка (сек)", 0.01, 1, 0.1, function(v) S.autoClickDelay = v end, 2)
+addDivider(shooterTab)
+addSection(shooterTab, "Дополнительно")
+addToggle(shooterTab, "Бесконечный прыжок", false, function(on) S.infJump = on end)
+addToggle(shooterTab, "Noclip", false, function(on) S.noclip = on end)
+addToggle(shooterTab, "Fly", false, function(on) S.fly = on end)
+addSlider(shooterTab, "Fly speed", 10, 500, 60, function(v) S.flySpeed = v end)
+addSlider(shooterTab, "WalkSpeed", 16, 500, 16, function(v) S.speed = v end)
+
+local topBar2 = new("Frame", { Size = UDim2.fromOffset(260, 36), Position = UDim2.new(1, -270, 0, 8), BackgroundColor3 = Color3.fromRGB(18, 20, 30), BackgroundTransparency = 0.1, BorderSizePixel = 0, Active = true, Draggable = true, ZIndex = 60, Parent = sg })
+corner(topBar2, 12)
+stroke(topBar2, Color3.fromRGB(126, 108, 255), 1, 0.5)
+local function topToggle2(label, state, cb)
+	local t = new("TextButton", { Size = UDim2.fromOffset(56, 24), Position = UDim2.fromOffset(8, 6), BackgroundColor3 = state and Color3.fromRGB(0, 200, 100) or Color3.fromRGB(60, 62, 78), Text = label, TextColor3 = Color3.fromRGB(255, 255, 255), Font = Enum.Font.GothamBold, TextSize = 9, AutoButtonColor = false, ZIndex = 61, Parent = topBar2 })
+	corner(t, 6)
+	t.MouseButton1Click:Connect(function()
+		state = not state
+		t.BackgroundColor3 = state and Color3.fromRGB(0, 200, 100) or Color3.fromRGB(60, 62, 78)
+		cb(state)
+	end)
+	t.Text = label
+	return t
+end
+local aimBtn2 = topToggle2("Aim", false, function(on) togglesById["Aimbot"]:Set(on) end)
+aimBtn2.Position = UDim2.fromOffset(8, 6)
+local espBtn2 = topToggle2("ESP", false, function(on) togglesById["ESP имена"]:Set(on) end)
+espBtn2.Position = UDim2.fromOffset(70, 6)
+local trigBtn2 = topToggle2("TRIG", false, function(on) togglesById["Triggerbot"]:Set(on) end)
+trigBtn2.Position = UDim2.fromOffset(132, 6)
+local gearBtn2 = new("TextButton", { Size = UDim2.fromOffset(36, 24), Position = UDim2.new(1, -42, 0, 6), BackgroundColor3 = Color3.fromRGB(126, 108, 255), Text = "⚙", TextColor3 = Color3.fromRGB(255, 255, 255), Font = Enum.Font.GothamBold, TextSize = 14, AutoButtonColor = false, ZIndex = 61, Parent = topBar2 })
+corner(gearBtn2, 8)
+gearBtn2.MouseButton1Click:Connect(function() clickSnd(); win.Visible = not win.Visible end)
+
+local tanksTab = addTab("Танчики", "🚀")
+addSection(tanksTab, "Мини-игра: ТАНЧИКИ")
+addButton(tanksTab, "▶ Запустить игру", function() startTanks() end)
+addButton(tanksTab, "■ Стоп", function() stopTanks() end)
+addDivider(tanksTab)
+addSection(tanksTab, "Улучшения")
+addToggle(tanksTab, "Бесконечные патроны", false, function(on) S.infAmmo = on end)
+addToggle(tanksTab, "Быстрый огонь", false, function(on) S.fastFire = on end)
+addToggle(tanksTab, "Двойной урон", false, function(on) S.doubleDmg = on end)
+addSlider(tanksTab, "Скорость танка", 50, 400, 190, function(v) S.tankSpeed = v end)
+addSlider(tanksTab, "Урон врагов", 5, 50, 20, function(v) S.enemyDmg = v end)
